@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
-    android:background="@drawable/business"
+    android:background="@drawable/ic_loginscreen_background"
     android:backgroundTintMode="src_atop"
     android:backgroundTint="#AB000000">
 
@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/ic_logo_go4lunch"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"/>
+        android:layout_marginTop="40dp"/>
 
     <TextView
         android:id="@+id/go4LunchTextView"
@@ -34,8 +34,8 @@
         android:layout_height="wrap_content"
         android:text="@string/tagline"
         android:textColor="#FFFFFF"
-        android:textStyle="italic"
-        android:textSize="15sp"
+        android:textStyle="italic|bold"
+        android:textSize="10sp"
         android:layout_below="@id/go4LunchTextView"
         android:layout_centerHorizontal="true"/>
 
@@ -44,13 +44,12 @@
         android:id="@+id/facebookLoginButton"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/shape_button"
+        android:background="@drawable/shape_facebookbutton"
         android:drawableLeft="@drawable/facebook"
         android:padding="10dp"
         android:text="@string/sign_in_facebook"
         android:textAllCaps="false"
-        android:textColor="#3b5998"
-        android:textStyle="bold"
+        android:textColor="#FFFFFF"
         android:layout_centerHorizontal="true"
         android:layout_above="@id/googleLoginButton"/>
 
@@ -58,16 +57,16 @@
         android:id="@+id/googleLoginButton"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/shape_button"
+        android:background="@drawable/shape_googlebutton"
         android:text="@string/sign_in_google"
         android:textAllCaps="false"
-        android:textColor="#6E6D6D"
-        android:textStyle="bold"
+        android:textColor="#FFFFFF"
         android:drawableLeft="@drawable/googleplus"
         android:padding="10dp"
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
-        android:layout_margin="25dp"/>
+        android:layout_margin="25dp"
+        android:onClick="onClickGoogleLoginButton"/>
 
 
 
