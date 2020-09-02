@@ -39,34 +39,18 @@
         android:layout_below="@id/go4LunchTextView"
         android:layout_centerHorizontal="true"/>
 
-
     <Button
-        android:id="@+id/facebookLoginButton"
+        android:id="@+id/loginButton"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/shape_facebookbutton"
-        android:drawableLeft="@drawable/facebook"
-        android:padding="10dp"
-        android:text="@string/sign_in_facebook"
-        android:textAllCaps="false"
+        android:background="@drawable/shape_button"
+        android:text="@string/sign_in"
         android:textColor="#FFFFFF"
-        android:layout_centerHorizontal="true"
-        android:layout_above="@id/googleLoginButton"/>
-
-    <Button
-        android:id="@+id/googleLoginButton"
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:background="@drawable/shape_googlebutton"
-        android:text="@string/sign_in_google"
-        android:textAllCaps="false"
-        android:textColor="#FFFFFF"
-        android:drawableLeft="@drawable/googleplus"
-        android:padding="10dp"
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
-        android:layout_margin="25dp"
-        android:onClick="onClickGoogleLoginButton"/>
+        android:padding="10dp"
+        android:layout_margin="35dp"
+        android:onClick="onClickLoginButton"/>
 
 
 
