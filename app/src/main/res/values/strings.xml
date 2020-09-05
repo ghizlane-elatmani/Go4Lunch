@@ -4,6 +4,10 @@
     <string name="sign_in">Sign in</string>
     <string name="sign_in_facebook">Sign in with Facebook</string>
     <string name="sign_in_google">Sign in with Google</string>
+    <string name="connection_succeed">Connexion succeed</string>
+    <string name="error_authentication_canceled">Error authentication canceled</string>
+    <string name="error_no_internet">Error no internet</string>
+    <string name="error_unknown_error">Error unknown error</string>
 
     <!-- FACEBOOK PURPOSE -->
     <string name="facebook_application_id" translatable="false">1558301754356407</string>
