@@ -8,9 +8,14 @@ import com.developpeuseoc.go4lunch.R;
 
 public abstract class BaseActivity extends AppCompatActivity {
 
+    // Lifecycle
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_base);
+        this.setContentView(this.getFragmentLayout());
     }
+
+    public abstract int getFragmentLayout();
+
 }
