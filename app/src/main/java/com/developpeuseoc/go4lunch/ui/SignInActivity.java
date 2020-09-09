@@ -1,14 +1,10 @@
 package com.developpeuseoc.go4lunch.ui;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.developpeuseoc.go4lunch.R;
@@ -16,23 +12,22 @@ import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.ErrorCodes;
 import com.firebase.ui.auth.IdpResponse;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.Collections;
 
-public class SignInActivity extends AppCompatActivity {
+public class SignInActivity extends BaseActivity {
 
+    // Identifier for Sign-In Activity
     private static final int RC_SIGN_IN = 123;
-
-    // Choose authentication providers -- Facebook and Google
-    List<AuthUI.IdpConfig> providers = Arrays.asList(
-            new AuthUI.IdpConfig.Builder(AuthUI.FACEBOOK_PROVIDER).build(),
-            new AuthUI.IdpConfig.Builder(AuthUI.GOOGLE_PROVIDER).build());
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
 
+    }
+
+    @Override
+    public int getFragmentLayout() {
+        return R.layout.activity_sign_in;
     }
 
 
@@ -42,22 +37,44 @@ public class SignInActivity extends AppCompatActivity {
         this.handleResponseAfterSignIn(requestCode, resultCode, data);
     }
 
-    public void onClickLoginButton(View view){
-        this.startSignInActivity();
+
+    public void onClickGoogleButton(View view){
+        this.startSignInActivityGoogle();
     }
 
-    // Create and launch sign-in intent
-    private void startSignInActivity(){
+
+    public void onClickFacebookButton(View view){
+        this.startSignInActivityFacebook();
+    }
+
+    // Create and launch sign-in intent for google
+    private void startSignInActivityGoogle(){
         startActivityForResult(
                 AuthUI.getInstance()
                         .createSignInIntentBuilder()
-                        .setTheme(R.style.LoginTheme)
-                        .setAvailableProviders(providers)
+                        .setAvailableProviders(Collections.singletonList(new AuthUI.IdpConfig.Builder(AuthUI.GOOGLE_PROVIDER).build()))
                         .setIsSmartLockEnabled(false, true)
-                        .setLogo(R.drawable.ic_logo_go4lunch)
                         .build(),
                 RC_SIGN_IN
         );
+    }
+
+    // Create and launch sign-in intent for facebook
+    private void startSignInActivityFacebook(){
+        startActivityForResult(
+                AuthUI.getInstance()
+                        .createSignInIntentBuilder()
+                        .setAvailableProviders(Collections.singletonList(new AuthUI.IdpConfig.Builder(AuthUI.FACEBOOK_PROVIDER).build()))
+                        .setIsSmartLockEnabled(false, true)
+                        .build(),
+                RC_SIGN_IN
+        );
+    }
+
+    private void startActivityIfLogged() {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     private void handleResponseAfterSignIn(int requestCode, int resultCode, Intent data){
@@ -67,7 +84,7 @@ public class SignInActivity extends AppCompatActivity {
         if (requestCode == RC_SIGN_IN){
 
             if (resultCode == RESULT_OK){ //SUCCESS
-                Toast.makeText(this, R.string.connection_succeed, Toast.LENGTH_SHORT).show();
+                startActivityIfLogged();
             } else { //ERRORS
                 if (response == null){
                     Toast.makeText(this, R.string.error_authentication_canceled, Toast.LENGTH_SHORT).show();
