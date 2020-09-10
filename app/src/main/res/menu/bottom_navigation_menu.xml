@@ -4,29 +4,21 @@
 
     <item
         android:id="@+id/action_map_view"
-        android:enabled="true"
         android:icon="@drawable/ic_baseline_map_24"
-        android:title="@string/bottom_navigation_menu_map_view"
-        app:showAsAction="ifRoom" />
+        android:title="@string/bottom_navigation_menu_map_view" />
 
     <item
         android:id="@+id/action_list_view"
-        android:enabled="true"
         android:icon="@drawable/ic_baseline_view_list_24"
-        android:title="@string/bottom_navigation_menu_list_view"
-        app:showAsAction="ifRoom" />
+        android:title="@string/bottom_navigation_menu_list_view"/>
 
     <item
         android:id="@+id/action_workmates"
-        android:enabled="true"
         android:icon="@drawable/ic_baseline_group_24"
-        android:title="@string/bottom_navigation_menu_workmates"
-        app:showAsAction="ifRoom" />
+        android:title="@string/bottom_navigation_menu_workmates" />
 
     <item
         android:id="@+id/action_chat"
-        android:enabled="true"
         android:icon="@drawable/ic_baseline_chat_24"
-        android:title="@string/bottom_navigation_menu_chat"
-        app:showAsAction="ifRoom" />
+        android:title="@string/bottom_navigation_menu_chat" />
 </menu>
