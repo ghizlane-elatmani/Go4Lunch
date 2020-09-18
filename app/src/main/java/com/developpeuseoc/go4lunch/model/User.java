@@ -4,21 +4,21 @@ import androidx.annotation.Nullable;
 
 public class User {
 
-    private int uid;
+    private String uid;
     private String username;
     @Nullable private String urlPicture;
 
     public User() {
     }
 
-    public User(int uid, String username, @Nullable String urlPicture) {
+    public User(String uid, String username, @Nullable String urlPicture) {
         this.uid = uid;
         this.username = username;
         this.urlPicture = urlPicture;
     }
 
     //--- GETTERS ---
-    public int getUid() {
+    public String getUid() {
         return uid;
     }
     public String getUsername() {
@@ -30,7 +30,7 @@ public class User {
     }
 
     //--- SETTERS ---
-    public void setUid(int uid) {
+    public void setUid(String uid) {
         this.uid = uid;
     }
     public void setUsername(String username) {
