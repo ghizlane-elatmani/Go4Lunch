@@ -1,13 +1,12 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">Go4Lunch</string>
     <string name="tagline">Find a nice restaurant and invite your co-workers for lunch!</string>
+
+    <!-- SIGN IN -->
     <string name="sign_in">Sign in</string>
     <string name="sign_in_facebook">Sign in with Facebook</string>
     <string name="sign_in_google">Sign in with Google</string>
-    <string name="connection_succeed">Connexion succeed</string>
-    <string name="error_authentication_canceled">Error authentication canceled</string>
-    <string name="error_no_internet">Error no internet</string>
-    <string name="error_unknown_error">Error unknown error</string>
+
 
     <!-- BOTTOM NAVIGATION VIEW -->
     <string name="bottom_navigation_menu_map_view">Map View</string>
@@ -26,5 +25,14 @@
 
     <!-- API KEY -->
     <string name="YOUR_API_KEY">AIzaSyDzSszTzfJREkId1r5N9HEcO9eLHX8Uttw</string>
+
+    <!-- ERROR -->
+    <string name="error_authentication_canceled">Error authentication canceled</string>
+    <string name="error_no_internet">Error no internet</string>
+    <string name="error_unknown_error">Error unknown error</string>
+    <string name="error_during_creating">Error during creating new user</string>
+
+    <string name="connection_succeed">Connexion succeed</string>
+    <string name="location_permission">Please grant the location permission</string>
 
 </resources>

@@ -25,7 +25,6 @@
 
         <activity android:name=".ui.RestaurantActivity"></activity>
         <activity android:name=".ui.MainActivity" />
-        <activity android:name=".ui.BaseActivity" />
         <activity android:name=".ui.SignInActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
