@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.developpeuseoc.go4lunch">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <uses-feature
+        android:glEsVersion="0x00020000"
+        android:required="true" />
 
     <application
         android:allowBackup="true"
@@ -15,6 +18,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".ui.SettingsActivity"></activity>
 
         <meta-data
             android:name="com.google.android.gms.version"
@@ -23,7 +27,7 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/YOUR_API_KEY" />
 
-        <activity android:name=".ui.RestaurantActivity"></activity>
+        <activity android:name=".ui.RestaurantActivity" />
         <activity android:name=".ui.MainActivity" />
         <activity android:name=".ui.SignInActivity">
             <intent-filter>
@@ -33,9 +37,5 @@
             </intent-filter>
         </activity>
     </application>
-
-    <uses-feature
-        android:glEsVersion="0x00020000"
-        android:required="true"/>
 
 </manifest>
