@@ -5,11 +5,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.developpeuseoc.go4lunch.R;
 import com.developpeuseoc.go4lunch.api.UserHelper;
-import com.developpeuseoc.go4lunch.databinding.ActivitySignInBinding;
 import com.developpeuseoc.go4lunch.model.User;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.ErrorCodes;
@@ -20,36 +20,35 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import java.util.Collections;
 import java.util.Objects;
 
-import pub.devrel.easypermissions.AfterPermissionGranted;
-import pub.devrel.easypermissions.EasyPermissions;
-
-import static com.developpeuseoc.go4lunch.utils.getCurrentUser;
-import static com.developpeuseoc.go4lunch.utils.onFailureListener;
+import static com.developpeuseoc.go4lunch.utils.utils.getCurrentUser;
+import static com.developpeuseoc.go4lunch.utils.utils.onFailureListener;
 
 public class SignInActivity extends AppCompatActivity {
 
-    private ActivitySignInBinding binding;
     private static final int RC_SIGN_IN = 100;
     private String urlPicture;
     private String userName;
     private String uid;
+    private Button googleLoginButton;
+    private Button facebookLoginButton;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivitySignInBinding.inflate(getLayoutInflater());
-        View view = binding.getRoot();
-        setContentView(view);
+        setContentView(R.layout.activity_sign_in);
 
-        binding.googleLoginButton.setOnClickListener(new View.OnClickListener() {
+        googleLoginButton = findViewById(R.id.googleLoginButton);
+        facebookLoginButton = findViewById(R.id.facebookLoginButton);
+
+        googleLoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startSignInActivityGoogle();
             }
         });
 
-        binding.facebookLoginButton.setOnClickListener(new View.OnClickListener() {
+        facebookLoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startSignInActivityFacebook();
@@ -96,14 +95,14 @@ public class SignInActivity extends AppCompatActivity {
         urlPicture = (getCurrentUser().getPhotoUrl() != null) ? getCurrentUser().getPhotoUrl().toString() : null;
         userName = getCurrentUser().getDisplayName();
         uid = getCurrentUser().getUid();
-        UserHelper.getUser(uid).addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+        UserHelper.getCurrentUser(uid).addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 User user = documentSnapshot.toObject(User.class);
                 if (user != null) {
-                    UserHelper.createUser(uid, userName, urlPicture).addOnFailureListener(onFailureListener());
+                    UserHelper.createUser(uid, userName, urlPicture, null, null, null, null, null).addOnFailureListener(onFailureListener());
                 } else {
-                    UserHelper.createUser(uid, userName, urlPicture).addOnFailureListener(onFailureListener());
+                    UserHelper.createUser(uid, userName, urlPicture, null, null, null, null, null).addOnFailureListener(onFailureListener());
                 }
             }
         });

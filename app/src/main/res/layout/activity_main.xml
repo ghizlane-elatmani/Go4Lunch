@@ -24,7 +24,7 @@
 
         <!-- FrameLayout for our fragments -->
         <FrameLayout
-            android:id="@+id/activity_main_frame_layout"
+            android:id="@+id/fragment_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
 
@@ -50,7 +50,16 @@
         app:menu="@menu/navigation_drawer_menu"
         android:background="#ff8a50"
         app:itemIconTint="#ffffff"
-        app:itemTextColor="#ffffff"/>
+        app:itemTextColor="#ffffff">
+
+        <ImageView
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:background="@drawable/ic_logo_go4lunch"
+            android:layout_marginStart="10dp"
+            android:layout_gravity="bottom|center"/>
+
+    </com.google.android.material.navigation.NavigationView>
 
 
 </androidx.drawerlayout.widget.DrawerLayout>

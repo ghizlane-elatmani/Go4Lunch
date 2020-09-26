@@ -5,20 +5,23 @@
     tools:showIn="navigation_view">
 
     <group android:checkableBehavior="single">
-        <item
+        <item android:title="">
+            <menu>
+                <item
 
-            android:id="@+id/menu_drawer_lunch"
-            android:icon="@drawable/ic_lunch_24"
-            android:title="@string/navigation_drawer_menu_your_lunch" />
-        <item
-            android:id="@+id/menu_drawer_settings"
-            android:icon="@drawable/ic_settings_24"
-            android:title="@string/navigation_drawer_menu_settings" />
-        <item
-            android:id="@+id/menu_drawer_Logout"
-            android:icon="@drawable/ic_logout_24"
-            android:title="@string/navigation_drawer_menu_logout" />
+                    android:id="@+id/menu_drawer_lunch"
+                    android:icon="@drawable/ic_lunch_24"
+                    android:title="@string/navigation_drawer_menu_your_lunch" />
+                <item
+                    android:id="@+id/menu_drawer_settings"
+                    android:icon="@drawable/ic_settings_24"
+                    android:title="@string/navigation_drawer_menu_settings" />
+                <item
+                    android:id="@+id/menu_drawer_Logout"
+                    android:icon="@drawable/ic_logout_24"
+                    android:title="@string/navigation_drawer_menu_logout" />
 
+            </menu>
+        </item>
     </group>
-
 </menu>

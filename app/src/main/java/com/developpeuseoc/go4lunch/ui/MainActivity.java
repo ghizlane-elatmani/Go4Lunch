@@ -1,115 +1,272 @@
 package com.developpeuseoc.go4lunch.ui;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
+import androidx.cardview.widget.CardView;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
+import android.Manifest;
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 import androidx.appcompat.widget.Toolbar;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.developpeuseoc.go4lunch.R;
-import com.developpeuseoc.go4lunch.databinding.ActivityMainBinding;
-import com.developpeuseoc.go4lunch.ui.fragment.ChatFragment;
+import com.developpeuseoc.go4lunch.model.User;
 import com.developpeuseoc.go4lunch.ui.fragment.ListFragment;
 import com.developpeuseoc.go4lunch.ui.fragment.MapFragment;
 import com.developpeuseoc.go4lunch.ui.fragment.WorkmatesFragment;
-import com.developpeuseoc.go4lunch.utils;
-import com.firebase.ui.auth.AuthUI;
-import com.google.android.gms.tasks.OnSuccessListener;
+import com.developpeuseoc.go4lunch.utils.CurrentPlace;
+import com.developpeuseoc.go4lunch.utils.utils;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseUser;
 
 
-import static com.developpeuseoc.go4lunch.utils.getCurrentUser;
+import java.util.ArrayList;
+import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+import pub.devrel.easypermissions.AppSettingsDialog;
+import pub.devrel.easypermissions.EasyPermissions;
 
-    private static final int SIGN_OUT_TASK = 456;
+import static com.developpeuseoc.go4lunch.utils.utils.getCurrentUser;
 
-    private ActivityMainBinding binding;
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, EasyPermissions.PermissionCallbacks {
+
+    // Access fina location
+    public static final String[] PERMS = {Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.INTERNET};
+    public static final int RC_LOCATION = 123;
+
+    // Design
     private Toolbar toolbar;
-    private NavigationView navigationView;
     private DrawerLayout drawerLayout;
+    private BottomNavigationView bottomNavigationView;
+    private TextView nameProfile;
+    private TextView emailProfile;
+    private ImageView urlPictureProfile;
+
+    // User
+    private FirebaseUser currentUser;
+    private String username;
+    private String email;
+
+    // Toolbar
+    private CardView cardView;
+    private SearchView searchView;
+    private ActionBarDrawerToggle toggle;
+
+    // For Menu Item in ActionBar
+    private MenuItem item;
+
+    // Fragments
+    private Fragment selectedFragment = new Fragment();
+    private Fragment MapFragment = new MapFragment();
+    private Fragment ListFragment = new ListFragment();
+
+    private static final String TAG = MainActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
-        View view = binding.getRoot();
-        setContentView(view);
+        setContentView(R.layout.activity_main);
 
-        binding.activityMainBottomNavView.setOnNavigationItemSelectedListener(navListener);
+        // Navigation Drawer - Translucency
+        Window window = getWindow();
 
-        this.configureToolbar();
-        this.configureDrawerLayout();
-        this.configureNavigationView();
-        this.updateUINavHeader();
+        window.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
+                WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.activity_main_drawer_layout, new MapFragment()).commit();
+        window.getAttributes().flags &= (~WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+            window.setStatusBarColor(Color.TRANSPARENT);
+
+        // FindViewById
+        cardView = findViewById(R.id.toolbar_card_view);
+        searchView = findViewById(R.id.toolbar_search_view);
+        bottomNavigationView = findViewById(R.id.activity_main_bottom_nav_view);
+
+        // Initialize FireBase User
+        currentUser = utils.getCurrentUser();
+
+        // Display views and layouts
+        configureToolbar();
+        configureDrawerLayout();
+        configureNavigationView();
+        configureBottomView();
+
+        // Request permission - MainActivity contains Google Maps services
+        EasyPermissions.requestPermissions(this,
+                getString(R.string.permission_location_access), RC_LOCATION, PERMS);
+
+        // Open the view with MapFragment if permissions were already allowed
+        if (EasyPermissions.hasPermissions(this, PERMS)) {
+            selectedFragment = MapFragment;
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                    selectedFragment).commit();
+        }
+
 
     }
 
-    // Handle Navigation Item Click in bottom navigation
-    private BottomNavigationView.OnNavigationItemSelectedListener navListener =
-            new BottomNavigationView.OnNavigationItemSelectedListener() {
-                @Override
-                public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                    Fragment selectedFragment = null;
+    // --- Configure design ---
 
-                    switch (menuItem.getItemId()){
-                        case R.id.nav_map_view :
-                            selectedFragment = new MapFragment();
-                            break;
+    private void configureToolbar() {
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+    }
 
-                        case R.id.nav_list_view :
-                            selectedFragment = new ListFragment();
-                            break;
+    private void configureDrawerLayout() {
+        drawerLayout = findViewById(R.id.activity_main_drawer_layout);
+        toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar,
+                R.string.navigation_drawer_menu_open, R.string.navigation_drawer_menu_close);
+        toggle.getDrawerArrowDrawable().setColor(getResources().getColor(android.R.color.white));
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
+    }
 
-                        case R.id.nav_workmates :
-                            selectedFragment = new WorkmatesFragment();
-                            break;
+    private void configureNavigationView() {
+        NavigationView navigationView = findViewById(R.id.activity_main_drawer_layout);
+        // For Menu Item
+        navigationView.setNavigationItemSelectedListener(this);
+        // For Nav Header
+        View headerView = navigationView.getHeaderView(0);
+        nameProfile = headerView.findViewById(R.id.name_header);
+        emailProfile = headerView.findViewById(R.id.mail_header);
+        urlPictureProfile = headerView.findViewById(R.id.urlPicture_header);
+        updateUserProfile();
+    }
 
-                        case R.id.nav_chat :
-                            selectedFragment = new ChatFragment();
-                            break;
-                    }
+    private void configureBottomView() {
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                // Check the fragment selected
+                switch (menuItem.getItemId()) {
+                    case R.id.nav_map_view:
+                        selectedFragment = MapFragment;
+                        MainActivity.this.setTitle(MainActivity.this.getString(R.string.hungry));
+                        MainActivity.this.resetToolbarUI();
+                        break;
 
-                    getSupportFragmentManager().beginTransaction().replace(R.id.activity_main_drawer_layout, selectedFragment).commit();
+                    case R.id.nav_list_view:
+                        selectedFragment = ListFragment;
+                        MainActivity.this.setTitle(MainActivity.this.getString(R.string.hungry));
+                        MainActivity.this.resetToolbarUI();
+                        break;
 
-                    return true;
+                    case R.id.nav_workmates:
+                        selectedFragment = new WorkmatesFragment();
+                        MainActivity.this.setTitle(getString(R.string.available_workmates));
+                        MainActivity.this.resetToolbarUI();
+                        break;
                 }
-            };
 
+                // Add it to FrameLayout fragment_container
+                MainActivity.this.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        selectedFragment).commit();
+                return true;
+            }
+        });
+    }
 
-    //Handle Navigation Item Click in navigation drawer
+    //--- Toolbar ---
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.toolbar_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        this.item = item;
+        // Handle action on menu items
+        if (item.getItemId() == R.id.menu_toolbar_search) {
+            // Set the search icon item
+            item.setVisible(false);
+            // Set toggle and cardView
+            toggle.setDrawerIndicatorEnabled(false);
+            cardView.setVisibility(View.VISIBLE);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void resetToolbarUI() {
+        // Close the searchView if it's open when change fragment
+        if (!searchView.isIconified()) {
+            searchView.setQuery("", false);
+            searchView.setIconified(true);
+            // Set the search icon item
+            if (item != null) {
+                item.setVisible(true);
+            }
+            // Set toggle and cardView
+            toggle.setDrawerIndicatorEnabled(true);
+            cardView.setVisibility(View.GONE);
+        }
+    }
+
+    //----------------------------------------------------------------------------------
+    // Methods for NavigationView in NavigationDrawer
+
+    @Override
+    public void onBackPressed() {
+        // Handle back click to close menu
+        if (this.drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            this.drawerLayout.closeDrawer(GravityCompat.START);
+            // Handle back click to close the searchView
+        } else if (!searchView.isIconified()) {
+            searchView.setQuery("", false);
+            searchView.setIconified(true);
+            // Set the search icon item
+            if (item != null) {
+                item.setVisible(true);
+            }
+            // Set toggle and cardView
+            toggle.setDrawerIndicatorEnabled(true);
+            cardView.setVisibility(View.GONE);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        int id = item.getItemId();
-        switch (id) {
+        // Handle Navigation Item Click
+        switch (item.getItemId()) {
             case R.id.menu_drawer_lunch:
-                //TODO
-                break;
+                // TODO
 
             case R.id.menu_drawer_settings:
-                Intent settingIntent = new Intent(this, SettingsActivity.class);
-                startActivity(settingIntent);
+                // TODO
                 break;
 
             case R.id.menu_drawer_Logout:
-                signOutFromUserFirebase();
-                Toast.makeText(getApplicationContext(), getString(R.string.logout), Toast.LENGTH_SHORT).show();
+                // TODO
+                break;
+
+            default:
                 break;
         }
 
@@ -117,92 +274,61 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
-    //Configure toolbar
-    private void configureToolbar() {
-        this.toolbar = findViewById(R.id.activity_main_toolbar);
-        setSupportActionBar(toolbar);
-    }
 
-    //Configure Navigation Drawer Layout
-    private void configureDrawerLayout() {
-        this.drawerLayout = findViewById(R.id.activity_main_drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar,
-                R.string.navigation_drawer_menu_open, R.string.navigation_drawer_menu_close);
-        drawerLayout.addDrawerListener(toggle);
-        toggle.syncState();
-    }
-
-    //Configure NavigationView
-    private void configureNavigationView() {
-        this.navigationView = findViewById(R.id.activity_main_nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
-    }
-
-    //Update UI Nav Header in navigation drawer
-    private void updateUINavHeader() {
-        if (utils.getCurrentUser() != null) {
-
-            View headerView = navigationView.getHeaderView(0);
-            ImageView mPhotoHeader = headerView.findViewById(R.id.urlPicture_header);
-            TextView mNameHeader = headerView.findViewById(R.id.name_header);
-            TextView mMailHeader = headerView.findViewById(R.id.mail_header);
-
-            // Get picture
-            if (utils.getCurrentUser().getPhotoUrl() != null) {
+    // Update user profile in the Nav Drawer Header
+    private void updateUserProfile() {
+        if (currentUser != null) {
+            //Get picture URL from Firebase
+            if (currentUser.getPhotoUrl() != null) {
                 Glide.with(this)
-                        .load(utils.getCurrentUser().getPhotoUrl())
+                        .load(currentUser.getPhotoUrl())
                         .apply(RequestOptions.circleCropTransform())
-                        .into(mPhotoHeader);
+                        .into(urlPictureProfile);
             }
-
-            // Get email
-            String email = TextUtils.isEmpty(utils.getCurrentUser().getEmail()) ?
-                    ("No Email Found") : utils.getCurrentUser().getEmail();
-
-            // Get Name
-            String name = TextUtils.isEmpty(utils.getCurrentUser().getDisplayName()) ?
-                    ("No Username Found") : utils.getCurrentUser().getDisplayName();
-
-            // Update With data
-            mNameHeader.setText(name);
-            mMailHeader.setText(email);
+            //Get username & email from Firebase
+            username = TextUtils.isEmpty(currentUser.getDisplayName()) ? getString(R.string.info_no_username_found) : currentUser.getDisplayName();
+            Log.i(TAG, "username = " + currentUser.getDisplayName());
+            email = TextUtils.isEmpty(currentUser.getEmail()) ? getString(R.string.info_no_email_found) : currentUser.getEmail();
+            Log.i(TAG, "email = " + currentUser.getEmail());
         }
+
+        //Update views with data
+        nameProfile.setText(username);
+        emailProfile.setText(email);
     }
 
-    // Request to sign out
-    private void signOutFromUserFirebase() {
-        if (getCurrentUser() != null) {
-            AuthUI.getInstance()
-                    .signOut(this)
-                    .addOnSuccessListener(this, this.updateUIAfterRestRequestsCompleted(SIGN_OUT_TASK));
-        }
-    }
 
-    //Create OnCompleteListener called after tasks ended for sign out
-    private OnSuccessListener<Void> updateUIAfterRestRequestsCompleted(final int origin) {
-        return new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-                switch (origin) {
-                    case SIGN_OUT_TASK:
-                        MainActivity.this.finish();
-                        break;
-                    default:
-                        break;
-                }
-            }
-        };
-    }
+    // --- Easy Permissions ---
 
-    //For back click to close navigation drawer menu
     @Override
-    public void onBackPressed() {
-        if (this.drawerLayout.isDrawerOpen(GravityCompat.START)) {
-            this.drawerLayout.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        // Forward results to EasyPermissions
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
+    }
+
+    @Override
+    public void onPermissionsGranted(int requestCode, @NonNull List<String> perms) {
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                new MapFragment()).commit();
+    }
+
+    @Override
+    public void onPermissionsDenied(int requestCode, @NonNull List<String> perms) {
+        if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
+            new AppSettingsDialog.Builder(this).build().show();
         }
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == AppSettingsDialog.DEFAULT_SETTINGS_REQ_CODE) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                    new MapFragment()).commit();
+        }
+    }
 
 }

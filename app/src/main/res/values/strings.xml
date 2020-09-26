@@ -37,5 +37,11 @@
     <string name="connection_succeed">Connexion succeed</string>
     <string name="location_permission">Please grant the location permission</string>
     <string name="logout">logout</string>
+    <string name="toolbar_search">Search restaurants</string>
+    <string name="hungry">I\'m Hungry !</string>
+    <string name="permission_location_access">This application needs an access to your site and internet.</string>
+    <string name="available_workmates">Available Workmates</string>
+    <string name="info_no_username_found">Username not found</string>
+    <string name="info_no_email_found">Email not found.</string>
 
 </resources>

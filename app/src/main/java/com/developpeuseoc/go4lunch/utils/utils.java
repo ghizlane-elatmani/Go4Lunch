@@ -1,4 +1,4 @@
-package com.developpeuseoc.go4lunch;
+package com.developpeuseoc.go4lunch.utils;
 
 import android.content.Context;
 import android.widget.Toast;
@@ -6,6 +6,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.developpeuseoc.go4lunch.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
