@@ -109,10 +109,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         currentUser = utils.getCurrentUser();
 
         // Display views and layouts
-        configureToolbar();
-        configureDrawerLayout();
-        configureNavigationView();
-        configureBottomView();
+        this.configureToolbar();
+        this.configureDrawerLayout();
+        this.configureNavigationView();
+        this.configureBottomView();
 
         // Request permission - MainActivity contains Google Maps services
         EasyPermissions.requestPermissions(this,
@@ -145,7 +145,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void configureNavigationView() {
-        NavigationView navigationView = findViewById(R.id.activity_main_drawer_layout);
+        NavigationView navigationView = findViewById(R.id.activity_main_nav_view);
         // For Menu Item
         navigationView.setNavigationItemSelectedListener(this);
         // For Nav Header
@@ -165,19 +165,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     case R.id.nav_map_view:
                         selectedFragment = MapFragment;
                         MainActivity.this.setTitle(MainActivity.this.getString(R.string.hungry));
-                        MainActivity.this.resetToolbarUI();
                         break;
 
                     case R.id.nav_list_view:
                         selectedFragment = ListFragment;
                         MainActivity.this.setTitle(MainActivity.this.getString(R.string.hungry));
-                        MainActivity.this.resetToolbarUI();
                         break;
 
                     case R.id.nav_workmates:
                         selectedFragment = new WorkmatesFragment();
                         MainActivity.this.setTitle(getString(R.string.available_workmates));
-                        MainActivity.this.resetToolbarUI();
                         break;
                 }
 
@@ -213,7 +210,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void resetToolbarUI() {
-        // Close the searchView if it's open when change fragment
         if (!searchView.isIconified()) {
             searchView.setQuery("", false);
             searchView.setIconified(true);

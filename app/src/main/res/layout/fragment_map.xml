@@ -19,7 +19,7 @@
         android:layout_margin="16dp"
         android:focusable="true"
         android:clickable="true"
-        app:backgroundTint="@android:color/white"
+        app:backgroundTint="#ffffff"
         app:srcCompat="@drawable/ic_geolocate"
         android:layout_gravity="end|bottom"
         tools:ignore="VectorDrawableCompat" />
