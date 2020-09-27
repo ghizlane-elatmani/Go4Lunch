@@ -49,11 +49,11 @@ import pub.devrel.easypermissions.EasyPermissions;
 
 import static com.developpeuseoc.go4lunch.utils.utils.getCurrentUser;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, EasyPermissions.PermissionCallbacks {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,
+        EasyPermissions.PermissionCallbacks, MapFragment.DeviceLocationListener {
 
     // Access fina location
-    public static final String[] PERMS = {Manifest.permission.ACCESS_FINE_LOCATION,
-            Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.INTERNET};
+    public static final String[] PERMS = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.INTERNET};
     public static final int RC_LOCATION = 123;
 
     // Design
@@ -327,4 +327,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
+    @Override
+    public void onDeviceLocationFetch(LatLng latLng) {
+
+    }
 }
