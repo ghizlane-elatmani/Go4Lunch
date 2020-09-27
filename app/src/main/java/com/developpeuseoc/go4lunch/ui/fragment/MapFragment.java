@@ -1,6 +1,8 @@
 package com.developpeuseoc.go4lunch.ui.fragment;
 
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
 import com.developpeuseoc.go4lunch.R;
@@ -155,7 +158,34 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         mMapView.onLowMemory();
     }
 
+
     // --- Location & Map ---
+
+    @AfterPermissionGranted(RC_LOCATION)
+    private void updateLocationUI() {
+        if (googleMap == null) {
+            return;
+        }
+        try {
+            if (getActivity() != null) {
+                if (EasyPermissions.hasPermissions(getActivity(), PERMS)) {
+                    googleMap.setMyLocationEnabled(true);
+                    getDeviceLocation();
+                } else {
+                    googleMap.setMyLocationEnabled(false);
+                    googleMap = null;
+                    EasyPermissions.requestPermissions(getActivity(),
+                            getString(R.string.permission_location_access),
+                            RC_LOCATION,
+                            PERMS);
+                }
+            }
+        } catch (Exception e) {
+            Log.e("Exception : ", e.getMessage());
+        }
+
+    }
+
     @AfterPermissionGranted(RC_LOCATION)
     private void getDeviceLocation() {
         try {
