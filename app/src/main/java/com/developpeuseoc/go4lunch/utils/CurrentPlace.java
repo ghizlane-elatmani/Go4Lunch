@@ -37,5 +37,29 @@ import java.util.List;
 
 public class CurrentPlace {
 
+    // --- Attribute ---
+
+    private static final String TAG = CurrentPlace.class.getSimpleName();
+    private static CurrentPlace ourInstance;
+    private PlacesClient placesClient;
+    private FetchPlaceRequest request;
+    private AutocompleteSessionToken token = AutocompleteSessionToken.newInstance();
+
+    // --- Constructor + Singleton---
+
+    // Initialize the SDK & new Places client instance
+    private CurrentPlace(Context context) {
+
+        Places.initialize(context.getApplicationContext(), context.getString(R.string.google_api_key));
+        placesClient = Places.createClient(context.getApplicationContext());
+
+    }
+
+    public static synchronized CurrentPlace getInstance(Context context) {
+        if (ourInstance == null)
+            ourInstance = new CurrentPlace(context);
+        return ourInstance;
+    }
+
 
 }

@@ -2,6 +2,7 @@ package com.developpeuseoc.go4lunch.ui.fragment;
 
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
@@ -25,6 +26,7 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.libraries.places.api.model.Place;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import pub.devrel.easypermissions.AfterPermissionGranted;
@@ -99,6 +101,13 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     public void onMapReady(GoogleMap map) {
         Log.d(TAG, "onMapReady: ");
         googleMap = map;
+
+        googleMap.getUiSettings().setMyLocationButtonEnabled(false);
+        googleMap.getUiSettings().setMapToolbarEnabled(false);
+        googleMap.getUiSettings().setCompassEnabled(false);
+
+        updateLocationUI();
+
     }
 
     // --- Interface ---
@@ -234,4 +243,12 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
             Log.e("Exception: %s", e.getMessage());
         }
     }
+
+    // --- Markers on Map ---
+
+    @AfterPermissionGranted(RC_LOCATION)
+    private void showPlaces(Place place){
+        
+    }
+
 }
