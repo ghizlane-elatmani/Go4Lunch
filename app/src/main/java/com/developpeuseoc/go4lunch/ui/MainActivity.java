@@ -50,7 +50,7 @@ import pub.devrel.easypermissions.EasyPermissions;
 import static com.developpeuseoc.go4lunch.utils.utils.getCurrentUser;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,
-        EasyPermissions.PermissionCallbacks, MapFragment.DeviceLocationListener {
+        EasyPermissions.PermissionCallbacks, MapFragment.DeviceLocationListener, CurrentPlace.AutocompleteListener {
 
     // Access fina location
     public static final String[] PERMS = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.INTERNET};
@@ -65,6 +65,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private ImageView urlPictureProfile;
 
     // User
+    private User user;
     private FirebaseUser currentUser;
     private String username;
     private String email;
@@ -79,10 +80,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     // Fragments
     private Fragment selectedFragment = new Fragment();
-    private Fragment MapFragment = new MapFragment();
-    private Fragment ListFragment = new ListFragment();
+    private Fragment mapFragment = new MapFragment();
+    private Fragment listFragment = new ListFragment();
 
     private static final String TAG = MainActivity.class.getSimpleName();
+
+    public static final String LAT_LNG_BUNDLE_KEY = "lat_lng_bundle_key";
+    public static final String PLACES_ID_BUNDLE_KEY = "places_id_bundle_key";
+
+    // Bundles
+    private Bundle bundleMap = new Bundle();
+    private Bundle bundleList = new Bundle();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,12 +128,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         // Open the view with MapFragment if permissions were already allowed
         if (EasyPermissions.hasPermissions(this, PERMS)) {
-            selectedFragment = MapFragment;
+            selectedFragment = mapFragment;
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                     selectedFragment).commit();
         }
 
-
+        CurrentPlace.getInstance(this).addAutocompleteListener(this);
     }
 
     // --- Configure design ---
@@ -163,12 +171,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 // Check the fragment selected
                 switch (menuItem.getItemId()) {
                     case R.id.nav_map_view:
-                        selectedFragment = MapFragment;
+                        selectedFragment = mapFragment;
                         MainActivity.this.setTitle(MainActivity.this.getString(R.string.hungry));
                         break;
 
                     case R.id.nav_list_view:
-                        selectedFragment = ListFragment;
+                        selectedFragment = listFragment;
                         MainActivity.this.setTitle(MainActivity.this.getString(R.string.hungry));
                         break;
 
@@ -197,11 +205,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         this.item = item;
-        // Handle action on menu items
         if (item.getItemId() == R.id.menu_toolbar_search) {
-            // Set the search icon item
+
             item.setVisible(false);
-            // Set toggle and cardView
             toggle.setDrawerIndicatorEnabled(false);
             cardView.setVisibility(View.VISIBLE);
             return true;
@@ -223,7 +229,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-    //----------------------------------------------------------------------------------
+
     // Methods for NavigationView in NavigationDrawer
 
     @Override
@@ -297,10 +303,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     // --- Easy Permissions ---
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
-                                           @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        // Forward results to EasyPermissions
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
     }
 
@@ -328,7 +332,50 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     @Override
-    public void onDeviceLocationFetch(LatLng latLng) {
+    public void onDeviceLocationFetch(final LatLng latLng) {
 
+        bundleList.putParcelable(LAT_LNG_BUNDLE_KEY, latLng);
+        listFragment.setArguments(bundleList);
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+
+                CurrentPlace.getInstance(MainActivity.this).autocomplete(searchView.getQuery().toString(), latLng);
+                searchView.setQuery("", false);
+                searchView.setIconified(true);
+                item.setVisible(true);
+                toggle.setDrawerIndicatorEnabled(true);
+                cardView.setVisibility(View.GONE);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+    }
+
+
+    @Override
+    public void onAutocompleteFetch(ArrayList<String> placesId) {
+
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+
+        if (fragment instanceof MapFragment) {
+            bundleMap.putStringArrayList(PLACES_ID_BUNDLE_KEY, placesId);
+            mapFragment.setArguments(bundleMap);
+
+            getSupportFragmentManager().beginTransaction().detach(fragment).commit();
+            getSupportFragmentManager().beginTransaction().attach(mapFragment).commit();
+        }
+        if (fragment instanceof ListFragment) {
+            bundleList.putStringArrayList(PLACES_ID_BUNDLE_KEY, placesId);
+            listFragment.setArguments(bundleList);
+
+            getSupportFragmentManager().beginTransaction().detach(fragment).commit();
+            getSupportFragmentManager().beginTransaction().attach(listFragment).commit();
+        }
     }
 }
