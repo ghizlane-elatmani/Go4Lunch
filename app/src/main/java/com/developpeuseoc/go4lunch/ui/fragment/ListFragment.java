@@ -11,11 +11,18 @@ import androidx.fragment.app.Fragment;
 
 import com.developpeuseoc.go4lunch.R;
 
+
 public class ListFragment extends Fragment {
+
+
+    public static ListFragment newInstance() {
+        return new ListFragment();
+    }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_list, container, false);
     }
+
 }

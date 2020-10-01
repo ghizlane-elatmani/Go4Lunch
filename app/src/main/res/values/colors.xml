@@ -6,4 +6,7 @@
 
     <color name="colorFacebook">#3b5998</color>
     <color name="colorGoogle">#dd4b39</color>
+
+    <color name="colorPin">#6df0b0</color>
+
 </resources>

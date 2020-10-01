@@ -7,43 +7,42 @@ import java.util.List;
 
 public class User {
 
-    private String id;
+    // --- ATTRIBUTE ---
+    private String uid;
     private String username;
     @Nullable
     private String urlPicture;
     @Nullable
-    private String restaurantId;
+    private int searchRadius;
     @Nullable
-    private String restaurantName;
+    private int defaultZoom;
     @Nullable
-    private String restaurantAddress;
-    @Nullable
-    private String restaurantDate;
-    @Nullable
-    private List<String> restaurantsLikedId;
+    private boolean isNotificationOn;
 
+
+    // --- CONSTRUCTOR ---
 
     public User() {
 
     }
 
-    public User(String id, String username, @Nullable String urlPicture, @Nullable String restaurantId,
-                    @Nullable String restaurantName, @Nullable String restaurantAddress,
-                    @Nullable String restaurantDate, @Nullable List<String> restaurantsLikedId) {
-        this.id = id;
-        this.username = username;
-        this.urlPicture = urlPicture;
-        this.restaurantId = restaurantId;
-        this.restaurantName = restaurantName;
-        this.restaurantAddress = restaurantAddress;
-        this.restaurantDate = restaurantDate;
-        this.restaurantsLikedId = restaurantsLikedId;
+    public User(String uid) {
+        this.uid = uid;
     }
 
-    //--- GETTERS ---
+    public User(String uid, String username, @Nullable String urlPicture, int searchRadius, int defaultZoom, boolean isNotificationOn) {
+        this.uid = uid;
+        this.username = username;
+        this.urlPicture = urlPicture;
+        this.searchRadius = searchRadius;
+        this.defaultZoom = defaultZoom;
+        this.isNotificationOn = isNotificationOn;
+    }
 
-    public String getId() {
-        return id;
+
+    // --- GETTERS ---
+    public String getUid() {
+        return uid;
     }
     public String getUsername() {
         return username;
@@ -52,25 +51,34 @@ public class User {
     public String getUrlPicture() {
         return urlPicture;
     }
-    @Nullable
-    public String getRestaurantId() {
-        return restaurantId;
+    public int getSearchRadius() {
+        return searchRadius;
     }
-    @Nullable
-    public String getRestaurantName() {
-        return restaurantName;
+    public int getDefaultZoom() {
+        return defaultZoom;
     }
-    @Nullable
-    public String getRestaurantAddress() {
-        return restaurantAddress;
-    }
-    @Nullable
-    public String getRestaurantDate() {
-        return restaurantDate;
-    }
-    @Nullable
-    public List<String> getRestaurantsLikedId() {
-        return restaurantsLikedId;
+    public boolean isNotificationOn() {
+        return isNotificationOn;
     }
 
+
+    // --- SETTERS ---
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
+    public void setUsername(String username) {
+        this.username = username;
+    }
+    public void setUrlPicture(@Nullable String urlPicture) {
+        this.urlPicture = urlPicture;
+    }
+    public void setSearchRadius(int searchRadius) {
+        this.searchRadius = searchRadius;
+    }
+    public void setDefaultZoom(int defaultZoom) {
+        this.defaultZoom = defaultZoom;
+    }
+    public void setNotificationOn(boolean notificationOn) {
+        isNotificationOn = notificationOn;
+    }
 }

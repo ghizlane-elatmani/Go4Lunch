@@ -13,6 +13,10 @@ import com.developpeuseoc.go4lunch.R;
 
 public class WorkmatesFragment extends Fragment {
 
+    public static WorkmatesFragment newInstance() {
+        return new WorkmatesFragment();
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

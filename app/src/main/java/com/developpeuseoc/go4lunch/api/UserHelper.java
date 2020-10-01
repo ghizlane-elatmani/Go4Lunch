@@ -16,83 +16,35 @@ import java.util.List;
 public class UserHelper {
 
     private static final String COLLECTION_NAME = "users";
-    public static final String FIELD_USERNAME = "username";
-    public static final String FIELD_RESTAURANT_ID = "restaurantId";
-    private static final String FIELD_RESTAURANT_NAME = "restaurantName";
-    private static final String FIELD_RESTAURANT_ADDRESS = "restaurantAddress";
-    public static final String FIELD_RESTAURANT_DATE = "restaurantDate";
-    private static final String FIELD_RESTAURANTS_LIKED = "restaurantsLikedId";
 
     // --- COLLECTION REFERENCE ---
 
-    public static CollectionReference getUsersCollection() {
+    public static CollectionReference getUsersCollection(){
         return FirebaseFirestore.getInstance().collection(COLLECTION_NAME);
     }
 
     // --- CREATE ---
 
-    @SuppressWarnings("UnusedReturnValue")
-    public static Task<Void> createUser(String id, String username, String urlPicture, String restaurantId,
-                                            String restaurantName, String restaurantAddress,
-                                            String restaurantDate, List<String> restaurantsLikedId) {
-
-        User userToCreate = new User(id, username, urlPicture, restaurantId,
-                restaurantName, restaurantAddress, restaurantDate, restaurantsLikedId);
-
-        return UserHelper.getUsersCollection().document(id).set(userToCreate);
-    }
-
-    public void addLike(String id, String restaurantId) {
-        DocumentReference documentReference = getUsersCollection().document(id);
-        documentReference.update(FIELD_RESTAURANTS_LIKED, FieldValue.arrayUnion(restaurantId));
-
-    }
-
-    // --- QUERY ---
-
-    // Retrieve all workmates and order them especially by restaurant date and choice in WorkmatesFragment
-    public static Query getAllUsers() {
-        return getUsersCollection()
-                .orderBy(FIELD_RESTAURANT_DATE, Query.Direction.DESCENDING)
-                .orderBy(FIELD_RESTAURANT_NAME, Query.Direction.DESCENDING)
-                .orderBy(FIELD_USERNAME, Query.Direction.DESCENDING);
-    }
-
-    // Retrieve all workmates with the same restaurant choice
-    // on the same day for DetailsRestaurantActivity
-    public static Query getUsersAtRestaurant(String id, String restaurantDate) {
-        return getUsersCollection()
-                .whereEqualTo(FIELD_RESTAURANT_ID, id)
-                .whereEqualTo(FIELD_RESTAURANT_DATE, restaurantDate);
+    public static Task<Void> createUser(String uid, String username, String urlPicture, int searchRadius, int defaultZoom, boolean isNotificationOn) {
+        User userToCreate = new User(uid, username, urlPicture, searchRadius, defaultZoom, isNotificationOn);
+        return UserHelper.getUsersCollection().document(uid).set(userToCreate);
     }
 
     // --- GET ---
 
-    public static Task<DocumentSnapshot> getCurrentUser(String id) {
-        return getUsersCollection().document(id).get();
+    public static Task<DocumentSnapshot> getUser(String uid){
+        return UserHelper.getUsersCollection().document(uid).get();
     }
+
 
     // --- UPDATE ---
 
-    // Update the choice of the workmate's restaurant
-    public static Task<Void> updateRestaurant(String id, String placeId, String placeName,
-                                              String placeAddress, String restaurantDate) {
-        return getUsersCollection()
-                .document(id)
-                .update(FIELD_RESTAURANT_ID, placeId, FIELD_RESTAURANT_NAME, placeName,
-                        FIELD_RESTAURANT_ADDRESS, placeAddress, FIELD_RESTAURANT_DATE, restaurantDate);
+    public static Task<Void> updateUserSettings(String userId, int zoom, boolean notification, int radius){
+        return  UserHelper.getUsersCollection().document(userId)
+                .update(
+                        "defaultZoom", zoom,
+                        "notificationOn",notification,
+                        "searchRadius",radius
+                );
     }
-
-    // --- DELETE ---
-
-    public static Task<Void> deleteUser(String id) {
-        return getUsersCollection().document(id).delete();
-    }
-
-    // Remove a restaurantId from the "restaurantsLikedId" array field.
-    public void removeLike(String id, String restaurantId) {
-        DocumentReference documentReference = getUsersCollection().document(id);
-        documentReference.update(FIELD_RESTAURANTS_LIKED, FieldValue.arrayRemove(restaurantId));
-    }
-
 }

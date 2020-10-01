@@ -20,6 +20,14 @@
     <string name="navigation_drawer_menu_logout">LOGOUT</string>
     <string name="navigation_drawer_menu_open">Open navigation drawer</string>
     <string name="navigation_drawer_menu_close">Close navigation drawer</string>
+    <string name="info_no_email_found">Email not found</string>
+    <string name="info_no_username_found">Username not found</string>
+
+    <!-- TOOLBAR -->
+    <string name="hungry">I\'m Hungry!</string>
+    <string name="available">Available workmates</string>
+    <string name="chat">Chat</string>
+    <string name="search">Search</string>
 
     <!-- FACEBOOK PURPOSE -->
     <string name="facebook_application_id" translatable="false">1558301754356407</string>
@@ -34,14 +42,12 @@
     <string name="error_unknown_error">Error unknown error</string>
     <string name="error_during_creating">Error during creating new user</string>
 
-    <string name="connection_succeed">Connexion succeed</string>
-    <string name="location_permission">Please grant the location permission</string>
-    <string name="logout">logout</string>
-    <string name="toolbar_search">Search restaurants</string>
-    <string name="hungry">I\'m Hungry !</string>
-    <string name="permission_location_access">This application needs an access to your site and internet.</string>
-    <string name="available_workmates">Available Workmates</string>
-    <string name="info_no_username_found">Username not found</string>
-    <string name="info_no_email_found">Email not found.</string>
+    <string name="http_error_message">HttpException, Error code : %1$i</string>
+    <string name="timeout_error_message">Request timeout, please check your internet connection</string>
+    <string name="exception_error_message">An error occurred, please check your internet connection</string>
+    <string name="generic_error_message">An error occurred, please try again</string>
+    <string name="restaurant_item_call">CALL</string>
+    <string name="restaurant_item_like">LIKE</string>
+    <string name="restaurant_item_website">WEBSITE</string>
 
 </resources>

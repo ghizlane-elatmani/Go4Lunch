@@ -1,27 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.fragment.MapFragment">
 
     <com.google.android.gms.maps.MapView
-        android:id="@+id/map_view"
+        android:id="@+id/mapView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/geolocate_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:focusable="true"
-        android:clickable="true"
-        app:backgroundTint="#ffffff"
-        app:srcCompat="@drawable/ic_geolocate"
-        android:layout_gravity="end|bottom"
-        tools:ignore="VectorDrawableCompat" />
+        android:layout_height="match_parent"
+        />
 
 </FrameLayout>
