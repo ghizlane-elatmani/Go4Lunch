@@ -39,7 +39,7 @@
     <!-- ERROR -->
     <string name="error_authentication_canceled">Error authentication canceled</string>
     <string name="error_no_internet">Error no internet</string>
-    <string name="error_unknown_error">Error unknown error</string>
+    <string name="error_unknown">Error unknown error</string>
     <string name="error_during_creating">Error during creating new user</string>
 
     <string name="http_error_message">HttpException, Error code : %1$i</string>
@@ -49,5 +49,12 @@
     <string name="restaurant_item_call">CALL</string>
     <string name="restaurant_item_like">LIKE</string>
     <string name="restaurant_item_website">WEBSITE</string>
+    <string name="popup_title_perm_access">This application need permissions to work correctly.</string>
+    <string name="no_restaurant_error_message">No restaurants found, try to change your search radius settings</string>
+    <string name="title_alarm">Your today lunch !</string>
+    <string name="lunch_at">You\'re lunching at</string>
+    <string name="with">with</string>
+    <string name="alone">alone</string>
+    <string name="no_restaurant_choose">No restaurant choose !</string>
 
 </resources>

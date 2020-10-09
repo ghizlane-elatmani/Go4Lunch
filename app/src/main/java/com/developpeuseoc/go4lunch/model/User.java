@@ -3,82 +3,64 @@ package com.developpeuseoc.go4lunch.model;
 
 import androidx.annotation.Nullable;
 
-import java.util.List;
+import java.io.Serializable;
+import java.util.ArrayList;
 
-public class User {
+public class User implements Serializable {
 
-    // --- ATTRIBUTE ---
     private String uid;
     private String username;
     @Nullable
     private String urlPicture;
-    @Nullable
-    private int searchRadius;
-    @Nullable
-    private int defaultZoom;
-    @Nullable
-    private boolean isNotificationOn;
-
+    private String placeId;
+    private ArrayList<String> like;
+    private int currentTime;
+    private boolean userChat;
 
     // --- CONSTRUCTOR ---
 
-    public User() {
+    public User() { }
 
-    }
 
-    public User(String uid) {
-        this.uid = uid;
-    }
-
-    public User(String uid, String username, @Nullable String urlPicture, int searchRadius, int defaultZoom, boolean isNotificationOn) {
+    public User(String uid, String username, @Nullable String urlPicture, String placeId, ArrayList<String> like, int currentTime) {
         this.uid = uid;
         this.username = username;
         this.urlPicture = urlPicture;
-        this.searchRadius = searchRadius;
-        this.defaultZoom = defaultZoom;
-        this.isNotificationOn = isNotificationOn;
-    }
+        this.placeId = placeId;
+        this.like = like;
+        this.userChat = false;
+        this.currentTime = currentTime;
 
+    }
 
     // --- GETTERS ---
-    public String getUid() {
-        return uid;
+    public String getUid() { return uid; }
+    public String getUsername() { return username; }
+    public String getUrlPicture() { return urlPicture; }
+    public String getPlaceId(){
+        return placeId;
     }
-    public String getUsername() {
-        return username;
+    public ArrayList<String> getLike() {
+        return like;
     }
-    @Nullable
-    public String getUrlPicture() {
-        return urlPicture;
-    }
-    public int getSearchRadius() {
-        return searchRadius;
-    }
-    public int getDefaultZoom() {
-        return defaultZoom;
-    }
-    public boolean isNotificationOn() {
-        return isNotificationOn;
+    public Boolean getUserChat() { return userChat; }
+    public int getCurrentTime() {
+        return currentTime;
     }
 
 
     // --- SETTERS ---
-    public void setUid(String uid) {
-        this.uid = uid;
+    public void setUsername(String username) { this.username = username; }
+    public void setUid(String uid) { this.uid = uid; }
+    public void setUrlPicture(String urlPicture) { this.urlPicture = urlPicture; }
+    public void setPlaceId(String placeId) {
+        this.placeId = placeId;
     }
-    public void setUsername(String username) {
-        this.username = username;
+    public void setLike(ArrayList<String> like) {
+        this.like = like;
     }
-    public void setUrlPicture(@Nullable String urlPicture) {
-        this.urlPicture = urlPicture;
-    }
-    public void setSearchRadius(int searchRadius) {
-        this.searchRadius = searchRadius;
-    }
-    public void setDefaultZoom(int defaultZoom) {
-        this.defaultZoom = defaultZoom;
-    }
-    public void setNotificationOn(boolean notificationOn) {
-        isNotificationOn = notificationOn;
+    public void setUserChat(Boolean chatUser) { userChat = chatUser; }
+    private void setCurrentTime(int currentTime){
+        this.currentTime = currentTime;
     }
 }
