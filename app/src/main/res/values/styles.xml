@@ -32,7 +32,7 @@
         <item name="color">@android:color/white</item>
     </style>
 
-    <style name="AppCompatRatingBar" parent="Theme.AppCompat">
+    <style name="RatingBar" parent="Theme.AppCompat">
         <item name="colorControlNormal">@color/colorAccent</item>
         <item name="colorControlActivated">#FFEB3B</item>
     </style>

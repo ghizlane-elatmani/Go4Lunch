@@ -61,4 +61,9 @@
     <string name="open_until">"Open until "</string>
     <string name="closing_soon">Closing soon</string>
 
+    <!--restaurant button-->
+    <string name="call_button">CALL</string>
+    <string name="like_button" translatable="false">LIKE</string>
+    <string name="website_button">WEBSITE</string>
+
 </resources>

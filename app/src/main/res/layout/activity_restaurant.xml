@@ -1,10 +1,126 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.activity.SettingsActivity">
+    android:orientation="vertical"
+    tools:context=".ui.activity.RestaurantActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <ImageView
+        android:id="@+id/restoPhotoImageView"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/restoOkFloatingActionButton"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_marginStart="300dp"
+        android:layout_marginTop="170dp"
+        android:clickable="true"
+        android:elevation="8dp"
+        android:src="@drawable/ic_done_24"
+        app:fabSize="auto"
+        android:focusable="true" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="200dp"
+        android:background="@color/colorPrimary">
+
+        <TextView
+            android:id="@+id/restoNameTextView"
+            android:layout_width="220dp"
+            android:layout_height="wrap_content"
+            android:textColor="#ffff"
+            android:textStyle="bold|italic"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="7dp"
+            android:text="" />
+
+        <androidx.appcompat.widget.AppCompatRatingBar
+
+            android:id="@+id/restoRatingBar"
+            style="?android:attr/ratingBarStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="230dp"
+            android:layout_marginTop="7dp"
+            android:numStars="3"
+            android:text=""
+            android:theme="@style/RatingBar"/>
+
+        <TextView
+            android:id="@+id/restoAddressTextView"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:textColor="#ffff"
+            android:textStyle="bold|italic"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="27dp"
+            android:text="" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/restoActionFrameLayout"
+        android:layout_marginTop="270dp"
+        android:layout_width="match_parent"
+        android:layout_height="70dp">
+
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/restoCallButton"
+            android:layout_width="65dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start|center_horizontal"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="5dp"
+            android:backgroundTint="#FFFFFF"
+            android:drawableTop="@drawable/ic_call_24"
+            android:drawableTint="@color/colorPrimary"
+            android:text="@string/call_button"
+            android:textAlignment="center"
+            android:textStyle="bold"
+            android:textColor="@color/colorPrimary"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/restoStarButton"
+            android:layout_width="65dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|center_vertical"
+            android:background="#00FFFFFF"
+            android:drawableTop="@drawable/ic_star_24"
+            android:drawableTint="@color/colorPrimary"
+            android:text="@string/like_button"
+            android:textAlignment="center"
+            android:textStyle="bold"
+            android:textColor="@color/colorPrimary"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/restoWebButton"
+            android:layout_width="85dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|center_vertical"
+            android:layout_marginEnd="30dp"
+            android:background="#00FFFFFF"
+            android:drawableTop="@drawable/ic_public_24"
+            android:drawableTint="@color/colorPrimary"
+            android:text="@string/website_button"
+            android:textAlignment="center"
+            android:textStyle="bold"
+            android:textColor="@color/colorPrimary"
+            tools:ignore="RtlCompat" />
+
+    </FrameLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/restoWorkmatesRecyclerView"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/restoActionFrameLayout"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent" />
+
+</RelativeLayout>

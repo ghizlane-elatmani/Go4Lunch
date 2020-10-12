@@ -75,7 +75,7 @@
             android:layout_toEndOf="@+id/itemHoursTextView"
             android:numStars="3"
             android:text=""
-            android:theme="@style/AppCompatRatingBar" />
+            android:theme="@style/RatingBar" />
 
         <ImageView
             android:id="@+id/itemPhotoImageView"
