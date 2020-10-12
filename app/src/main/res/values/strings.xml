@@ -56,5 +56,9 @@
     <string name="with">with</string>
     <string name="alone">alone</string>
     <string name="no_restaurant_choose">No restaurant choose !</string>
+    <string name="opening_hours_not_avalaible">Opening hours not avalaible</string>
+    <string name="closed">Closed</string>
+    <string name="open_until">"Open until "</string>
+    <string name="closing_soon">Closing soon</string>
 
 </resources>

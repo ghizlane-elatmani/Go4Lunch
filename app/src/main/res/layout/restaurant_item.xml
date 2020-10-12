@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_margin="5dp"
+    android:padding="20dp">
+
+    <RelativeLayout
+        android:id="@+id/itemRelativeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop">
+
+        <TextView
+            android:id="@+id/itemNameTextView"
+            android:layout_width="210dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:text=""
+            android:textColor="#050505"
+            android:textStyle="bold|italic" />
+
+        <TextView
+            android:id="@+id/itemDistanceTextView"
+            android:layout_width="45dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="234dp"
+            android:layout_marginTop="5dp"
+            android:layout_toEndOf="@+id/itemNameTextView"
+            android:text=""
+            android:textColor="#1A237E"
+            android:textStyle="italic|bold" />
+
+        <TextView
+            android:id="@+id/itemAddressTextView"
+            android:layout_width="220dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="30dp"
+            android:text="" />
+
+        <TextView
+            android:id="@+id/itemWorkmateTextView"
+            android:layout_width="35dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="240dp"
+            android:layout_marginTop="30dp"
+            android:layout_toEndOf="@+id/itemAddressTextView"
+            android:drawableStart="@drawable/ic_person_outline"
+            android:text="" />
+
+        <TextView
+            android:id="@+id/itemHoursTextView"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="70dp"
+            android:text=""
+            android:textStyle="italic|bold" />
+
+        <androidx.appcompat.widget.AppCompatRatingBar
+            android:id="@+id/itemAppCompatRatingBar"
+            style="?android:attr/ratingBarStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="227dp"
+            android:layout_marginTop="60dp"
+            android:layout_toEndOf="@+id/itemHoursTextView"
+            android:numStars="3"
+            android:text=""
+            android:theme="@style/AppCompatRatingBar" />
+
+        <ImageView
+            android:id="@+id/itemPhotoImageView"
+            android:layout_width="90dp"
+            android:layout_height="70dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="15dp"
+            android:layout_toEndOf="@+id/itemDistanceTextView"
+            android:scaleType="center" />
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

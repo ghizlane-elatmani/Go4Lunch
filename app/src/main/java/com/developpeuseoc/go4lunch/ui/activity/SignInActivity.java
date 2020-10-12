@@ -12,7 +12,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.developpeuseoc.go4lunch.R;
 import com.developpeuseoc.go4lunch.api.UserHelper;
 import com.developpeuseoc.go4lunch.model.User;
-import com.developpeuseoc.go4lunch.viewModel.CommunicationViewModel;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.ErrorCodes;
 import com.firebase.ui.auth.IdpResponse;
@@ -27,7 +26,6 @@ import static com.developpeuseoc.go4lunch.utils.FirebaseUtils.onFailureListener;
 public class SignInActivity extends AppCompatActivity {
 
     private static final int RC_SIGN_IN = 100;
-    private CommunicationViewModel mViewModel;
     private Button googleLoginButton;
     private Button facebookLoginButton;
 
