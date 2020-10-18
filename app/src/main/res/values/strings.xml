@@ -65,5 +65,10 @@
     <string name="call_button">CALL</string>
     <string name="like_button" translatable="false">LIKE</string>
     <string name="website_button">WEBSITE</string>
+    <string name="eat_at">Eat At</string>
+    <string name="not_decided">Not Decided</string>
+    <string name="no_phone_available">No Phone Available</string>
+    <string name="permission_denied">Permission denied</string>
+    <string name="no_website">No website</string>
 
 </resources>

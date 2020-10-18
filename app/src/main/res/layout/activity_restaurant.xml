@@ -11,14 +11,15 @@
     <ImageView
         android:id="@+id/restoPhotoImageView"
         android:layout_width="match_parent"
-        android:layout_height="200dp"/>
+        android:layout_height="250dp"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/restoOkFloatingActionButton"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        android:layout_marginStart="300dp"
-        android:layout_marginTop="170dp"
+        android:layout_marginTop="220dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="15dp"
         android:clickable="true"
         android:elevation="8dp"
         android:src="@drawable/ic_done_24"
@@ -26,9 +27,10 @@
         android:focusable="true" />
 
     <FrameLayout
+        android:id="@+id/detailframeLayout"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginTop="200dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="250dp"
         android:background="@color/colorPrimary">
 
         <TextView
@@ -36,7 +38,7 @@
             android:layout_width="220dp"
             android:layout_height="wrap_content"
             android:textColor="#ffff"
-            android:textStyle="bold|italic"
+            android:textSize="20sp"
             android:layout_marginStart="5dp"
             android:layout_marginTop="7dp"
             android:text="" />
@@ -47,7 +49,7 @@
             style="?android:attr/ratingBarStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="230dp"
+            android:layout_marginStart="250dp"
             android:layout_marginTop="7dp"
             android:numStars="3"
             android:text=""
@@ -60,13 +62,13 @@
             android:textColor="#ffff"
             android:textStyle="bold|italic"
             android:layout_marginStart="5dp"
-            android:layout_marginTop="27dp"
+            android:layout_marginTop="35dp"
             android:text="" />
     </FrameLayout>
 
     <FrameLayout
         android:id="@+id/restoActionFrameLayout"
-        android:layout_marginTop="270dp"
+        android:layout_below="@id/detailframeLayout"
         android:layout_width="match_parent"
         android:layout_height="70dp">
 

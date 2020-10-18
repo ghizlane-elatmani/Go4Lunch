@@ -53,6 +53,7 @@ import static com.developpeuseoc.go4lunch.utils.FirebaseUtils.getCurrentUser;
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
 
+    // --- Attribute ---
     private static final int SIGN_OUT_TASK = 100;
     private Toolbar toolbar;
     private BottomNavigationView bottomNavigationView;
@@ -69,10 +70,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // findViewById
         toolbar = findViewById(R.id.activity_main_toolbar);
         bottomNavigationView = findViewById(R.id.activity_main_bottom_nav_view);
         navigationView = findViewById(R.id.activity_main_nav_view);
 
+        // configure
         this.configureToolbar();
         this.configureDrawerLayout();
         this.configureNavigationView();
