@@ -23,8 +23,10 @@ import androidx.core.app.ActivityCompat;
 
 
 import com.developpeuseoc.go4lunch.R;
+import com.developpeuseoc.go4lunch.api.UserHelper;
 import com.developpeuseoc.go4lunch.model.PlaceDetail.PlaceDetail;
 import com.developpeuseoc.go4lunch.model.PlaceDetail.PlaceDetailsResult;
+import com.developpeuseoc.go4lunch.model.User;
 import com.developpeuseoc.go4lunch.ui.activity.RestaurantActivity;
 import com.developpeuseoc.go4lunch.utils.PlacesStreams;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -36,8 +38,17 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
@@ -51,6 +62,8 @@ public class MapFragment extends BaseFragment implements LocationListener, Seria
     private Disposable mDisposable;
     private String mPosition;
     private Marker positionMarker;
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private CollectionReference collectionUsers = db.collection("users");
 
 
     public MapFragment() {
@@ -160,25 +173,51 @@ public class MapFragment extends BaseFragment implements LocationListener, Seria
     //for position marker
     private void positionMarker(List<PlaceDetail> placeDetails) {
         mMap.clear();
+
+        final List<User> mList = new ArrayList<>();
+        collectionUsers.get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        if (!queryDocumentSnapshots.isEmpty()) {
+                            for (QueryDocumentSnapshot journals : queryDocumentSnapshots) {
+                                User user = journals.toObject(User.class);
+                                mList.add(user);
+                            }
+                        }
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+
+                    }
+                });
+
         for (PlaceDetail detail : placeDetails) {
             LatLng latLng = new LatLng(detail.getResult().getGeometry().getLocation().getLat(),
                     detail.getResult().getGeometry().getLocation().getLng()
             );
+
             positionMarker = mMap.addMarker(new MarkerOptions().position(latLng)
-                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_place_black_24dp))
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_restaurant_pin_unselected))
                     .title(detail.getResult().getName())
                     .snippet(detail.getResult().getVicinity()));
+
+            for (User user : mList){
+                if(detail.getResult().getPlaceId().equals(user.getPlaceId())){
+                    positionMarker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.ic_restaurant_pin));
+                }
+            }
+
             positionMarker.showInfoWindow();
             PlaceDetailsResult placeDetailsResult = detail.getResult();
             positionMarker.setTag(placeDetailsResult);
-            Log.d("detailResultMap", String.valueOf(placeDetailsResult));
+
         }
     }
 
-    /**
-     * HTTP request RX Java for restaurants
-     */
-
+    //HTTP request RX Java for restaurants
     private void executeHttpRequestWithRetrofit() {
 
         this.mDisposable = PlacesStreams.streamFetchRestaurantDetails(mPosition, 3000, "restaurant")

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:elevation="4dp"
+    android:orientation="horizontal"
+    android:padding="20dp">
+
+    <RelativeLayout
+        android:id="@+id/workmatesRelativeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop">
+
+        <ImageView
+            android:id="@+id/workmatesPhotoImageView"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="10dp"
+            android:contentDescription="workmatesPhoto" />
+
+        <TextView
+            android:id="@+id/workmatesNameTextView"
+            android:layout_width="280dp"
+            android:layout_height="40dp"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="20dp"
+            android:layout_toEndOf="@id/workmatesPhotoImageView"
+            android:textColor="#000" />
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

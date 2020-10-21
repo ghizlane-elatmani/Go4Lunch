@@ -22,27 +22,27 @@ import com.developpeuseoc.go4lunch.utils.PlacesStreams;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.observers.DisposableObserver;
 
-public class RestaurantWorkmatesViewHolder extends RecyclerView.ViewHolder {
+public class WorkmatesViewHolder  extends RecyclerView.ViewHolder {
 
-    // Attribute
-    private ImageView restoWorkmatePhoto;
-    private TextView restoWorkmateName;
+    // --- Attribute ---
+    private ImageView workmatesPhoto;
+    private TextView workmatesName;
 
-    private Disposable mDisposable;
-    private String restoName;
     private String idResto;
+    private String restoName;
     private PlaceDetail detail;
     private String userName;
+    private Disposable mDisposable;
 
 
-    public RestaurantWorkmatesViewHolder(@NonNull View itemView) {
+    public WorkmatesViewHolder(@NonNull View itemView) {
         super(itemView);
 
-        // FindViewById
-        restoWorkmatePhoto = itemView.findViewById(R.id.restoWorkmatePhoto);
-        restoWorkmateName= itemView.findViewById(R.id.restoWorkmateName);
+        // findViewByID
+        workmatesPhoto = itemView.findViewById(R.id.workmatesPhotoImageView);
+        workmatesName = itemView.findViewById(R.id.workmatesNameTextView);
 
-        // Retrieve restaurant sheet on click workmates
+        // Click workmates -- Launch RestaurantActivity
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -55,34 +55,26 @@ public class RestaurantWorkmatesViewHolder extends RecyclerView.ViewHolder {
                 }
             }
         });
-
     }
 
-    // For update usernames and photos
+    //update usernames and photos
     @SuppressLint("SetTextI18n")
     public void updateWithDetails(User users, RequestManager glide) {
-
-        // Retrieve name and id resto for request
+        //for retrieve name and id resto for request
         userName = users.getUsername();
         idResto = users.getPlaceId();
 
         Log.d("idRestoUser", "idRestoUsers" + " " + idResto);
-
         executeHttpRequestWithRetrofit();
-
-        // Retrieve user photo
+        //for retrieve user photo
         if (users.getUrlPicture() != null && !users.getUrlPicture().isEmpty()) {
-            try{
-            glide.load(users.getUrlPicture()).apply(RequestOptions.circleCropTransform()).into(restoWorkmatePhoto);
-            } catch (Exception e){
-                e.getMessage();
-            }
+            glide.load(users.getUrlPicture()).apply(RequestOptions.circleCropTransform()).into(workmatesPhoto);
         } else {
-            restoWorkmatePhoto.setImageResource(R.drawable.ic_person_outline);
+            workmatesPhoto.setImageResource(R.drawable.ic_person_outline);
         }
     }
 
-    //request for retrieve restaurant name with id
+    // Request for retrieve restaurant name with id
     private void executeHttpRequestWithRetrofit() {
         this.mDisposable = PlacesStreams.streamFetchDetails(idResto)
                 .subscribeWith(new DisposableObserver<PlaceDetail>() {
@@ -97,11 +89,13 @@ public class RestaurantWorkmatesViewHolder extends RecyclerView.ViewHolder {
                     public void onComplete() {
 
                         if (idResto != null) {
+
                             restoName = detail.getResult().getName();
-                            restoWorkmateName.setText(userName + " " + itemView.getContext().getString(R.string.eat_at) + " " + restoName);
+                            workmatesName.setText(userName + " " + itemView.getContext().getString(R.string.eatWorkmates) + " " + restoName);
 
                         } else {
-                            restoWorkmateName.setText(userName + " " + itemView.getContext().getString(R.string.not_decided));
+                            workmatesName.setText(userName + " " + itemView.getContext().getString(R.string.no_decided));
+
                         }
                     }
 

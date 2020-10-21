@@ -46,11 +46,14 @@
     <string name="timeout_error_message">Request timeout, please check your internet connection</string>
     <string name="exception_error_message">An error occurred, please check your internet connection</string>
     <string name="generic_error_message">An error occurred, please try again</string>
+
     <string name="restaurant_item_call">CALL</string>
     <string name="restaurant_item_like">LIKE</string>
     <string name="restaurant_item_website">WEBSITE</string>
+
     <string name="popup_title_perm_access">This application need permissions to work correctly.</string>
     <string name="no_restaurant_error_message">No restaurants found, try to change your search radius settings</string>
+
     <string name="title_alarm">Your today lunch !</string>
     <string name="lunch_at">You\'re lunching at</string>
     <string name="with">with</string>
@@ -70,5 +73,11 @@
     <string name="no_phone_available">No Phone Available</string>
     <string name="permission_denied">Permission denied</string>
     <string name="no_website">No website</string>
+    <string name="eatWorkmates">eat at</string>
+    <string name="no_decided">hasn\'t decided yet</string>
+    <string name="chat_empty">Chat empty</string>
+    <string name="compose_your_message">Compose your message</string>
+    <string name="send">Send</string>
+    <string name="toast_title_no_image_chosen">No selected image</string>
 
 </resources>

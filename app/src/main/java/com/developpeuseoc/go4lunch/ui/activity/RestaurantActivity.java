@@ -68,7 +68,7 @@ public class RestaurantActivity extends AppCompatActivity implements Serializabl
 
 
     private String formattedPhoneNumber;
-    private RequestManager glide;
+    private RequestManager mGlide;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private CollectionReference collectionUsers = db.collection("users");
     private RestaurantWorkmatesAdapter adapter;
@@ -145,7 +145,7 @@ public class RestaurantActivity extends AppCompatActivity implements Serializabl
             placeDetailsResult = (PlaceDetailsResult) bundle.getSerializable("placeDetailsResult");
         }
         if (placeDetailsResult != null) {
-            updateUI(placeDetailsResult, glide);
+            updateUI(placeDetailsResult, mGlide);
             placeId = placeDetailsResult.getPlaceId();
 
         }
@@ -154,7 +154,7 @@ public class RestaurantActivity extends AppCompatActivity implements Serializabl
 
     //For update UI
     private void updateUI(PlaceDetailsResult placeDetailsResult, RequestManager glide) {
-        this.glide = glide;
+        this.mGlide = glide;
 
         //for add photos with Glide
         if (placeDetailsResult.getPhotos() != null && !placeDetailsResult.getPhotos().isEmpty()) {

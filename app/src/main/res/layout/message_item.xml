@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/chat_item_root_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp">
+
+    <!-- PROFILE CONTAINER -->
+    <LinearLayout
+        android:id="@+id/chat_item_profile_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="10dp">
+
+        <!-- IMAGE VIEW PROFILE -->
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/chat_item_profile_container_profile_image"
+            android:layout_width="50dip"
+            android:layout_height="50dip"
+            app:srcCompat="@drawable/ic_person_outline"
+            tools:ignore="VectorDrawableCompat" />
+
+        <!-- IMAGE Profile 2 -->
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/chat_item_profile"
+            android:layout_width="15dip"
+            android:layout_height="15dip"
+            app:srcCompat="@drawable/ic_person_outline"
+            tools:ignore="VectorDrawableCompat" />
+
+    </LinearLayout>
+
+    <!-- MESSAGE CONTAINER -->
+    <RelativeLayout
+        android:id="@+id/chat_item_message_container"
+        android:layout_width="176dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="214dp"
+        android:layout_marginBottom="-214dp">
+
+        <!-- IMAGE SENT CONTAINER -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/chat_item_message_container_image_sent_cardview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="15dp"
+            android:background="#F0F4C3">
+
+
+            <!-- IMAGE SENT -->
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/chat_item_message_container_image_sent_cardview_image"
+                android:layout_width="100dip"
+                android:layout_height="100dip"
+                android:scaleType="centerCrop" />
+
+        </androidx.cardview.widget.CardView>
+
+        <!-- TEXT MESSAGE CONTAINER -->
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/chat_item_message_container_text_message_container"
+            android:layout_width="152dp"
+            android:layout_height="60dp"
+            android:layout_below="@id/chat_item_message_container_image_sent_cardview"
+            android:layout_margin="10dp"
+            android:background="#FFCC80"
+            android:orientation="horizontal"
+            app:cardCornerRadius="30dp"
+            app:cardElevation="10dp"
+
+            >
+            <!-- TEXT MESSAGE -->
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/chat_item_message_container_text_message_container_text_view"
+                android:layout_width="152dp"
+                android:layout_height="60dp"
+                android:padding="10dp"
+                android:textColor="@color/quantum_brown900"
+                android:textIsSelectable="true"
+                android:textSize="@dimen/default_text_size"
+                android:textStyle="bold"
+                tools:text="Text example" />
+
+        </androidx.cardview.widget.CardView>
+        <!-- DATE MESSAGE -->
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/chat_item_message_container_text_view_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/chat_item_message_container_text_message_container"
+            android:layout_alignEnd="@id/chat_item_message_container_text_message_container"
+            android:layout_alignParentBottom="true"
+            android:textSize="8sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+</RelativeLayout>

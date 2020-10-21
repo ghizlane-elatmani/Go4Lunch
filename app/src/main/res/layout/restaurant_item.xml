@@ -38,7 +38,7 @@
 
         <TextView
             android:id="@+id/itemAddressTextView"
-            android:layout_width="220dp"
+            android:layout_width="210dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
             android:layout_marginTop="30dp"
@@ -46,7 +46,7 @@
 
         <TextView
             android:id="@+id/itemWorkmateTextView"
-            android:layout_width="35dp"
+            android:layout_width="45dp"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_marginStart="240dp"
@@ -84,7 +84,6 @@
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
             android:layout_marginRight="15dp"
-            android:layout_toEndOf="@+id/itemDistanceTextView"
             android:scaleType="center" />
 
     </RelativeLayout>
