@@ -30,8 +30,6 @@ import androidx.core.content.ContextCompat;
 
 import com.developpeuseoc.go4lunch.R;
 import com.developpeuseoc.go4lunch.model.PlaceAPI;
-import com.developpeuseoc.go4lunch.model.PlaceDetail.PlaceDetail;
-import com.developpeuseoc.go4lunch.model.PlaceDetail.PlaceDetailsResult;
 import com.developpeuseoc.go4lunch.model.User;
 import com.developpeuseoc.go4lunch.ui.activity.RestaurantActivity;
 import com.developpeuseoc.go4lunch.service.PlacesStreams;
@@ -46,7 +44,10 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -67,7 +68,6 @@ public class MapFragment extends BaseFragment implements LocationListener, Seria
     private String mPosition;
     private Marker positionMarker;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private CollectionReference collectionUsers = db.collection("users");
 
 
     public MapFragment() {
@@ -173,18 +173,41 @@ public class MapFragment extends BaseFragment implements LocationListener, Seria
     //for position marker
     private void positionMarker(List<PlaceAPI> placeDetails) {
         mMap.clear();
-        for (PlaceAPI detail : placeDetails) {
+        for (final PlaceAPI detail : placeDetails) {
             LatLng latLng = new LatLng(detail.getResult().getGeometry().getLocation().getLat(),
                     detail.getResult().getGeometry().getLocation().getLng()
             );
-            positionMarker = mMap.addMarker(new MarkerOptions().position(latLng)
-                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.restaurant_markerv2))
-                    .title(detail.getResult().getName())
-                    .snippet(detail.getResult().getVicinity()));
+
+            final MarkerOptions marker = new MarkerOptions().position(latLng).title(detail.getResult().getName());
+
+            CollectionReference collectionReference = FirebaseFirestore.getInstance().collection("users");
+            ArrayList<String> ids = new ArrayList<>(); //Contains your keys
+            ArrayList<Task<QuerySnapshot>> tasks = new ArrayList<>();
+            for (String uid : ids) {
+                Task<QuerySnapshot> task = collectionReference.whereEqualTo("uid", uid).get();
+                tasks.add(task);
+            }
+
+            Tasks.whenAllSuccess(tasks).addOnSuccessListener(new OnSuccessListener<List<Object>>() {
+                @Override
+                public void onSuccess(List<Object> list) {
+                    //Do what you need to do with your list
+                    for (Object object : list) {
+                        User user = ((DocumentSnapshot) object).toObject(User.class);
+                        if(user.getPlaceId() == detail.getResult().getId()){
+                            marker.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_restaurant_pin_cyan));
+                        } else {
+                            marker.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_restaurant_pin_orange));
+                        }
+                    }
+
+                }
+            });
+
+            positionMarker = mMap.addMarker(marker);
             positionMarker.showInfoWindow();
             PlaceAPI.PlaceDetailsResult placeDetailsResult = detail.getResult();
             positionMarker.setTag(placeDetailsResult);
-            Log.d("detailResultMap", String.valueOf(placeDetailsResult));
         }
     }
 

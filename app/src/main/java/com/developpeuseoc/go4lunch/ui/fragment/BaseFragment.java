@@ -9,9 +9,6 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -20,28 +17,21 @@ import androidx.appcompat.app.ActionBar;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
-import com.developpeuseoc.go4lunch.R;
-import com.developpeuseoc.go4lunch.model.PlaceDetail.PlaceDetail;
+import com.developpeuseoc.go4lunch.model.PlaceAPI;
 import com.developpeuseoc.go4lunch.ui.activity.MainActivity;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnFailureListener;
-import com.muddzdev.styleabletoast.StyleableToast;
 
-import java.io.IOException;
-import java.net.SocketTimeoutException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
 
-import retrofit2.HttpException;
 
 public abstract class BaseFragment extends Fragment implements LocationListener {
 
     protected static final int PERMS_CALL_ID = 1000;
-    public List<PlaceDetail> placeDetails;
+    public List<PlaceAPI> placeDetails;
     public LocationManager locationManager;
     private GoogleMap mMap;
     private String mPosition;
@@ -155,7 +145,7 @@ public abstract class BaseFragment extends Fragment implements LocationListener 
         return new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                StyleableToast.makeText(Objects.requireNonNull(BaseFragment.this.getContext()), "Unknown Error", R.style.personalizedToast).show();
+                Toast.makeText(Objects.requireNonNull(BaseFragment.this.getContext()), "Unknown Error", Toast.LENGTH_SHORT).show();
             }
         };
     }
