@@ -3,10 +3,15 @@ package com.developpeuseoc.go4lunch.ui.fragment;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.drawable.VectorDrawable;
 import android.location.Location;
 import android.location.LocationListener;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,9 +25,11 @@ import android.widget.SearchView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 
 import com.developpeuseoc.go4lunch.R;
+import com.developpeuseoc.go4lunch.model.PlaceAPI;
 import com.developpeuseoc.go4lunch.model.PlaceDetail.PlaceDetail;
 import com.developpeuseoc.go4lunch.model.PlaceDetail.PlaceDetailsResult;
 import com.developpeuseoc.go4lunch.model.User;
@@ -32,6 +39,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -147,11 +155,7 @@ public class MapFragment extends BaseFragment implements LocationListener, Seria
         });
     }
 
-    /**
-     * For user position
-     *
-     * @param location
-     */
+    // User position
     public void onLocationChanged(Location location) {
         double mLatitude = location.getLatitude();
         double mLongitude = location.getLongitude();
@@ -167,49 +171,43 @@ public class MapFragment extends BaseFragment implements LocationListener, Seria
     }
 
     //for position marker
-    private void positionMarker(List<PlaceDetail> placeDetails) {
+    private void positionMarker(List<PlaceAPI> placeDetails) {
         mMap.clear();
-
-        final List<User> mList = new ArrayList<>();
-        collectionUsers.get()
-                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                    @Override
-                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        if (!queryDocumentSnapshots.isEmpty()) {
-                            for (QueryDocumentSnapshot journals : queryDocumentSnapshots) {
-                                User user = journals.toObject(User.class);
-                                mList.add(user);
-                            }
-                        }
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-
-                    }
-                });
-
-        for (PlaceDetail detail : placeDetails) {
+        for (PlaceAPI detail : placeDetails) {
             LatLng latLng = new LatLng(detail.getResult().getGeometry().getLocation().getLat(),
                     detail.getResult().getGeometry().getLocation().getLng()
             );
-
             positionMarker = mMap.addMarker(new MarkerOptions().position(latLng)
-                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_restaurant_pin_unselected))
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.restaurant_markerv2))
                     .title(detail.getResult().getName())
                     .snippet(detail.getResult().getVicinity()));
-
-            for (User user : mList){
-                if(detail.getResult().getPlaceId().equals(user.getPlaceId())){
-                    positionMarker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.ic_restaurant_pin));
-                }
-            }
-
             positionMarker.showInfoWindow();
-            PlaceDetailsResult placeDetailsResult = detail.getResult();
+            PlaceAPI.PlaceDetailsResult placeDetailsResult = detail.getResult();
             positionMarker.setTag(placeDetailsResult);
+            Log.d("detailResultMap", String.valueOf(placeDetailsResult));
+        }
+    }
 
+    // BitmapDescriptor for vector drawable on the map
+    private BitmapDescriptor getBitmapDescriptor(Context context, int id) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            VectorDrawable vectorDrawable = (VectorDrawable) ContextCompat.getDrawable(context, id);
+            if (vectorDrawable != null) {
+                int height = vectorDrawable.getIntrinsicHeight();
+                int width = vectorDrawable.getIntrinsicWidth();
+
+                vectorDrawable.setBounds(0, 0, width, height);
+
+                Bitmap bm = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+                Canvas canvas = new Canvas(bm);
+                vectorDrawable.draw(canvas);
+
+                return BitmapDescriptorFactory.fromBitmap(bm);
+            } else {
+                return null;
+            }
+        } else {
+            return BitmapDescriptorFactory.fromResource(id);
         }
     }
 
@@ -217,10 +215,10 @@ public class MapFragment extends BaseFragment implements LocationListener, Seria
     private void executeHttpRequestWithRetrofit() {
 
         this.mDisposable = PlacesStreams.streamFetchRestaurantDetails(mPosition, 3000, "restaurant")
-                .subscribeWith(new DisposableSingleObserver<List<PlaceDetail>>() {
+                .subscribeWith(new DisposableSingleObserver<List<PlaceAPI>>() {
 
                     @Override
-                    public void onSuccess(List<PlaceDetail> placeDetails) {
+                    public void onSuccess(List<PlaceAPI> placeDetails) {
 
                         MapFragment.super.placeDetails = placeDetails;
                         positionMarker(placeDetails);
@@ -237,7 +235,7 @@ public class MapFragment extends BaseFragment implements LocationListener, Seria
             @Override
             public void onInfoWindowClick(Marker marker) {
                 //for retrieve result
-                PlaceDetailsResult positionMarkerList = (PlaceDetailsResult) positionMarker.getTag();
+                PlaceAPI.PlaceDetailsResult positionMarkerList = (PlaceAPI.PlaceDetailsResult) positionMarker.getTag();
                 Intent intent = new Intent(MapFragment.this.getContext(), RestaurantActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("placeDetailsResult", positionMarkerList);
@@ -261,10 +259,10 @@ public class MapFragment extends BaseFragment implements LocationListener, Seria
     private void executeHttpRequestWithRetrofitAutocomplete(String input) {
 
         this.mDisposable = PlacesStreams.streamFetchAutocompleteInfos(input, 2000, mPosition, "establishment")
-                .subscribeWith(new DisposableSingleObserver<List<PlaceDetail>>() {
+                .subscribeWith(new DisposableSingleObserver<List<PlaceAPI>>() {
 
                     @Override
-                    public void onSuccess(List<PlaceDetail> placeDetails) {
+                    public void onSuccess(List<PlaceAPI> placeDetails) {
 
                         positionMarker(placeDetails);
                     }
@@ -278,7 +276,7 @@ public class MapFragment extends BaseFragment implements LocationListener, Seria
             @Override
             public void onInfoWindowClick(Marker marker) {
                 //For retrieve result
-                PlaceDetailsResult positionMarkerList = (PlaceDetailsResult) positionMarker.getTag();
+                PlaceAPI.PlaceDetailsResult positionMarkerList = (PlaceAPI.PlaceDetailsResult) positionMarker.getTag();
                 Intent intent = new Intent(MapFragment.this.getContext(), RestaurantActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("placeDetailsResult", positionMarkerList);

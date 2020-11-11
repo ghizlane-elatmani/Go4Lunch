@@ -31,10 +31,9 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     implementation 'com.android.support:multidex:1.0.3'
-    implementation 'com.google.firebase:firebase-messaging:20.1.0'
 
     // Testing
     testImplementation 'junit:junit:4.13'
@@ -54,20 +53,18 @@ dependencies {
     // CardView
     implementation "androidx.cardview:cardview:1.0.0"
 
-    // FirebaseUI for Firebase Auth
-    implementation 'com.firebaseui:firebase-ui-auth:6.2.0'
-
-    // FirebaseUI for Firebase Firestore
+    // Firebase
+    implementation 'com.google.firebase:firebase-auth:20.0.0'
     implementation 'com.firebaseui:firebase-ui-firestore:6.2.0'
-
-    //Firebase
+    implementation 'com.google.firebase:firebase-messaging:20.1.0'
     implementation 'com.google.firebase:firebase-analytics:17.2.2'
     implementation 'com.google.firebase:firebase-storage:19.1.1'
 
     // Easy Permissions
     implementation 'pub.devrel:easypermissions:3.0.0'
 
-    // FACEBOOK LOGIN SUPPORT
+    // LOGIN SUPPORT
+    implementation 'com.google.android.gms:play-services-auth:18.1.0'
     implementation 'com.facebook.android:facebook-android-sdk:[4,5)'
 
     // Material design
@@ -86,8 +83,7 @@ dependencies {
     implementation 'io.reactivex.rxjava2:rxjava:2.1.7'
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
 
-    // Styleable Toast
-    implementation 'com.muddzdev:styleabletoast:2.2.3'
+
 }
 
 apply plugin: 'com.google.gms.google-services'

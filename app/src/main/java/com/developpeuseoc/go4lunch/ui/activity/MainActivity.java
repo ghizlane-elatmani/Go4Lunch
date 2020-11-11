@@ -27,8 +27,9 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.developpeuseoc.go4lunch.R;
 import com.developpeuseoc.go4lunch.api.UserHelper;
-import com.developpeuseoc.go4lunch.model.PlaceDetail.PlaceDetail;
+import com.developpeuseoc.go4lunch.model.PlaceAPI;
 import com.developpeuseoc.go4lunch.model.User;
+import com.developpeuseoc.go4lunch.notification.AlertReceiver;
 import com.developpeuseoc.go4lunch.ui.fragment.ChatFragment;
 import com.developpeuseoc.go4lunch.ui.fragment.ListFragment;
 import com.developpeuseoc.go4lunch.ui.fragment.MapFragment;
@@ -47,20 +48,20 @@ import java.util.Objects;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.observers.DisposableObserver;
 
+import static com.developpeuseoc.go4lunch.utils.Constant.SIGN_OUT_TASK;
 import static com.developpeuseoc.go4lunch.utils.FirebaseUtils.getCurrentUser;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
 
     // --- Attribute ---
-    private static final int SIGN_OUT_TASK = 100;
     private Toolbar toolbar;
     private BottomNavigationView bottomNavigationView;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
 
     private Disposable mDisposable;
-    private PlaceDetail detail;
+    private PlaceAPI detail;
     private String idRestaurant;
 
 
@@ -264,10 +265,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     //Http request for retrieve name resto with id
     private void executeHttpRequestWithRetrofit() {
         this.mDisposable = PlacesStreams.streamFetchDetails(idRestaurant)
-                .subscribeWith(new DisposableObserver<PlaceDetail>() {
+                .subscribeWith(new DisposableObserver<PlaceAPI>() {
 
                     @Override
-                    public void onNext(PlaceDetail placeDetail) {
+                    public void onNext(PlaceAPI placeDetail) {
                         detail = placeDetail;
                         startForLunch();
                     }

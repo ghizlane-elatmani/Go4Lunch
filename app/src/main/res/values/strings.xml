@@ -80,4 +80,9 @@
     <string name="send">Send</string>
     <string name="toast_title_no_image_chosen">No selected image</string>
 
+    <string name="email_already_linked_title"></string>
+    <string name="email_already_linked_message"></string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+
 </resources>
