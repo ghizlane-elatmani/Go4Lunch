@@ -24,7 +24,7 @@ import com.developpeuseoc.go4lunch.model.PlaceDetail.PlaceDetail;
 import com.developpeuseoc.go4lunch.model.PlaceDetail.PlaceDetailsResult;
 import com.developpeuseoc.go4lunch.ui.activity.RestaurantActivity;
 import com.developpeuseoc.go4lunch.utils.ItemClickSupport;
-import com.developpeuseoc.go4lunch.utils.PlacesStreams;
+import com.developpeuseoc.go4lunch.service.PlacesStreams;
 
 import java.io.Serializable;
 import java.util.ArrayList;

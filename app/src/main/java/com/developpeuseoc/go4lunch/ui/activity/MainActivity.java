@@ -33,8 +33,7 @@ import com.developpeuseoc.go4lunch.ui.fragment.ChatFragment;
 import com.developpeuseoc.go4lunch.ui.fragment.ListFragment;
 import com.developpeuseoc.go4lunch.ui.fragment.MapFragment;
 import com.developpeuseoc.go4lunch.ui.fragment.WorkmatesFragment;
-import com.developpeuseoc.go4lunch.utils.PlacesStreams;
-import com.developpeuseoc.go4lunch.utils.notifications.AlertReceiver;
+import com.developpeuseoc.go4lunch.service.PlacesStreams;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -70,33 +69,33 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // findViewById
+        // 1 - findViewById
         toolbar = findViewById(R.id.activity_main_toolbar);
         bottomNavigationView = findViewById(R.id.activity_main_bottom_nav_view);
         navigationView = findViewById(R.id.activity_main_nav_view);
 
-        // configure
+        // 2 - Method to configure toolbar, navigationView ect...
         this.configureToolbar();
         this.configureDrawerLayout();
         this.configureNavigationView();
         this.updateUINavHeader();
         this.onTimeSet();
 
-        //for alarm off
+        // 3 - Use for notification
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         sharedPref.getBoolean("alarmOff", false);
         sharedPref.getBoolean("alarmOn", false);
-        Log.d("TestAlarmOff", String.valueOf(sharedPref.getBoolean("alarmOff", false)));
 
-        //For change title Action Bar
+        // 4 - To change title Action Bar
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setTitle(R.string.hungry);
         }
-        //For bottom navigation View
+
+        // 5 - For bottom navigation View
         bottomNavigationView.setOnNavigationItemSelectedListener(navlistener);
 
-        //For connect MapFragment with activity
+        // 6 - Launch MapFragment in fragment_container
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MapFragment()).commit();
 
     }
@@ -143,7 +142,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
     // Navigation Drawer
-
     private void configureDrawerLayout() {
         this.drawerLayout = findViewById(R.id.activity_main_drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar,
@@ -186,6 +184,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
 
+    // To Log Out
     private void signOutFromUserFirebase() {
         if (getCurrentUser() != null) {
             AuthUI.getInstance()

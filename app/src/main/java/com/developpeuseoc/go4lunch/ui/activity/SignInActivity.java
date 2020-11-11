@@ -25,6 +25,7 @@ import static com.developpeuseoc.go4lunch.utils.FirebaseUtils.onFailureListener;
 
 public class SignInActivity extends AppCompatActivity {
 
+    // 1 - Declare attribute
     private static final int RC_SIGN_IN = 100;
     private Button googleLoginButton;
     private Button facebookLoginButton;
@@ -35,9 +36,11 @@ public class SignInActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
 
+        // 2 - FindViewById
         googleLoginButton = findViewById(R.id.googleLoginButton);
         facebookLoginButton = findViewById(R.id.facebookLoginButton);
 
+        // 3 - When you click on googleButton, call startSignInActivityGoogle
         googleLoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -45,6 +48,7 @@ public class SignInActivity extends AppCompatActivity {
             }
         });
 
+        // 3 - When you click on facebookButton, call startSignInActivityFacebook
         facebookLoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -55,15 +59,8 @@ public class SignInActivity extends AppCompatActivity {
 
     }
 
-    //
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        this.handleResponseAfterSignIn(requestCode, resultCode, data);
-    }
 
-
-    // Create and launch sign-in activity Google
+    // 4 - Create and launch sign-in activity Google
     private void startSignInActivityGoogle() {
         startActivityForResult(
                 AuthUI.getInstance()
@@ -75,7 +72,7 @@ public class SignInActivity extends AppCompatActivity {
                 RC_SIGN_IN);
     }
 
-    // Create and launch sign-in activity Facebook
+    // 4 - Create and launch sign-in activity Facebook
     private void startSignInActivityFacebook() {
         startActivityForResult(
                 AuthUI.getInstance()
@@ -87,6 +84,35 @@ public class SignInActivity extends AppCompatActivity {
                 RC_SIGN_IN);
     }
 
+    // 5 - Method who catch the result of signIn
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        this.handleResponseAfterSignIn(requestCode, resultCode, data);
+    }
+
+    // 6 - Method to handle response
+    private void handleResponseAfterSignIn(int requestCode, int resultCode, Intent data) {
+
+        IdpResponse response = IdpResponse.fromResultIntent(data);
+
+        if (requestCode == RC_SIGN_IN) {
+            if (resultCode == RESULT_OK) { // SUCCESS
+                this.createUserInFirestore();
+                startMainActivity();
+            } else { // ERRORS
+                if (response == null) {
+                    Toast.makeText(this, getString(R.string.error_authentication_canceled), Toast.LENGTH_SHORT).show();
+                } else if (response.getError().getErrorCode() == ErrorCodes.NO_NETWORK) {
+                    Toast.makeText(this, getString(R.string.error_no_internet), Toast.LENGTH_SHORT).show();
+                } else if (response.getError().getErrorCode() == ErrorCodes.UNKNOWN_ERROR) {
+                    Toast.makeText(this, getString(R.string.error_unknown), Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
+    }
+
+    // 7 - If the connection is a success, create the user in Firestore
     private void createUserInFirestore() {
 
         final String urlPicture = (getCurrentUser().getPhotoUrl() != null) ?
@@ -107,29 +133,8 @@ public class SignInActivity extends AppCompatActivity {
         });
     }
 
-
-    private void handleResponseAfterSignIn(int requestCode, int resultCode, Intent data) {
-
-        IdpResponse response = IdpResponse.fromResultIntent(data);
-
-        if (requestCode == RC_SIGN_IN) {
-            if (resultCode == RESULT_OK) { // SUCCESS
-                this.createUserInFirestore();
-                startSignInActivity();
-            } else { // ERRORS
-                if (response == null) {
-                    Toast.makeText(this, getString(R.string.error_authentication_canceled), Toast.LENGTH_SHORT).show();
-                } else if (response.getError().getErrorCode() == ErrorCodes.NO_NETWORK) {
-                    Toast.makeText(this, getString(R.string.error_no_internet), Toast.LENGTH_SHORT).show();
-                } else if (response.getError().getErrorCode() == ErrorCodes.UNKNOWN_ERROR) {
-                    Toast.makeText(this, getString(R.string.error_unknown), Toast.LENGTH_SHORT).show();
-                }
-            }
-        }
-    }
-
-
-    private void startSignInActivity() {
+    // 8 - Launch MainActivity
+    private void startMainActivity() {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }

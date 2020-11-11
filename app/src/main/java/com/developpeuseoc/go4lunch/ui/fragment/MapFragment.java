@@ -23,13 +23,11 @@ import androidx.core.app.ActivityCompat;
 
 
 import com.developpeuseoc.go4lunch.R;
-import com.developpeuseoc.go4lunch.api.UserHelper;
 import com.developpeuseoc.go4lunch.model.PlaceDetail.PlaceDetail;
 import com.developpeuseoc.go4lunch.model.PlaceDetail.PlaceDetailsResult;
 import com.developpeuseoc.go4lunch.model.User;
 import com.developpeuseoc.go4lunch.ui.activity.RestaurantActivity;
-import com.developpeuseoc.go4lunch.utils.PlacesStreams;
-import com.google.android.gms.common.api.GoogleApiClient;
+import com.developpeuseoc.go4lunch.service.PlacesStreams;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -42,13 +40,11 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
