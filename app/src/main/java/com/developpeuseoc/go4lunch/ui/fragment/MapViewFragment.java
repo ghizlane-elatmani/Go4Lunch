@@ -42,14 +42,12 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.io.Serializable;
@@ -60,7 +58,7 @@ import java.util.Objects;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.observers.DisposableSingleObserver;
 
-public class MapFragment extends BaseFragment implements LocationListener, Serializable {
+public class MapViewFragment extends BaseFragment implements LocationListener, Serializable {
 
     private GoogleMap mMap;
     private SupportMapFragment mapFragment;
@@ -69,8 +67,7 @@ public class MapFragment extends BaseFragment implements LocationListener, Seria
     private Marker positionMarker;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-
-    public MapFragment() {
+    public MapViewFragment() {
         // Required empty public constructor
     }
 
@@ -142,9 +139,9 @@ public class MapFragment extends BaseFragment implements LocationListener, Seria
             public void onMapReady(GoogleMap googleMap) {
                 mMap = googleMap;
                 googleMap.moveCamera(CameraUpdateFactory.zoomBy(15));
-                if (ActivityCompat.checkSelfPermission(Objects.requireNonNull(MapFragment.this.getContext()), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-                        ActivityCompat.checkSelfPermission(MapFragment.this.getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                    ActivityCompat.requestPermissions((Activity) MapFragment.this.getContext(), new String[]{
+                if (ActivityCompat.checkSelfPermission(MapViewFragment.this.requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                        ActivityCompat.checkSelfPermission(MapViewFragment.this.getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions((Activity) MapViewFragment.this.getContext(), new String[]{
                             Manifest.permission.ACCESS_FINE_LOCATION,
                             Manifest.permission.ACCESS_COARSE_LOCATION
                     }, PERMS_CALL_ID);
@@ -243,7 +240,7 @@ public class MapFragment extends BaseFragment implements LocationListener, Seria
                     @Override
                     public void onSuccess(List<PlaceAPI> placeDetails) {
 
-                        MapFragment.super.placeDetails = placeDetails;
+                        MapViewFragment.super.placeDetails = placeDetails;
                         positionMarker(placeDetails);
                         Log.i("Succes", String.valueOf(placeDetails.size()));
                     }
@@ -259,11 +256,11 @@ public class MapFragment extends BaseFragment implements LocationListener, Seria
             public void onInfoWindowClick(Marker marker) {
                 //for retrieve result
                 PlaceAPI.PlaceDetailsResult positionMarkerList = (PlaceAPI.PlaceDetailsResult) positionMarker.getTag();
-                Intent intent = new Intent(MapFragment.this.getContext(), RestaurantActivity.class);
+                Intent intent = new Intent(MapViewFragment.this.getContext(), RestaurantActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("placeDetailsResult", positionMarkerList);
                 intent.putExtras(bundle);
-                MapFragment.this.startActivity(intent);
+                MapViewFragment.this.startActivity(intent);
             }
         });
     }
@@ -300,11 +297,11 @@ public class MapFragment extends BaseFragment implements LocationListener, Seria
             public void onInfoWindowClick(Marker marker) {
                 //For retrieve result
                 PlaceAPI.PlaceDetailsResult positionMarkerList = (PlaceAPI.PlaceDetailsResult) positionMarker.getTag();
-                Intent intent = new Intent(MapFragment.this.getContext(), RestaurantActivity.class);
+                Intent intent = new Intent(MapViewFragment.this.getContext(), RestaurantActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("placeDetailsResult", positionMarkerList);
                 intent.putExtras(bundle);
-                MapFragment.this.startActivity(intent);
+                MapViewFragment.this.startActivity(intent);
             }
         });
     }

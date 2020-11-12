@@ -22,6 +22,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -31,16 +32,15 @@ import com.developpeuseoc.go4lunch.model.PlaceAPI;
 import com.developpeuseoc.go4lunch.model.User;
 import com.developpeuseoc.go4lunch.notification.AlertReceiver;
 import com.developpeuseoc.go4lunch.ui.fragment.ChatFragment;
-import com.developpeuseoc.go4lunch.ui.fragment.ListFragment;
-import com.developpeuseoc.go4lunch.ui.fragment.MapFragment;
+import com.developpeuseoc.go4lunch.ui.fragment.ListViewFragment;
+import com.developpeuseoc.go4lunch.ui.fragment.MapViewFragment;
 import com.developpeuseoc.go4lunch.ui.fragment.WorkmatesFragment;
 import com.developpeuseoc.go4lunch.service.PlacesStreams;
-import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.muddzdev.styleabletoast.StyleableToast;
 
 import java.util.Calendar;
 import java.util.Objects;
@@ -59,8 +59,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private BottomNavigationView bottomNavigationView;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
+    private FirebaseAuth auth;
 
-    private Disposable mDisposable;
+    private Disposable disposable;
     private PlaceAPI detail;
     private String idRestaurant;
 
@@ -74,6 +75,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toolbar = findViewById(R.id.activity_main_toolbar);
         bottomNavigationView = findViewById(R.id.activity_main_bottom_nav_view);
         navigationView = findViewById(R.id.activity_main_nav_view);
+
+        auth = FirebaseAuth.getInstance();
 
         // 2 - Method to configure toolbar, navigationView ect...
         this.configureToolbar();
@@ -97,7 +100,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         bottomNavigationView.setOnNavigationItemSelectedListener(navlistener);
 
         // 6 - Launch MapFragment in fragment_container
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MapFragment()).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MapViewFragment()).commit();
 
     }
 
@@ -118,11 +121,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                     switch (menuItem.getItemId()) {
                         case R.id.nav_map_view:
-                            selectedFragment = new MapFragment();
+                            selectedFragment = new MapViewFragment();
 
                             break;
                         case R.id.nav_list_view:
-                            selectedFragment = new ListFragment();
+                            selectedFragment = new ListViewFragment();
                             break;
                         case R.id.nav_workmates:
                             selectedFragment = new WorkmatesFragment();
@@ -165,7 +168,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                             if (Objects.requireNonNull(user).getPlaceId() != null) {
                                 MainActivity.this.userResto(user);
                             } else {
-                                StyleableToast.makeText(MainActivity.this.getApplicationContext(), MainActivity.this.getString(R.string.no_restaurant_choose), R.style.personalizedToast).show();
+                                Toast.makeText(MainActivity.this.getApplicationContext(), MainActivity.this.getString(R.string.no_restaurant_choose), Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
@@ -176,8 +179,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(settingIntent);
                 break;
             case R.id.menu_drawer_Logout:
-                signOutFromUserFirebase();
-                StyleableToast.makeText(getApplicationContext(), getString(R.string.navigation_drawer_menu_logout), R.style.personalizedToast).show();
+                auth.signOut();
+                startActivity(new Intent(MainActivity.this, SignInActivity.class));
+                finish();
                 break;
         }
         this.drawerLayout.closeDrawer(GravityCompat.START);
@@ -185,14 +189,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
 
-    // To Log Out
-    private void signOutFromUserFirebase() {
-        if (getCurrentUser() != null) {
-            AuthUI.getInstance()
-                    .signOut(this)
-                    .addOnSuccessListener(this, this.updateUIAfterRestRequestsCompleted(SIGN_OUT_TASK));
-        }
-    }
 
     //Create OnCompleteListener called after tasks ended for sign out
     private OnSuccessListener<Void> updateUIAfterRestRequestsCompleted(final int origin) {
@@ -264,7 +260,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     //Http request for retrieve name resto with id
     private void executeHttpRequestWithRetrofit() {
-        this.mDisposable = PlacesStreams.streamFetchDetails(idRestaurant)
+        this.disposable = PlacesStreams.streamFetchDetails(idRestaurant)
                 .subscribeWith(new DisposableObserver<PlaceAPI>() {
 
                     @Override

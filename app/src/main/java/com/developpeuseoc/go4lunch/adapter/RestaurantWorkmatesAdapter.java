@@ -8,10 +8,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatImageView;
+import androidx.appcompat.widget.AppCompatTextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.RequestManager;
@@ -28,9 +29,6 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.observers.DisposableObserver;
 
 public class RestaurantWorkmatesAdapter extends FirestoreRecyclerAdapter<User, RestaurantWorkmatesAdapter.RestaurantWorkmatesViewHolder> {
-
-
-    TextView mRestoMatesName;
 
     private RequestManager glide;
 
@@ -60,8 +58,8 @@ public class RestaurantWorkmatesAdapter extends FirestoreRecyclerAdapter<User, R
     public static class RestaurantWorkmatesViewHolder extends RecyclerView.ViewHolder {
 
         // Attribute
-        private ImageView restoWorkmatePhoto;
-        private TextView restoWorkmateName;
+        private AppCompatImageView restoWorkmatePhoto;
+        private AppCompatTextView restoWorkmateName;
 
         private Disposable mDisposable;
         private String restoName;

@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -39,7 +40,6 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.muddzdev.styleabletoast.StyleableToast;
 
 import java.util.Objects;
 import java.util.UUID;
@@ -208,7 +208,7 @@ public class ChatFragment  extends BaseFragment implements ChatAdapter.Listener 
                         .apply(RequestOptions.centerCropTransform())
                         .into(this.imageViewPreview);
             } else {
-                StyleableToast.makeText(Objects.requireNonNull(getContext()), getString(R.string.toast_title_no_image_chosen), R.style.personalizedToast).show();
+                Toast.makeText(Objects.requireNonNull(getContext()), getString(R.string.toast_title_no_image_chosen), Toast.LENGTH_SHORT).show();
             }
         }
     }

@@ -32,7 +32,7 @@ import com.developpeuseoc.go4lunch.BuildConfig;
 import com.developpeuseoc.go4lunch.R;
 import com.developpeuseoc.go4lunch.adapter.RestaurantWorkmatesAdapter;
 import com.developpeuseoc.go4lunch.api.UserHelper;
-import com.developpeuseoc.go4lunch.model.PlaceDetail.PlaceDetailsResult;
+import com.developpeuseoc.go4lunch.model.PlaceAPI;
 import com.developpeuseoc.go4lunch.model.User;
 import com.developpeuseoc.go4lunch.utils.FirebaseUtils;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
@@ -42,7 +42,6 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
-import com.muddzdev.styleabletoast.StyleableToast;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -56,10 +55,10 @@ public class RestaurantActivity extends AppCompatActivity implements Serializabl
     private static final int REQUEST_CALL = 100;
     String GOOGLE_MAP_API_KEY = BuildConfig.GOOGLE_MAP_API_KEY;
 
-    private ImageView restoPhoto;
-    private TextView restoName;
+    private ImageView photo;
+    private TextView name;
     private RatingBar ratingBar;
-    private TextView restoAddress;
+    private TextView address;
     private FloatingActionButton okFloatingButton;
     private Button callButton;
     private Button webButton;
@@ -86,10 +85,10 @@ public class RestaurantActivity extends AppCompatActivity implements Serializabl
         setContentView(R.layout.activity_restaurant);
 
         // FindViewById
-        restoPhoto = findViewById(R.id.restoPhotoImageView);
-        restoName = findViewById(R.id.restoNameTextView);
+        photo = findViewById(R.id.restoPhotoImageView);
+        name = findViewById(R.id.restoNameTextView);
         ratingBar = findViewById(R.id.restoRatingBar);
-        restoAddress = findViewById(R.id.restoAddressTextView);
+        address = findViewById(R.id.restoAddressTextView);
         okFloatingButton = findViewById(R.id.restoOkFloatingActionButton);
         callButton = findViewById(R.id.restoCallButton);
         webButton = findViewById(R.id.restoWebButton);
@@ -106,9 +105,9 @@ public class RestaurantActivity extends AppCompatActivity implements Serializabl
         Bundle bundle = intent.getExtras();
 
         //for retrieve like when open
-        PlaceDetailsResult placeDetailsResult = null;
+        PlaceAPI.PlaceDetailsResult placeDetailsResult = null;
         if (bundle != null) {
-            placeDetailsResult = (PlaceDetailsResult) bundle.getSerializable("placeDetailsResult");
+            placeDetailsResult = (PlaceAPI.PlaceDetailsResult) bundle.getSerializable("placeDetailsResult");
         }
         if (placeDetailsResult != null) {
             final String placeRestaurantId = placeDetailsResult.getPlaceId();
@@ -139,10 +138,10 @@ public class RestaurantActivity extends AppCompatActivity implements Serializabl
         Intent intent = this.getIntent();
         Bundle bundle = intent.getExtras();
 
-        PlaceDetailsResult placeDetailsResult = null;
+        PlaceAPI.PlaceDetailsResult placeDetailsResult = null;
 
         if (bundle != null) {
-            placeDetailsResult = (PlaceDetailsResult) bundle.getSerializable("placeDetailsResult");
+            placeDetailsResult = (PlaceAPI.PlaceDetailsResult) bundle.getSerializable("placeDetailsResult");
         }
         if (placeDetailsResult != null) {
             updateUI(placeDetailsResult, mGlide);
@@ -153,7 +152,7 @@ public class RestaurantActivity extends AppCompatActivity implements Serializabl
     }
 
     //For update UI
-    private void updateUI(PlaceDetailsResult placeDetailsResult, RequestManager glide) {
+    private void updateUI(PlaceAPI.PlaceDetailsResult placeDetailsResult, RequestManager glide) {
         this.mGlide = glide;
 
         //for add photos with Glide
@@ -161,15 +160,15 @@ public class RestaurantActivity extends AppCompatActivity implements Serializabl
             Glide.with(this)
                     .load("https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&maxheight=400&photoreference=" + placeDetailsResult.getPhotos().get(0).getPhotoReference() + "&key=" + GOOGLE_MAP_API_KEY)
                     .apply(RequestOptions.centerCropTransform())
-                    .into(restoPhoto);
+                    .into(photo);
         } else {
-            restoPhoto.setImageResource(R.drawable.ic_person_outline);
+            photo.setImageResource(R.drawable.ic_person_outline);
         }
         //For Restaurant Name
-        restoName.setText(placeDetailsResult.getName());
+        name.setText(placeDetailsResult.getName());
 
         //For Restaurant address
-        restoAddress.setText(placeDetailsResult.getVicinity());
+        address.setText(placeDetailsResult.getVicinity());
 
         //For rating
         restaurantRating(placeDetailsResult);
@@ -185,7 +184,7 @@ public class RestaurantActivity extends AppCompatActivity implements Serializabl
 
 
 
-    private void restaurantRating(PlaceDetailsResult placeDetailsResult) {
+    private void restaurantRating(PlaceAPI.PlaceDetailsResult placeDetailsResult) {
 
         if (placeDetailsResult.getRating() != null) {
             double restaurantRating = placeDetailsResult.getRating();
@@ -223,14 +222,14 @@ public class RestaurantActivity extends AppCompatActivity implements Serializabl
         Intent intent = this.getIntent();
         Bundle bundle = intent.getExtras();
 
-        PlaceDetailsResult placeDetailsResult = null;
+        PlaceAPI.PlaceDetailsResult placeDetailsResult = null;
         if (bundle != null) {
-            placeDetailsResult = (PlaceDetailsResult) bundle.getSerializable("placeDetailsResult");
+            placeDetailsResult = (PlaceAPI.PlaceDetailsResult) bundle.getSerializable("placeDetailsResult");
         }
 
         if (placeDetailsResult != null) {
             UserHelper.updatePlaceId(Objects.requireNonNull(FirebaseUtils.getCurrentUser()).getUid(), placeDetailsResult.getPlaceId(), getCurrentTime());
-            okFloatingButton.setImageDrawable(getResources().getDrawable(R.drawable.fui_ic_check_circle_black_128dp));
+            okFloatingButton.setImageDrawable(getResources().getDrawable(R.drawable.ic_check_selected));
             okFloatingButton.setTag(UNSELECTED);
         }
     }
@@ -238,7 +237,7 @@ public class RestaurantActivity extends AppCompatActivity implements Serializabl
     //For remove restaurant choice
     public void removeRestaurant() {
         UserHelper.deletePlaceId(Objects.requireNonNull(Objects.requireNonNull(FirebaseUtils.getCurrentUser()).getUid()));
-        okFloatingButton.setImageDrawable(getResources().getDrawable(R.drawable.ic_done_24));
+        okFloatingButton.setImageDrawable(getResources().getDrawable(R.drawable.ic_check_unselected));
         okFloatingButton.setTag(SELECTED);
     }
 
@@ -264,7 +263,7 @@ public class RestaurantActivity extends AppCompatActivity implements Serializabl
             Log.d("PhoneNumber", formattedPhoneNumber);
             startActivity(intent);
         } else {
-            StyleableToast.makeText(RestaurantActivity.this, getString(R.string.no_phone_available), R.style.personalizedToast).show();
+            Toast.makeText(RestaurantActivity.this, getString(R.string.no_phone_available), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -298,7 +297,7 @@ public class RestaurantActivity extends AppCompatActivity implements Serializabl
             Log.d("Website", url);
             startActivity(intent);
         } else {
-            StyleableToast.makeText(this, getString(R.string.no_website), R.style.personalizedToast).show();
+            Toast.makeText(this, getString(R.string.no_website), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -368,9 +367,9 @@ public class RestaurantActivity extends AppCompatActivity implements Serializabl
         Intent intent = this.getIntent();
         Bundle bundle = intent.getExtras();
 
-        PlaceDetailsResult placeDetailsResult = null;
+        PlaceAPI.PlaceDetailsResult placeDetailsResult = null;
         if (bundle != null) {
-            placeDetailsResult = (PlaceDetailsResult) bundle.getSerializable("placeDetailsResult");
+            placeDetailsResult = (PlaceAPI.PlaceDetailsResult) bundle.getSerializable("placeDetailsResult");
         }
         if (placeDetailsResult != null) {
             final String placeRestaurantId = placeDetailsResult.getPlaceId();
@@ -381,7 +380,7 @@ public class RestaurantActivity extends AppCompatActivity implements Serializabl
                     if (user != null) {
                         if (!user.getLike().isEmpty() && user.getLike().contains(placeRestaurantId)) {
                             UserHelper.deleteLike(FirebaseUtils.getCurrentUser().getUid(), placeRestaurantId);
-                            starButton.setBackgroundResource(R.color.fui_transparent);
+                            starButton.setBackgroundResource(R.color.quantum_grey);
                         } else {
                             UserHelper.updateLike(FirebaseUtils.getCurrentUser().getUid(), placeRestaurantId);
                             starButton.setBackgroundResource(R.color.quantum_yellow);

@@ -1,37 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="5dp"
-    android:elevation="4dp"
-    android:orientation="horizontal"
-    android:padding="20dp">
+    android:background="@android:color/white">
 
-    <RelativeLayout
-        android:id="@+id/restoWorkmateRelativeLayout"
-        android:layout_width="match_parent"
-        android:layout_height="65dp"
-        android:scaleType="centerCrop">
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/restoWorkmatePhoto"
+        android:layout_width="96dp"
+        android:layout_height="96dp"
+        android:padding="12dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/restoWorkmatePhoto"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="10dp"
-            android:contentDescription="restoMatesPhoto" />
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/restoWorkmateName"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="4dp"
+        android:gravity="center_vertical"
+        android:textColor="@color/quantum_grey"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="@id/restoWorkmatePhoto"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/restoWorkmatePhoto"
+        app:layout_constraintTop_toTopOf="@id/restoWorkmatePhoto"/>
 
-        <TextView
-            android:id="@+id/restoWorkmateName"
-            android:layout_width="280dp"
-            android:layout_height="40dp"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="20dp"
-            android:layout_toEndOf="@id/restoWorkmatePhoto"
-            android:textColor="#000"
-            android:textStyle="italic" />
+</androidx.constraintlayout.widget.ConstraintLayout>
 
-    </RelativeLayout>
-</androidx.cardview.widget.CardView>

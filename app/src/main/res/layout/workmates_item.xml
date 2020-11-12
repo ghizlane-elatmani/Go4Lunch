@@ -1,36 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:elevation="4dp"
-    android:orientation="horizontal"
-    android:padding="20dp">
+    android:background="@android:color/white">
 
-    <RelativeLayout
-        android:id="@+id/workmatesRelativeLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="centerCrop">
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/workmatesPhotoImageView"
+        android:layout_width="96dp"
+        android:layout_height="96dp"
+        android:padding="12dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/workmatesPhotoImageView"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="10dp"
-            android:contentDescription="workmatesPhoto" />
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/workmatesNameTextView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="4dp"
+        android:gravity="center_vertical"
+        android:textColor="@color/quantum_grey"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="@id/workmatesPhotoImageView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/workmatesPhotoImageView"
+        app:layout_constraintTop_toTopOf="@id/workmatesPhotoImageView"/>
 
-        <TextView
-            android:id="@+id/workmatesNameTextView"
-            android:layout_width="280dp"
-            android:layout_height="40dp"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="20dp"
-            android:layout_toEndOf="@id/workmatesPhotoImageView"
-            android:textColor="#000" />
-
-    </RelativeLayout>
-
-</androidx.cardview.widget.CardView>
+</androidx.constraintlayout.widget.ConstraintLayout>

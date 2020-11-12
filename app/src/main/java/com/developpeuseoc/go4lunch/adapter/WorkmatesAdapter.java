@@ -8,10 +8,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatImageView;
+import androidx.appcompat.widget.AppCompatTextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.RequestManager;
@@ -56,8 +56,8 @@ public class WorkmatesAdapter extends FirestoreRecyclerAdapter<User, WorkmatesAd
     public static class WorkmatesViewHolder  extends RecyclerView.ViewHolder {
 
         // --- Attribute ---
-        private ImageView workmatesPhoto;
-        private TextView workmatesName;
+        private AppCompatImageView workmatesPhoto;
+        private AppCompatTextView workmatesName;
 
         private String idResto;
         private String restoName;

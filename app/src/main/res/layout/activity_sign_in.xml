@@ -60,7 +60,8 @@
             android:textSize="15sp"
             android:drawableStart="@drawable/ic_facebook_logo"
             android:padding="5dp"
-            android:background="@drawable/shape_facebook_button" />
+            android:background="@drawable/shape_facebook_button"
+            android:onClick="onClick"/>
 
         <Button
             android:id="@+id/googleLoginButton"
@@ -75,7 +76,8 @@
             android:textSize="15sp"
             android:drawableLeft="@drawable/ic_google_logo"
             android:padding="10dp"
-            android:background="@drawable/shape_google_button"/>
+            android:background="@drawable/shape_google_button"
+            android:onClick="onClick"/>
 
     </LinearLayout>
 

@@ -69,7 +69,7 @@
             android:hint="@string/compose_your_message"
             android:imeOptions="actionDone"
             android:inputType="textMultiLine"
-            android:textSize="@dimen/default_text_size" />
+            android:textSize="15sp" />
 
         <!-- ADD MESSAGE BUTTON -->
         <Button

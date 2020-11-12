@@ -227,8 +227,12 @@ public class ListRestaurantAdapter extends RecyclerView.Adapter<ListRestaurantAd
                                 }
                                 int numberWorkmates = Objects.requireNonNull(task.getResult()).size();
                                 String workmatesNumber = "(" + numberWorkmates + ")";
-                                workmates.setText(workmatesNumber);
 
+                                if(numberWorkmates > 0) {
+                                    workmates.setText(workmatesNumber);
+                                } else {
+                                    workmates.setVisibility(View.INVISIBLE);
+                                }
 
                             } else {
                                 Log.e("numberMatesError", "Error getting documents: ", task.getException());

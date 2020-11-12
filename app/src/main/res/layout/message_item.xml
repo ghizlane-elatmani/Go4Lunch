@@ -87,7 +87,7 @@
                 android:padding="10dp"
                 android:textColor="@color/quantum_brown900"
                 android:textIsSelectable="true"
-                android:textSize="@dimen/default_text_size"
+                android:textSize="15sp"
                 android:textStyle="bold"
                 tools:text="Text example" />
 

@@ -20,8 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.developpeuseoc.go4lunch.R;
 import com.developpeuseoc.go4lunch.adapter.ListRestaurantAdapter;
-import com.developpeuseoc.go4lunch.model.PlaceDetail.PlaceDetail;
-import com.developpeuseoc.go4lunch.model.PlaceDetail.PlaceDetailsResult;
+import com.developpeuseoc.go4lunch.model.PlaceAPI;
 import com.developpeuseoc.go4lunch.ui.activity.RestaurantActivity;
 import com.developpeuseoc.go4lunch.utils.ItemClickSupport;
 import com.developpeuseoc.go4lunch.service.PlacesStreams;
@@ -34,16 +33,16 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.observers.DisposableSingleObserver;
 
 
-public class ListFragment extends BaseFragment implements Serializable {
+public class ListViewFragment extends BaseFragment implements Serializable {
 
     public Disposable disposable;
-    public List<PlaceDetail> placeDetails;
+    public List<PlaceAPI> placeAPIS;
     RecyclerView recyclerView;
     private String position;
     private ListRestaurantAdapter adapter;
 
 
-    public ListFragment() {
+    public ListViewFragment() {
         // Required empty public constructor
     }
 
@@ -110,9 +109,9 @@ public class ListFragment extends BaseFragment implements Serializable {
      */
     private void configureRecyclerView() {
         //reset List
-        this.placeDetails = new ArrayList<>();
+        this.placeAPIS = new ArrayList<>();
         //create adapter passing the list of restaurants
-        this.adapter = new ListRestaurantAdapter(this.placeDetails, Glide.with(this), this.position);
+        this.adapter = new ListRestaurantAdapter(this.placeAPIS, Glide.with(this), this.position);
         //Attach the adapter to the recyclerview to items
         this.recyclerView.setAdapter(adapter);
         //Set layout manager to position the items
@@ -134,12 +133,12 @@ public class ListFragment extends BaseFragment implements Serializable {
                     @Override
                     public void onItemClicked(RecyclerView recyclerView, int position, View v) {
 
-                        PlaceDetailsResult placeDetailsResult = placeDetails.get(position).getResult();
-                        Intent intent = new Intent(ListFragment.this.getActivity(), RestaurantActivity.class);
+                        PlaceAPI.PlaceDetailsResult placeDetailsResult = placeAPIS.get(position).getResult();
+                        Intent intent = new Intent(ListViewFragment.this.getActivity(), RestaurantActivity.class);
                         Bundle bundle = new Bundle();
                         bundle.putSerializable("placeDetailsResult", placeDetailsResult);
                         intent.putExtras(bundle);
-                        ListFragment.this.startActivity(intent);
+                        ListViewFragment.this.startActivity(intent);
                     }
                 }));
     }
@@ -164,10 +163,10 @@ public class ListFragment extends BaseFragment implements Serializable {
     private void executeHttpRequestWithRetrofit() {
 
         this.disposable = PlacesStreams.streamFetchRestaurantDetails(position, 2000, "restaurant")
-                .subscribeWith(new DisposableSingleObserver<List<PlaceDetail>>() {
+                .subscribeWith(new DisposableSingleObserver<List<PlaceAPI>>() {
 
                     @Override
-                    public void onSuccess(List<PlaceDetail> placeDetails) {
+                    public void onSuccess(List<PlaceAPI> placeDetails) {
 
                         updateUI(placeDetails);
 
@@ -192,10 +191,10 @@ public class ListFragment extends BaseFragment implements Serializable {
      *
      * @param placeDetails
      */
-    private void updateUI(List<PlaceDetail> placeDetails) {
+    private void updateUI(List<PlaceAPI> placeDetails) {
 
-        this.placeDetails.clear();
-        this.placeDetails.addAll(placeDetails);
+        this.placeAPIS.clear();
+        this.placeAPIS.addAll(placeDetails);
 
         Log.d("TestUI", placeDetails.toString());
         adapter.notifyDataSetChanged();
@@ -207,10 +206,10 @@ public class ListFragment extends BaseFragment implements Serializable {
     private void executeHttpRequestWithRetrofitAutocomplete(String input) {
 
         this.disposable = PlacesStreams.streamFetchAutocompleteInfos(input, 2000, position, "establishment")
-                .subscribeWith(new DisposableSingleObserver<List<PlaceDetail>>() {
+                .subscribeWith(new DisposableSingleObserver<List<PlaceAPI>>() {
 
                     @Override
-                    public void onSuccess(List<PlaceDetail> placeDetails) {
+                    public void onSuccess(List<PlaceAPI> placeDetails) {
 
                         updateUI(placeDetails);
 
