@@ -231,6 +231,7 @@ public class RestaurantActivity extends AppCompatActivity implements Serializabl
             UserHelper.updatePlaceId(Objects.requireNonNull(FirebaseUtils.getCurrentUser()).getUid(), placeDetailsResult.getPlaceId(), getCurrentTime());
             okFloatingButton.setImageDrawable(getResources().getDrawable(R.drawable.ic_check_selected));
             okFloatingButton.setTag(UNSELECTED);
+
         }
     }
 

@@ -283,9 +283,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 });
     }
 
-    /**
-     * For your lunch in navigation drawer : retrieve selected restaurant
-     */
+    // For your lunch in navigation drawer : retrieve selected restaurant
     public void startForLunch() {
         Intent intent = new Intent(this, RestaurantActivity.class);
         Bundle bundle = new Bundle();
@@ -294,19 +292,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         this.startActivity(intent);
     }
 
-    // --- Notification ---
 
-    //set hour of nofications
-    public void onTimeSet() {
-        Calendar c = Calendar.getInstance();
-        c.set(Calendar.HOUR_OF_DAY, 12);
-        c.set(Calendar.MINUTE, 0);
-        c.set(Calendar.SECOND, 0);
+    // --- Notification
 
-        startAlarm(c);
-    }
-
-    //For notifications
+    // For notifications
     private void startAlarm(Calendar c) {
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(this, AlertReceiver.class);
@@ -316,5 +305,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             c.add(Calendar.DATE, 1);
         }
         Objects.requireNonNull(alarmManager).setExact(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), pendingIntent);
+    }
+
+    //For set hour of nofications
+    public void onTimeSet() {
+        Calendar c = Calendar.getInstance();
+        c.set(Calendar.HOUR_OF_DAY, 12);
+        c.set(Calendar.MINUTE, 0);
+        c.set(Calendar.SECOND, 0);
+
+        startAlarm(c);
     }
 }

@@ -84,5 +84,6 @@
     <string name="email_already_linked_message"></string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="notification">Notification :</string>
 
 </resources>

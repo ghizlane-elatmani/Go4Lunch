@@ -65,7 +65,7 @@ public class MapViewFragment extends BaseFragment implements LocationListener, S
     private Disposable mDisposable;
     private String mPosition;
     private Marker positionMarker;
-    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private CollectionReference collectionReference;
 
     public MapViewFragment() {
         // Required empty public constructor
@@ -80,6 +80,8 @@ public class MapViewFragment extends BaseFragment implements LocationListener, S
         //for SearchView
         setHasOptionsMenu(true);
 
+        // Pins
+        collectionReference = FirebaseFirestore.getInstance().collection("users");
 
         return view;
 
@@ -177,7 +179,6 @@ public class MapViewFragment extends BaseFragment implements LocationListener, S
 
             final MarkerOptions marker = new MarkerOptions().position(latLng).title(detail.getResult().getName());
 
-            CollectionReference collectionReference = FirebaseFirestore.getInstance().collection("users");
             ArrayList<String> ids = new ArrayList<>(); //Contains your keys
             ArrayList<Task<QuerySnapshot>> tasks = new ArrayList<>();
             for (String uid : ids) {
@@ -205,29 +206,6 @@ public class MapViewFragment extends BaseFragment implements LocationListener, S
             positionMarker.showInfoWindow();
             PlaceAPI.PlaceDetailsResult placeDetailsResult = detail.getResult();
             positionMarker.setTag(placeDetailsResult);
-        }
-    }
-
-    // BitmapDescriptor for vector drawable on the map
-    private BitmapDescriptor getBitmapDescriptor(Context context, int id) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            VectorDrawable vectorDrawable = (VectorDrawable) ContextCompat.getDrawable(context, id);
-            if (vectorDrawable != null) {
-                int height = vectorDrawable.getIntrinsicHeight();
-                int width = vectorDrawable.getIntrinsicWidth();
-
-                vectorDrawable.setBounds(0, 0, width, height);
-
-                Bitmap bm = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
-                Canvas canvas = new Canvas(bm);
-                vectorDrawable.draw(canvas);
-
-                return BitmapDescriptorFactory.fromBitmap(bm);
-            } else {
-                return null;
-            }
-        } else {
-            return BitmapDescriptorFactory.fromResource(id);
         }
     }
 

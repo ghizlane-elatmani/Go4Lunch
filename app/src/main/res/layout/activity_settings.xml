@@ -1,9 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="25dp"
     tools:context=".ui.activity.SettingsActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+    <Switch
+        android:id="@+id/notification_switch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/small_margin"
+        android:text="@string/notification"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/large_text_size" />
+
+    <Button
+        android:id="@+id/confirm_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:enabled="false"
+        android:layout_margin="@dimen/average_margin"
+        android:text="Confirm"
+        android:textColor="@color/quantum_greyblack1000"
+        android:textSize="@dimen/average_text_size"
+        android:layout_centerInParent="true"
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp"
+        android:background="@drawable/shape_button_confirm"/>
+
+</RelativeLayout>

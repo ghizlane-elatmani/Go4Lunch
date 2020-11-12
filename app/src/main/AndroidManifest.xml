@@ -52,15 +52,7 @@
             </intent-filter>
         </activity>
 
-
-<!--        <service-->
-<!--            android:name=".notification.FirebaseInstanceIDService">-->
-<!--            <intent-filter>-->
-<!--                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>-->
-<!--            </intent-filter>-->
-<!--        </service>-->
-
-<!--       <receiver android:name=".notification.AlertReceiver" />-->
+       <receiver android:name=".notification.AlertReceiver" />
 
     </application>
 
