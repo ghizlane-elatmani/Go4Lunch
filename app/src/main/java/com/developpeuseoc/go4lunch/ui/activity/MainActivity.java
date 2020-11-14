@@ -165,7 +165,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         @Override
                         public void onSuccess(DocumentSnapshot documentSnapshot) {
                             User user = documentSnapshot.toObject(User.class);
-                            if (Objects.requireNonNull(user).getPlaceId() != null) {
+                            if (Objects.requireNonNull(user).getRestaurantId() != null) {
                                 MainActivity.this.userResto(user);
                             } else {
                                 Toast.makeText(MainActivity.this.getApplicationContext(), MainActivity.this.getString(R.string.no_restaurant_choose), Toast.LENGTH_SHORT).show();
@@ -254,7 +254,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     //For retrieve id resto for your lunch in navigation drawer
     private void userResto(User users) {
-        idRestaurant = users.getPlaceId();
+        idRestaurant = users.getRestaurantId();
         executeHttpRequestWithRetrofit();
     }
 

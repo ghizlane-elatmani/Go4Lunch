@@ -51,9 +51,9 @@ public class AlertReceiver extends BroadcastReceiver {
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 User user = documentSnapshot.toObject(User.class);
                 if (user != null) {
-                    if (!user.getPlaceId().isEmpty() && (user.getCurrentTime() <= 1200) && (user.getCurrentTime() > 0)) {
+                    if (!user.getRestaurantId().isEmpty() && (user.getCurrentTime() <= 1200) && (user.getCurrentTime() > 0)) {
 
-                        userId = user.getPlaceId();
+                        userId = user.getRestaurantId();
                         timeUser = user.getCurrentTime();
                         AlertReceiver.this.executeHttpRequestWithRetrofit();
                         Log.d("AlertReceiver", userId);

@@ -12,7 +12,8 @@ public class User implements Serializable {
     private String username;
     @Nullable
     private String urlPicture;
-    private String placeId;
+    private String restaurantId;
+    private String restaurantName;
     private ArrayList<String> like;
     private int currentTime;
     private boolean userChat;
@@ -22,11 +23,12 @@ public class User implements Serializable {
     public User() { }
 
 
-    public User(String uid, String username, @Nullable String urlPicture, String placeId, ArrayList<String> like, int currentTime) {
+    public User(String uid, String username, @Nullable String urlPicture, String restaurantId, String restaurantName, ArrayList<String> like, int currentTime) {
         this.uid = uid;
         this.username = username;
         this.urlPicture = urlPicture;
-        this.placeId = placeId;
+        this.restaurantId = restaurantId;
+        this.restaurantName = restaurantName;
         this.like = like;
         this.userChat = false;
         this.currentTime = currentTime;
@@ -37,9 +39,10 @@ public class User implements Serializable {
     public String getUid() { return uid; }
     public String getUsername() { return username; }
     public String getUrlPicture() { return urlPicture; }
-    public String getPlaceId(){
-        return placeId;
+    public String getRestaurantId(){
+        return restaurantId;
     }
+    public String getRestaurantName(){ return restaurantName; }
     public ArrayList<String> getLike() {
         return like;
     }
@@ -53,8 +56,11 @@ public class User implements Serializable {
     public void setUsername(String username) { this.username = username; }
     public void setUid(String uid) { this.uid = uid; }
     public void setUrlPicture(String urlPicture) { this.urlPicture = urlPicture; }
-    public void setPlaceId(String placeId) {
-        this.placeId = placeId;
+    public void setRestaurantId(String restaurantId) {
+        this.restaurantId = restaurantId;
+    }
+    public void setRestaurantName(String restaurantName) {
+        this.restaurantName = restaurantName;
     }
     public void setLike(ArrayList<String> like) {
         this.like = like;

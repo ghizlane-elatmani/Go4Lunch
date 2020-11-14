@@ -109,6 +109,7 @@ public class RestaurantActivity extends AppCompatActivity implements Serializabl
         if (bundle != null) {
             placeDetailsResult = (PlaceAPI.PlaceDetailsResult) bundle.getSerializable("placeDetailsResult");
         }
+
         if (placeDetailsResult != null) {
             final String placeRestaurantId = placeDetailsResult.getPlaceId();
             UserHelper.getUser(Objects.requireNonNull(FirebaseUtils.getCurrentUser()).getUid()).addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -120,6 +121,23 @@ public class RestaurantActivity extends AppCompatActivity implements Serializabl
                             starButton.setBackgroundColor(Color.BLUE);
                         } else {
                             starButton.setBackgroundColor(Color.TRANSPARENT);
+                        }
+                    }
+                }
+            });
+        }
+
+        if (placeDetailsResult != null) {
+            final String placeRestaurantId = placeDetailsResult.getPlaceId();
+            UserHelper.getUser(Objects.requireNonNull(FirebaseUtils.getCurrentUser()).getUid()).addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                @Override
+                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                    User user = documentSnapshot.toObject(User.class);
+                    if (user != null) {
+                        if (user.getRestaurantId() == placeRestaurantId) {
+                            okFloatingButton.setImageDrawable(getResources().getDrawable(R.drawable.ic_check_selected));
+                        } else {
+                            okFloatingButton.setImageDrawable(getResources().getDrawable(R.drawable.ic_check_unselected));
                         }
                     }
                 }

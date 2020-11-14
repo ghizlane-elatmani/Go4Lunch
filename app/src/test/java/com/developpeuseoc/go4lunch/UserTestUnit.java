@@ -1,6 +1,5 @@
 package com.developpeuseoc.go4lunch;
 
-import com.developpeuseoc.go4lunch.api.UserHelper;
 import com.developpeuseoc.go4lunch.model.User;
 
 import org.junit.Before;
@@ -9,9 +8,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import static com.developpeuseoc.go4lunch.utils.FirebaseUtils.onFailureListener;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(JUnit4.class)
@@ -56,14 +53,14 @@ public class UserTestUnit {
         user.setUsername(username2);
         user.setUid(uid2);
         user.setUrlPicture(urlPicture2);
-        user.setPlaceId(placeId);
+        user.setRestaurantId(placeId);
         user.setLike(likes);
 
 
         assertEquals(uid2, user.getUid());
         assertEquals(username2, user.getUsername());
         assertEquals(urlPicture2, user.getUrlPicture());
-        assertEquals(placeId, user.getPlaceId());
+        assertEquals(placeId, user.getRestaurantId());
         assertEquals(likes, user.getLike());
     }
 

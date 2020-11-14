@@ -28,10 +28,11 @@ public class SettingsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
+        notificationSwitch = findViewById(R.id.notification_switch);
+
 
         this.switchOnOff();
 
-        notificationSwitch = findViewById(R.id.notification_switch);
     }
 
     // For set time of notifications
@@ -76,6 +77,7 @@ public class SettingsActivity extends AppCompatActivity {
                     onTimeSet();
                     editor.putBoolean("alarmOn", notificationSwitch.isChecked());
                 } else {
+                    cancelAlarm();
                     editor.putBoolean("alarmOff", !notificationSwitch.isChecked());
                 }
                 editor.apply();

@@ -8,4 +8,8 @@ public class Constant {
     public static final String CHANNEL_ID = "channel id";
     public static final String CHANNEL_NAME = "channel name";
 
+
+    public static final String RESTAURANT_ID_FIELD = "restaurantId";
+    public static final String LIKES_RESTAURANTS_ID_FIELD = "likesRestaurants";
+
 }

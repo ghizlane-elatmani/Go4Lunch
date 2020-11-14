@@ -1,68 +1,83 @@
 package com.developpeuseoc.go4lunch.api;
 
 
+import android.util.Log;
+
 import com.developpeuseoc.go4lunch.model.User;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
 import java.util.ArrayList;
-import java.util.List;
+
+import static com.developpeuseoc.go4lunch.utils.Constant.LIKES_RESTAURANTS_ID_FIELD;
+import static com.developpeuseoc.go4lunch.utils.Constant.RESTAURANT_ID_FIELD;
 
 
 public class UserHelper {
 
+    // --- Attribute ---
+    private static UserHelper USER_HELPER;
+    public static final String COLLECTION_NAME = "users";
+    public static final String RESTAURANT_NAME_FIELD = "restaurantName";
+    private static CollectionReference collectionReference;
 
-    private static final String COLLECTION_NAME = "users";
-
-    // --- COLLECTION REFERENCE ---
-    public static CollectionReference getUsersCollection() {
-        return FirebaseFirestore.getInstance().collection(COLLECTION_NAME);
+    // --- SINGLETON ---
+    public static UserHelper getInstance(){
+        if(USER_HELPER != null){
+            USER_HELPER = new UserHelper();
+        }
+        return USER_HELPER;
     }
 
+    // --- CONSTRUCTOR ---
+    private UserHelper(){
+        FirebaseFirestore firestore = FirebaseFirestore.getInstance();
+        this.collectionReference = firestore.collection(COLLECTION_NAME);
+    }
+
+
     // --- CREATE ---
-    public static Task<Void> createUser(String uid, String username, String urlPicture, String placeId, ArrayList<String> like, int currentTime) {
-        //Create user object
-        User userToCreate = new User(uid, username, urlPicture, placeId, like, currentTime);
+    public static Task<Void> createUser(User user) {
         //Add a new user Document in Firestore
-        return UserHelper.getUsersCollection()
-                .document(uid) //Setting uID for Document
-                .set(userToCreate);//Setting object for Document
+        return collectionReference
+                .document(user.getUid())
+                .set(user);
     }
 
     // --- GET ---
-    public static Task<DocumentSnapshot> getUser(String uid) {
-        return UserHelper.getUsersCollection().document(uid).get();
+    public Task<DocumentSnapshot> getUser(String uid) {
+        return collectionReference
+                .document(uid)
+                .get();
+    }
+
+
+    public Query getUsersQuery() {
+        return collectionReference;
+    }
+
+    public Query retrieveWorkmatesForThisRestaurant(String restaurantId) {
+        return collectionReference
+                .whereEqualTo(RESTAURANT_ID_FIELD, restaurantId);
     }
 
     // --- UPDATE ---
-    public static Task<Void> updateUsername(String username, String uid) {
-        return UserHelper.getUsersCollection().document(uid).update("username", username);
+    public static Task<Void> updateUserRestaurant(User user) {
+        return collectionReference
+                .document(user.getUid())
+                .update(RESTAURANT_ID_FIELD, user.getRestaurantId(),
+                        RESTAURANT_NAME_FIELD, user.getRestaurantName());
     }
 
-    public static Task<Void> updatePlaceId(String uid, String placeId, int currentTime) {
-        return UserHelper.getUsersCollection().document(uid).update("placeId", placeId, "currentTime", currentTime);
+    public Task<Void> updateUserLikes(User user) {
+        return collectionReference
+                .document(user.getUid())
+                .update(LIKES_RESTAURANTS_ID_FIELD, user.getLike());
     }
 
-    public static Task<Void> updateLike(String uid, String placeId) {
-        return UserHelper.getUsersCollection().document(uid).update("like", FieldValue.arrayUnion(placeId));
-    }
-
-    // --- DELETE ---
-    public static Task<Void> deleteUser(String uid) {
-        return UserHelper.getUsersCollection().document(uid).delete();
-    }
-
-    public static Task<Void> deletePlaceId(String uid) {
-        return UserHelper.getUsersCollection().document(uid).update("placeId", null);
-    }
-
-    public static Task<Void> deleteLike(String uid, String placeId) {
-        return UserHelper.getUsersCollection().document(uid).update("like", FieldValue.arrayRemove(placeId));
-    }
 }
 

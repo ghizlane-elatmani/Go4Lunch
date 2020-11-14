@@ -12,19 +12,28 @@ import com.google.firebase.firestore.Query;
 public class ChatHelper {
 
 
-    private static final String COLLECTION_NAME = "chats";
+    // --- Attribute ---
+    private static ChatHelper CHAT_HELPER;
+    public static final String COLLECTION_NAME = "chats";
+    private static CollectionReference collectionReference;
 
+    // --- SINGLETON ---
+    public static ChatHelper getInstance(){
+        if(CHAT_HELPER != null){
+            CHAT_HELPER = new ChatHelper();
+        }
+        return CHAT_HELPER;
+    }
 
-    // --- COLLECTION REFERENCE ---
-    public static CollectionReference getChatCollection() {
-        return FirebaseFirestore.getInstance().collection(COLLECTION_NAME);
+    // --- CONSTRUCTOR ---
+    private ChatHelper(){
+        FirebaseFirestore firestore = FirebaseFirestore.getInstance();
+        collectionReference = firestore.collection(COLLECTION_NAME);
     }
 
     // --- GET ---
     public static Query getAllMessageForChat(String chat) {
-        return FirebaseFirestore.getInstance()
-
-                .collection(COLLECTION_NAME)
+        return collectionReference
                 .orderBy("dateCreated")
                 .limit(50);
     }
@@ -36,13 +45,13 @@ public class ChatHelper {
         Message message = new Message(textMessage, userSender);
 
         // Store Message to Firestore
-        return ChatHelper.getChatCollection()
+        return collectionReference
                 .add(message);
     }
 
     public static Task<DocumentReference> createMessageWithImageForChat(String urlImage, String textMessage, User userSender) {
         Message message = new Message(textMessage, urlImage, userSender);
-        return ChatHelper.getChatCollection()
+        return collectionReference
                 .add(message);
     }
 

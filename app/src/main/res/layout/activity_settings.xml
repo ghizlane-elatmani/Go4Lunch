@@ -16,20 +16,8 @@
         android:layout_marginTop="@dimen/small_margin"
         android:text="@string/notification"
         android:textColor="@color/colorPrimary"
-        android:textSize="@dimen/large_text_size" />
+        android:textSize="@dimen/large_text_size"
+        style="@style/ColorSwitchStyle"/>
 
-    <Button
-        android:id="@+id/confirm_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:enabled="false"
-        android:layout_margin="@dimen/average_margin"
-        android:text="Confirm"
-        android:textColor="@color/quantum_greyblack1000"
-        android:textSize="@dimen/average_text_size"
-        android:layout_centerInParent="true"
-        android:paddingLeft="30dp"
-        android:paddingRight="30dp"
-        android:background="@drawable/shape_button_confirm"/>
 
 </RelativeLayout>

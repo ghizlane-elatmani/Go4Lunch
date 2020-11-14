@@ -93,7 +93,7 @@ public class WorkmatesAdapter extends FirestoreRecyclerAdapter<User, WorkmatesAd
         public void updateWithDetails(User users, RequestManager glide) {
             //for retrieve name and id resto for request
             userName = users.getUsername();
-            idResto = users.getPlaceId();
+            idResto = users.getRestaurantId();
 
             Log.d("idRestoUser", "idRestoUsers" + " " + idResto);
             executeHttpRequestWithRetrofit();

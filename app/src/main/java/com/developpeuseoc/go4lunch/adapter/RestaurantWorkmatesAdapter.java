@@ -8,7 +8,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatImageView;
@@ -97,7 +96,7 @@ public class RestaurantWorkmatesAdapter extends FirestoreRecyclerAdapter<User, R
 
             // Retrieve name and id resto for request
             userName = users.getUsername();
-            idResto = users.getPlaceId();
+            idResto = users.getRestaurantId();
 
             Log.d("idRestoUser", "idRestoUsers" + " " + idResto);
 

@@ -230,7 +230,7 @@ public class SignInActivity extends AppCompatActivity {
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 User user = documentSnapshot.toObject(User.class);
                 if (user != null) {
-                    UserHelper.createUser(uid, username, urlPicture, user.getPlaceId(), user.getLike(), user.getCurrentTime()).addOnFailureListener(onFailureListener());
+                    UserHelper.createUser(uid, username, urlPicture, user.getRestaurantId(), user.getLike(), user.getCurrentTime()).addOnFailureListener(onFailureListener());
                 } else {
                     UserHelper.createUser(uid, username, urlPicture, null, null, 0).addOnFailureListener(onFailureListener());
                 }

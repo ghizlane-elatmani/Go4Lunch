@@ -3,15 +3,10 @@ package com.developpeuseoc.go4lunch.ui.fragment;
 
 import android.Manifest;
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.drawable.VectorDrawable;
 import android.location.Location;
 import android.location.LocationListener;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -25,7 +20,6 @@ import android.widget.SearchView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
 
 import com.developpeuseoc.go4lunch.R;
@@ -37,7 +31,6 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -53,10 +46,10 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import io.reactivex.disposables.Disposable;
 import io.reactivex.observers.DisposableSingleObserver;
+
 
 public class MapViewFragment extends BaseFragment implements LocationListener, Serializable {
 
@@ -192,7 +185,7 @@ public class MapViewFragment extends BaseFragment implements LocationListener, S
                     //Do what you need to do with your list
                     for (Object object : list) {
                         User user = ((DocumentSnapshot) object).toObject(User.class);
-                        if(user.getPlaceId() == detail.getResult().getId()){
+                        if(user.getRestaurantId() == detail.getResult().getId()){
                             marker.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_restaurant_pin_cyan));
                         } else {
                             marker.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_restaurant_pin_orange));
