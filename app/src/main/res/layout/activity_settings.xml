@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="25dp"
-    tools:context=".ui.activity.SettingsActivity">
+    tools:context=".ui.Activities.SettingsActivity">
 
 
     <Switch

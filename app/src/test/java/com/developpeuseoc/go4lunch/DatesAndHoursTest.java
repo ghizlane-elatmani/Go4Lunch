@@ -1,6 +1,6 @@
 package com.developpeuseoc.go4lunch;
 
-import com.developpeuseoc.go4lunch.utils.DatesAndHours;
+import com.developpeuseoc.go4lunch.Utils.DatesAndHours;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
