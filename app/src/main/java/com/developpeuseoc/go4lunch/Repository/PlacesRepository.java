@@ -20,6 +20,13 @@ import retrofit2.Response;
 
 public class PlacesRepository {
 
+    // --- Interface ---
+    public interface OnCompleteListener {
+        void onSuccess(Restaurant restaurant);
+        void onFailure();
+    }
+
+
     // --- Attribute ---
     private static PlacesRepository placesRepository;
     private final IGoogleApi googleApi;
@@ -46,12 +53,6 @@ public class PlacesRepository {
         return placesRepository;
     }
 
-    // --- Interface ---
-    public interface OnCompleteListener {
-        void onSuccess(Restaurant restaurant);
-        void onFailure();
-    }
-
     // --- GET ---
     public LiveData<List<Restaurant>> getNearbyRestaurantsListLiveData() {
         return nearbyRestaurantsList;
@@ -64,6 +65,7 @@ public class PlacesRepository {
     public LiveData<List<Autocomplete.Prediction>> getAutocompletePredictionsLiveData() {
         return autocompletePredictionsList;
     }
+
 
     public void getRestaurantDetails(String placeId, final OnCompleteListener onCompleteListener) {
         Call<Place> details = googleApi.getRestaurant(placeId);
@@ -81,7 +83,6 @@ public class PlacesRepository {
             }
         });
     }
-
 
     // --- SET ---
     public void setNearbyRestaurantsListLiveData(String keyword, String type, String location, int radius) {
