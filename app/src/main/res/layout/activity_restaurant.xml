@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.Activities.RestaurantActivity">
+    tools:context=".ui.activities.RestaurantActivity">
 
     <ImageView
         android:id="@+id/restoPhotoImageView"
@@ -25,7 +25,8 @@
         android:backgroundTint="#ffffff"
         android:src="@drawable/ic_check_unselected"
         app:fabSize="auto"
-        android:focusable="true" />
+        android:focusable="true"
+        android:onClick="onClick"/>
 
     <FrameLayout
         android:id="@+id/detailframeLayout"
@@ -45,23 +46,20 @@
             android:text="" />
 
         <androidx.appcompat.widget.AppCompatRatingBar
-
             android:id="@+id/restoRatingBar"
-            style="?android:attr/ratingBarStyleSmall"
+            style="@style/Widget.AppCompat.RatingBar.Small"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="250dp"
             android:layout_marginTop="7dp"
             android:numStars="3"
-            android:text=""
-            android:theme="@style/RatingBar"/>
+            android:text=""/>
 
         <TextView
             android:id="@+id/restoAddressTextView"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:textColor="#ffff"
-            android:textStyle="bold|italic"
             android:layout_marginStart="5dp"
             android:layout_marginTop="35dp"
             android:text="" />
@@ -86,7 +84,8 @@
             android:text="@string/call_button"
             android:textAlignment="center"
             android:textStyle="bold"
-            android:textColor="@color/colorPrimary"/>
+            android:textColor="@color/colorPrimary"
+            android:onClick="onClick"/>
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/restoStarButton"
@@ -95,11 +94,12 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center|center_vertical"
             android:background="#00FFFFFF"
-            android:drawableTop="@drawable/ic_star_24"
+            android:drawableTop="@drawable/ic_star_unselected"
             android:text="@string/like_button"
             android:textAlignment="center"
             android:textStyle="bold"
-            android:textColor="@color/colorPrimary"/>
+            android:textColor="@color/colorPrimary"
+            android:onClick="onClick"/>
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/restoWebButton"
@@ -114,7 +114,8 @@
             android:textAlignment="center"
             android:textStyle="bold"
             android:textColor="@color/colorPrimary"
-            tools:ignore="RtlCompat" />
+            tools:ignore="RtlCompat"
+            android:onClick="onClick"/>
 
     </FrameLayout>
 

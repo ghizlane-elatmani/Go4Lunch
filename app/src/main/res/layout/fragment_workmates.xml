@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#EBE4E4"
-    tools:context=".ui.Fragments.WorkmatesFragment">
+    tools:context=".ui.fragments.WorkmatesFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/workmatesRecyclerView"

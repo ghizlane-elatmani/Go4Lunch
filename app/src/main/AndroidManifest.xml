@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.developpeuseoc.go4lunch">
 
+    <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -21,7 +22,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.Activities.WebsiteActivity"></activity>
 
         <meta-data
             android:name="com.google.android.gms.version"
@@ -41,10 +41,17 @@
             android:value="@string/facebook_application_id"
             tools:replace="android:value" />
 
-        <activity android:name=".ui.Activities.SettingsActivity" />
-        <activity android:name=".ui.Activities.RestaurantActivity" />
-        <activity android:name=".ui.Activities.MainActivity" />
-        <activity android:name=".ui.Activities.SignInActivity">
+        <activity android:name=".ui.activities.SettingsActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".ui.activities.RestaurantActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".ui.activities.MainActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".ui.activities.SignInActivity">
+            android:screenOrientation="portrait"
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -52,7 +59,7 @@
             </intent-filter>
         </activity>
 
-       <receiver android:name=".Notification.AlertReceiver" />
+       <receiver android:name=".notification.AlertReceiver" />
 
     </application>
 

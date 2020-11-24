@@ -1,7 +1,7 @@
 package com.developpeuseoc.go4lunch;
 
-import com.developpeuseoc.go4lunch.Models.Message;
-import com.developpeuseoc.go4lunch.Models.User;
+import com.developpeuseoc.go4lunch.models.Message;
+import com.developpeuseoc.go4lunch.models.User;
 
 import org.junit.Before;
 import org.junit.Test;

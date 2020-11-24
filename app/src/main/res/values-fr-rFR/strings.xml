@@ -1,0 +1,84 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name">Go4Lunch</string>
+    <string name="tagline">Trouvez un bon restaurant et invitez vos collègues à déjeuner!</string>
+
+    <!-- SIGN IN ACTIVITY -->
+    <string name="sign_in_facebook">Se connecter avec Facebook</string>
+    <string name="sign_in_google">Se connecter avec Google</string>
+    <string name="error_authentication_canceled">Erreur: authentification annulée</string>
+    <string name="error_unknown">Erreur: erreur inconnue</string>
+    <string name="email_existing_title">Cet e-mail est déjà lié à un compte existant.</string>
+    <string name="email_existing_message">&#160; est déjà associé à un compte Google existant. \ n
+        Souhaitez-vous vous connecter à votre compte Google pour associer la méthode de connexion %1$s à votre compte Go4Lunch?</string>
+    <string name="yes">Oui</string>
+    <string name="no">Non</string>
+
+
+    <!-- MAIN ACTIVITY -->
+    <string name="no_restaurant_choose">Aucun restaurant n\'a été choisis!</string>
+    <string name="error_location">Erreur: impossible d\'obtenir l\'emplacement de l\'appareil</string>
+
+    <!-- Toolbar -->
+    <string name="hungry">J\'ai faim!</string>
+    <string name="available">Collègues disponibles</string>
+    <string name="chat">Groupe chat:</string>
+    <string name="search">Recherchez un restaurant …</string>
+
+    <!-- Navigation Drawer -->
+    <string name="navigation_drawer_menu_your_lunch">VOTRE DEJEUNEZ</string>
+    <string name="navigation_drawer_menu_settings">PARAMETRES</string>
+    <string name="navigation_drawer_menu_logout">DECONNEXION</string>
+
+    <!-- Bottom Navigation -->
+    <string name="bottom_navigation_menu_map_view">Carte</string>
+    <string name="bottom_navigation_menu_list_view">Liste</string>
+    <string name="bottom_navigation_menu_workmates">Collègues</string>
+    <string name="bottom_navigation_menu_chat">Chat</string>
+
+
+    <!-- RESTAURANT ACTIVITY -->
+    <string name="is_joining">is joining!</string>
+    <string name="no_phone_available">Le numéro n\'est pas disponible.</string>
+    <string name="no_website">Le site web n\'est pas disponible.</string>
+
+    <string name="call_button">APPELEZ</string>
+    <string name="like_button">AIMEZ</string>
+    <string name="website_button">SITE WEB</string>
+
+
+    <!-- WORKMATES FRAGMENT -->
+    <string name="no_decided">n\'a pas encore décidé(e)</string>
+
+
+    <!-- LIST VIEW FRAGMENT -->
+    <string name="open">Ouvert</string>
+    <string name="closed">Fermé</string>
+    <string name="opening_hours_not_available">Les horaires ne sont pas disponible.</string>
+
+
+    <!-- CHAT FRAGMENT -->
+    <string name="chat_empty">Le chat est vide.</string>
+    <string name="compose_your_message">Composez votre message …</string>
+    <string name="send">Envoyez</string>
+    <string name="popup_title_perm_access">Cette application nécessite une permission pour fonctionner!</string>
+    <string name="toast_title_no_image_chosen">No selected image!</string>
+
+
+    <!-- PERMISSION DIALOG -->
+    <string name="alert_dialog_title">title</string>
+    <string name="alert_dialog_message">message</string>
+    <string name="allow">Authoriser</string>
+    <string name="cancel">Annuler</string>
+
+
+    <!-- SETTINGS ACTIVITY -->
+    <string name="notification">Notification :</string>
+
+    <!-- Notification -->
+    <string name="notification_title">Votre déjeuner!</string>
+    <string name="lunch_at">Vous dejeunez à </string>
+    <string name="address">Addresse</string>
+    <string name="with">avec</string>
+
+
+</resources>

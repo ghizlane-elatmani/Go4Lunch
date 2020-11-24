@@ -5,7 +5,7 @@
     android:id="@+id/chat_fragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.Fragments.ChatFragment">
+    tools:context=".ui.fragments.ChatFragment">
 
 
     <!-- RECYCLER VIEW CONTAINER -->

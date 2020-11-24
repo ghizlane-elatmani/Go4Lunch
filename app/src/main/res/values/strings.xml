@@ -2,88 +2,92 @@
     <string name="app_name">Go4Lunch</string>
     <string name="tagline">Find a nice restaurant and invite your co-workers for lunch!</string>
 
-    <!-- SIGN IN -->
-    <string name="sign_in">Sign in</string>
+    <!-- SIGN IN ACTIVITY -->
     <string name="sign_in_facebook">Sign in with Facebook</string>
     <string name="sign_in_google">Sign in with Google</string>
+    <string name="error_authentication_canceled">Error: authentication canceled</string>
+    <string name="error_unknown">Error: unknown error</string>
+    <string name="email_existing_title">This email is already linked to an existing account.</string>
+    <string name="email_existing_message">&#160; is already linked to an existing Google account.\n
+        Would you like to log in your Google account to link %1$s sign in method to your Go4Lunch account ?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 
 
-    <!-- BOTTOM NAVIGATION VIEW -->
+    <!-- MAIN ACTIVITY -->
+    <string name="no_restaurant_choose">No restaurant has been chosen!</string>
+    <string name="error_location">Error: unable to get the device location</string>
+
+    <!-- Toolbar -->
+    <string name="hungry">I\'m Hungry!</string>
+    <string name="available">Available workmates</string>
+    <string name="chat">Group chat:</string>
+    <string name="search">Search restaurant …</string>
+
+    <!-- Navigation Drawer -->
+    <string name="navigation_drawer_menu_open" translatable="false">open</string>
+    <string name="navigation_drawer_menu_close" translatable="false">close</string>
+    <string name="navigation_drawer_menu_your_lunch">YOUR LUNCH</string>
+    <string name="navigation_drawer_menu_settings">SETTINGS</string>
+    <string name="navigation_drawer_menu_logout">LOGOUT</string>
+
+    <!-- Bottom Navigation -->
     <string name="bottom_navigation_menu_map_view">Map View</string>
     <string name="bottom_navigation_menu_list_view">List View</string>
     <string name="bottom_navigation_menu_workmates">Workmates</string>
     <string name="bottom_navigation_menu_chat">Chat</string>
 
-    <!-- NAVIGATION DRAWER -->
-    <string name="navigation_drawer_menu_your_lunch">YOUR LUNCH</string>
-    <string name="navigation_drawer_menu_settings">SETTINGS</string>
-    <string name="navigation_drawer_menu_logout">LOGOUT</string>
-    <string name="navigation_drawer_menu_open">Open navigation drawer</string>
-    <string name="navigation_drawer_menu_close">Close navigation drawer</string>
-    <string name="info_no_email_found">Email not found</string>
-    <string name="info_no_username_found">Username not found</string>
 
-    <!-- TOOLBAR -->
-    <string name="hungry">I\'m Hungry!</string>
-    <string name="available">Available workmates</string>
-    <string name="chat">Chat</string>
-    <string name="search">Search</string>
+    <!-- RESTAURANT ACTIVITY -->
+    <string name="is_joining">is joining!</string>
+    <string name="no_phone_available">The phone number isn\'t available</string>
+    <string name="no_website">The website isn\'t available</string>
+
+    <string name="call_button">CALL</string>
+    <string name="like_button">LIKE</string>
+    <string name="website_button">WEBSITE</string>
+
+
+    <!-- WORKMATES FRAGMENT -->
+    <string name="no_decided">no decided</string>
+
+
+    <!-- LIST VIEW FRAGMENT -->
+    <string name="open">Open</string>
+    <string name="closed">Closed</string>
+    <string name="opening_hours_not_available">Opening hours not available</string>
+
+
+    <!-- CHAT FRAGMENT -->
+    <string name="chat_empty">The chat is empty.</string>
+    <string name="compose_your_message">Compose your message …</string>
+    <string name="send">Send</string>
+    <string name="popup_title_perm_access">This application need permissions to work correctly.</string>
+    <string name="toast_title_no_image_chosen">No selected image!</string>
+
+
+    <!-- PERMISSION DIALOG -->
+    <string name="alert_dialog_title">title</string>
+    <string name="alert_dialog_message">message</string>
+    <string name="allow">Allow</string>
+    <string name="cancel">Cancel</string>
+
+
+    <!-- SETTINGS ACTIVITY -->
+    <string name="notification">Notification :</string>
+
+    <!-- Notification -->
+    <string name="notification_title">Your Lunch!</string>
+    <string name="lunch_at">You have lunch at</string>
+    <string name="address">Address</string>
+    <string name="with">with</string>
+
 
     <!-- FACEBOOK PURPOSE -->
     <string name="facebook_application_id" translatable="false">1558301754356407</string>
     <string name="facebook_login_protocol_scheme" translatable="false" tools:ignore="UnusedResources">fb1558301754356407</string>
 
     <!-- API KEY -->
-    <string name="YOUR_API_KEY">AIzaSyDzSszTzfJREkId1r5N9HEcO9eLHX8Uttw</string>
-
-    <!-- ERROR -->
-    <string name="error_authentication_canceled">Error authentication canceled</string>
-    <string name="error_no_internet">Error no internet</string>
-    <string name="error_unknown">Error unknown error</string>
-    <string name="error_during_creating">Error during creating new user</string>
-
-    <string name="http_error_message">HttpException, Error code : %1$i</string>
-    <string name="timeout_error_message">Request timeout, please check your internet connection</string>
-    <string name="exception_error_message">An error occurred, please check your internet connection</string>
-    <string name="generic_error_message">An error occurred, please try again</string>
-
-    <string name="restaurant_item_call">CALL</string>
-    <string name="restaurant_item_like">LIKE</string>
-    <string name="restaurant_item_website">WEBSITE</string>
-
-    <string name="popup_title_perm_access">This application need permissions to work correctly.</string>
-    <string name="no_restaurant_error_message">No restaurants found, try to change your search radius settings</string>
-
-    <string name="title_alarm">Your today lunch !</string>
-    <string name="lunch_at">You\'re lunching at</string>
-    <string name="with">with</string>
-    <string name="alone">alone</string>
-    <string name="no_restaurant_choose">No restaurant choose !</string>
-    <string name="opening_hours_not_avalaible">Opening hours not avalaible</string>
-    <string name="closed">Closed</string>
-    <string name="open_until">"Open until "</string>
-    <string name="closing_soon">Closing soon</string>
-
-    <!--restaurant button-->
-    <string name="call_button">CALL</string>
-    <string name="like_button" translatable="false">LIKE</string>
-    <string name="website_button">WEBSITE</string>
-    <string name="eat_at">Eat At</string>
-    <string name="not_decided">Not Decided</string>
-    <string name="no_phone_available">No Phone Available</string>
-    <string name="permission_denied">Permission denied</string>
-    <string name="no_website">No website</string>
-    <string name="eatWorkmates">eat at</string>
-    <string name="no_decided">hasn\'t decided yet</string>
-    <string name="chat_empty">Chat empty</string>
-    <string name="compose_your_message">Compose your message</string>
-    <string name="send">Send</string>
-    <string name="toast_title_no_image_chosen">No selected image</string>
-
-    <string name="email_already_linked_title"></string>
-    <string name="email_already_linked_message"></string>
-    <string name="yes">Yes</string>
-    <string name="no">No</string>
-    <string name="notification">Notification :</string>
+    <string name="YOUR_API_KEY" translatable="false">AIzaSyDzSszTzfJREkId1r5N9HEcO9eLHX8Uttw</string>
 
 </resources>
