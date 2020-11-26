@@ -1,129 +1,129 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.activities.RestaurantActivity">
+    tools:context=".ui.activities.RestaurantActivity"
+    android:background="#fff">
 
-    <ImageView
-        android:id="@+id/restoPhotoImageView"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="250dp"/>
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <!-- Restaurant' Url Picture -->
+        <ImageView
+            android:id="@+id/restoPhotoImageView"
+            android:layout_width="match_parent"
+            android:layout_height="270dp"/>
+
+        <!-- Restaurant' name, address, rating -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/restoNameTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Le Zinc"
+                android:textColor="#ffff"
+                android:textSize="20sp"/>
+
+            <TextView
+                android:id="@+id/restoAddressTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="French restaurant - 12 rue du Faubourg Poissonière"
+                android:textColor="#ffff"
+                android:layout_below="@id/restoNameTextView"
+                android:paddingBottom="10dp" />
+
+            <androidx.appcompat.widget.AppCompatRatingBar
+                android:id="@+id/restoRatingBar"
+                style="@style/Widget.AppCompat.RatingBar.Small"
+                android:theme="@style/RatingBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="5dp"
+                android:layout_toEndOf="@id/restoNameTextView"
+                android:layout_above="@id/restoAddressTextView"
+                android:numStars="3" />
+
+        </RelativeLayout>
+
+        <!-- Call, like, website buttons -->
+        <RelativeLayout
+            android:id="@+id/restoActionFrameLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/restoCallButton"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:drawableTop="@drawable/ic_call_24"
+                android:drawablePadding="10dp"
+                android:text="@string/call_button"
+                android:textColor="@color/colorPrimary"
+                android:onClick="onClick"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/restoLikeButton"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:drawableTop="@drawable/ic_star_unselected"
+                android:drawablePadding="10dp"
+                android:text="@string/like_button"
+                android:textColor="@color/colorPrimary"
+                android:onClick="onClick"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/restoWebButton"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:layout_alignParentRight="true"
+                android:drawableTop="@drawable/ic_public_24"
+                android:drawablePadding="10dp"
+                android:text="@string/website_button"
+                android:textColor="@color/colorPrimary"
+                android:onClick="onClick"/>
+
+        </RelativeLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/restoWorkmatesRecyclerView"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:background="#fff"
+            tools:listitem="@layout/restaurant_workmates_item"/>
+
+    </LinearLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/restoOkFloatingActionButton"
-        android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        android:layout_marginTop="220dp"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="15dp"
-        android:clickable="true"
-        android:elevation="8dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
         android:backgroundTint="#ffffff"
         android:src="@drawable/ic_check_unselected"
         app:fabSize="auto"
         android:focusable="true"
-        android:onClick="onClick"/>
+        android:onClick="onClick"
+        app:layout_anchor="@id/restoPhotoImageView"
+        app:layout_anchorGravity="bottom|right|end"/>
 
-    <FrameLayout
-        android:id="@+id/detailframeLayout"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_marginTop="250dp"
-        android:background="@color/colorPrimary">
-
-        <TextView
-            android:id="@+id/restoNameTextView"
-            android:layout_width="220dp"
-            android:layout_height="wrap_content"
-            android:textColor="#ffff"
-            android:textSize="20sp"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="7dp"
-            android:text="" />
-
-        <androidx.appcompat.widget.AppCompatRatingBar
-            android:id="@+id/restoRatingBar"
-            style="@style/Widget.AppCompat.RatingBar.Small"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="250dp"
-            android:layout_marginTop="7dp"
-            android:numStars="3"
-            android:text=""/>
-
-        <TextView
-            android:id="@+id/restoAddressTextView"
-            android:layout_width="250dp"
-            android:layout_height="wrap_content"
-            android:textColor="#ffff"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="35dp"
-            android:text="" />
-    </FrameLayout>
-
-    <FrameLayout
-        android:id="@+id/restoActionFrameLayout"
-        android:layout_below="@id/detailframeLayout"
-        android:layout_width="match_parent"
-        android:layout_height="70dp">
-
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/restoCallButton"
-            style="?android:attr/borderlessButtonStyle"
-            android:layout_width="65dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start|center_horizontal"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="5dp"
-            android:drawableTop="@drawable/ic_call_24"
-            android:text="@string/call_button"
-            android:textAlignment="center"
-            android:textStyle="bold"
-            android:textColor="@color/colorPrimary"
-            android:onClick="onClick"/>
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/restoStarButton"
-            style="?android:attr/borderlessButtonStyle"
-            android:layout_width="65dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center|center_vertical"
-            android:background="#00FFFFFF"
-            android:drawableTop="@drawable/ic_star_unselected"
-            android:text="@string/like_button"
-            android:textAlignment="center"
-            android:textStyle="bold"
-            android:textColor="@color/colorPrimary"
-            android:onClick="onClick"/>
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/restoWebButton"
-            style="?android:attr/borderlessButtonStyle"
-            android:layout_width="85dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end|center_vertical"
-            android:layout_marginEnd="30dp"
-            android:background="#00FFFFFF"
-            android:drawableTop="@drawable/ic_public_24"
-            android:text="@string/website_button"
-            android:textAlignment="center"
-            android:textStyle="bold"
-            android:textColor="@color/colorPrimary"
-            tools:ignore="RtlCompat"
-            android:onClick="onClick"/>
-
-    </FrameLayout>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/restoWorkmatesRecyclerView"
-        android:layout_marginTop="15dp"
-        android:layout_below="@+id/restoActionFrameLayout"
-        android:layout_height="match_parent"
-        android:layout_width="match_parent" />
-
-</RelativeLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

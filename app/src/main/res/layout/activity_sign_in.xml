@@ -8,7 +8,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/ic_loginscreen_background"
     android:backgroundTintMode="src_atop"
-    android:backgroundTint="#AB000000">
+    android:backgroundTint="#AB272525">
 
     <LinearLayout
         android:layout_width="match_parent"

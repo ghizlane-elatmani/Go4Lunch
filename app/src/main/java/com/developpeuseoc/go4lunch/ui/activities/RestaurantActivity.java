@@ -81,7 +81,7 @@ public class RestaurantActivity extends AppCompatActivity implements Serializabl
         okFloatingButton = findViewById(R.id.restoOkFloatingActionButton);
         callButton = findViewById(R.id.restoCallButton);
         webButton = findViewById(R.id.restoWebButton);
-        likeButton = findViewById(R.id.restoStarButton);
+        likeButton = findViewById(R.id.restoLikeButton);
         recyclerViewRestaurant = findViewById(R.id.restoWorkmatesRecyclerView);
 
         this.configure();
@@ -198,7 +198,7 @@ public class RestaurantActivity extends AppCompatActivity implements Serializabl
             onClickCheckButton();
         } else if (view.getId() == R.id.restoCallButton) {
             onClickCallButton();
-        } else if (view.getId() == R.id.restoStarButton) {
+        } else if (view.getId() == R.id.restoLikeButton) {
             onClickLikeButton();
         } else if (view.getId() == R.id.restoWebButton) {
             onClickWebButton();
