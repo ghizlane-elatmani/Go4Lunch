@@ -23,6 +23,7 @@
     <string name="available">Collègues disponibles</string>
     <string name="chat">Groupe chat:</string>
     <string name="search">Recherchez un restaurant …</string>
+    <string name="like">Aime</string>
 
     <!-- Navigation Drawer -->
     <string name="navigation_drawer_menu_your_lunch">VOTRE DEJEUNEZ</string>
@@ -34,6 +35,7 @@
     <string name="bottom_navigation_menu_list_view">Liste</string>
     <string name="bottom_navigation_menu_workmates">Collègues</string>
     <string name="bottom_navigation_menu_chat">Chat</string>
+    <string name="bottom_navigation_menu_like">J\'aime</string>
 
 
     <!-- RESTAURANT ACTIVITY -->
@@ -46,13 +48,18 @@
     <string name="website_button">SITE WEB</string>
 
 
+    <string name="restaurant_i_like">Ajouté aux restaurants "J\'aime"</string>
+
+
     <!-- WORKMATES FRAGMENT -->
+    <string name="is_eating">mange</string>
     <string name="no_decided">n\'a pas encore décidé(e)</string>
 
 
     <!-- LIST VIEW FRAGMENT -->
-    <string name="open">Ouvert</string>
-    <string name="closed">Fermé</string>
+    <string name="open_until">Ouvert jusqu\'à</string>
+    <string name="closing_soon">Ferme bientôt</string>
+    <string name="close">Fermé</string>
     <string name="opening_hours_not_available">Les horaires ne sont pas disponible.</string>
 
 
@@ -72,13 +79,18 @@
 
 
     <!-- SETTINGS ACTIVITY -->
+    <string name="settings">Paramètres</string>
     <string name="notification">Notification :</string>
 
     <!-- Notification -->
+    <string name="no_time_set">Aucune heure définie</string>
+    <string name="choose_a_time">Heure pour la notification</string>
+    <string name="allowNotification">Notification à 12:00</string>
+    <string name="cancelNotification">Notification annulée</string>
     <string name="notification_title">Votre déjeuner!</string>
     <string name="lunch_at">Vous dejeunez à </string>
     <string name="address">Addresse</string>
     <string name="with">avec</string>
-
+    <string name="alone">seul(e)</string>
 
 </resources>

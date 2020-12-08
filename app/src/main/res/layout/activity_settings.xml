@@ -5,19 +5,52 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="25dp"
     tools:context=".ui.activities.SettingsActivity">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/notification"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        android:textColor="@color/colorPrimary"
+        android:layout_margin="15dp"/>
 
-    <Switch
-        android:id="@+id/notification_switch"
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/button_timepicker"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="30dp"
+        android:text="@string/no_time_set"
+        android:textSize="30sp"/>
+
+    <Button
+        android:id="@+id/button_timepicker"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/small_margin"
-        android:text="@string/notification"
-        android:textColor="@color/colorPrimary"
-        android:textSize="@dimen/large_text_size"
-        style="@style/ColorSwitchStyle"/>
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:text="@string/choose_a_time"
+        android:layout_marginStart="50dp"
+        android:textAllCaps="false"
+        android:textSize="20dp"
+        android:padding="15dp"
+        android:drawableLeft="@drawable/ic_settings_notifications_active"/>
 
+    <Button
+        android:id="@+id/button_cancel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/button_timepicker"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="27dp"
+        android:text="@string/cancelNotification"
+        android:layout_marginStart="50dp"
+        android:textAllCaps="false"
+        android:textSize="20dp"
+        android:padding="15dp"
+        android:drawableLeft="@drawable/ic_settings_notifications_off"/>
 
 </RelativeLayout>

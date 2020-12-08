@@ -12,11 +12,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
 
 import com.developpeuseoc.go4lunch.R;
+import com.developpeuseoc.go4lunch.api.UserHelper;
 import com.developpeuseoc.go4lunch.models.User;
-import com.developpeuseoc.go4lunch.viewModel.MyViewModel;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -41,6 +40,9 @@ import java.util.Arrays;
 
 import static com.developpeuseoc.go4lunch.utils.Constant.RC_GOOGLE_SIGN_IN;
 
+/**
+ * Activity who manage user' authentication
+ */
 public class SignInActivity extends AppCompatActivity {
 
     // --- Attribute ---
@@ -50,7 +52,6 @@ public class SignInActivity extends AppCompatActivity {
     private CallbackManager callbackManager;
     private AuthCredential authCredential;
     private LoginManager loginManager;
-    private MyViewModel myViewModel;
 
 
     @Override
@@ -60,8 +61,6 @@ public class SignInActivity extends AppCompatActivity {
 
         firebaseAuth = FirebaseAuth.getInstance();
         currentUser = firebaseAuth.getCurrentUser();
-        myViewModel = new ViewModelProvider(this).get(MyViewModel.class);
-        Log.e(">>>>>>>>>> myViewModel", myViewModel.toString());
 
         configureGoogleSignIn();
         configureFacebookSignIn();
@@ -218,14 +217,12 @@ public class SignInActivity extends AppCompatActivity {
     private void createUserInFirestore(FirebaseUser user) {
         final String uid = user.getUid();
         final String username = user.getDisplayName();
-        final String mail = user.getEmail();
         final String urlPicture = user.getPhotoUrl() != null
                 ? user.getPhotoUrl().toString()
                 : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png";
 
-        Log.e("UserLog", user.toString());
-
-        myViewModel.createUser(new User(uid, username, mail,urlPicture));
+        User user1 = new User(uid, username, urlPicture, null, 0);
+        UserHelper.createUser(user1);
     }
 
     // Use an intent to navigate to MainActivity

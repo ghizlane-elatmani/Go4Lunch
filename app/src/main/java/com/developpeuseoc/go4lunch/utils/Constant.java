@@ -1,23 +1,21 @@
 package com.developpeuseoc.go4lunch.utils;
 
+import android.Manifest;
+
+/**
+ * Class for app' constant
+ */
 public class Constant {
 
+    public static final String READ_EXTERNAL_STORAGE = Manifest.permission.READ_EXTERNAL_STORAGE;
     public static final int RC_GOOGLE_SIGN_IN = 100;
-    public static final int SIGN_OUT_TASK = 123;
+    public static final int RC_IMAGE_PERMS = 100;
+    public static final int RC_CHOOSE_PHOTO = 200;
+    public static final int REQUEST_CALL = 100;
 
-    public static final String NOTIFICATIONS_PREFERENCES_NAME = "com.developpeuseoc.go4lunch.notification";
+    public static final String RESTAURANT_ID = "restaurantId";
 
-    public static final int RC_LOCATION_PERMISSIONS = 1000;
-    public static final int RC_CALL_PHONE_PERMISSION = 2000;
-    public static final int RC_CHECK_LOCATION_SETTINGS = 3000;
-    public static final int RC_READ_EXTERNAL_STORAGE_PERMISSION = 4000;
-    private static final int RC_IMAGE_PERMISSIONS = 5000;
-    private static final int RC_CHOOSE_PHOTO = 7000;
-
-    public static final int DEFAULT_INTERVAL = 10000;
-    public static final int FASTEST_INTERVAL = 5000;
-
-    public static final String RESTAURANT_ID_FIELD = "restaurantId";
-    public static final String LIKES_RESTAURANTS_ID_FIELD = "likesRestaurants";
+    public static final String CHOOSEN = "CHOOSEN";
+    public static final String UNCHOOSEN = "UNCHOOSEN";
 
 }

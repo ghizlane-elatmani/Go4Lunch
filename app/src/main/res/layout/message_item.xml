@@ -22,7 +22,7 @@
             android:id="@+id/chat_item_profile_container_profile_image"
             android:layout_width="50dip"
             android:layout_height="50dip"
-            app:srcCompat="@drawable/ic_person_outline"
+            app:srcCompat="@drawable/ic_list_person_outline"
             tools:ignore="VectorDrawableCompat" />
 
         <!-- IMAGE Profile 2 -->
@@ -30,7 +30,7 @@
             android:id="@+id/chat_item_profile"
             android:layout_width="15dip"
             android:layout_height="15dip"
-            app:srcCompat="@drawable/ic_person_outline"
+            app:srcCompat="@drawable/ic_list_person_outline"
             tools:ignore="VectorDrawableCompat" />
 
     </LinearLayout>

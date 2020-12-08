@@ -23,6 +23,7 @@
     <string name="available">Available workmates</string>
     <string name="chat">Group chat:</string>
     <string name="search">Search restaurant …</string>
+    <string name="like">Like</string>
 
     <!-- Navigation Drawer -->
     <string name="navigation_drawer_menu_open" translatable="false">open</string>
@@ -36,6 +37,7 @@
     <string name="bottom_navigation_menu_list_view">List View</string>
     <string name="bottom_navigation_menu_workmates">Workmates</string>
     <string name="bottom_navigation_menu_chat">Chat</string>
+    <string name="bottom_navigation_menu_like">Like</string>
 
 
     <!-- RESTAURANT ACTIVITY -->
@@ -47,14 +49,18 @@
     <string name="like_button">LIKE</string>
     <string name="website_button">WEBSITE</string>
 
+    <string name="restaurant_i_like">Added to restaurants "I like"</string>
+
 
     <!-- WORKMATES FRAGMENT -->
+    <string name="is_eating">is eating</string>
     <string name="no_decided">no decided</string>
 
 
     <!-- LIST VIEW FRAGMENT -->
-    <string name="open">Open</string>
-    <string name="closed">Closed</string>
+    <string name="open_until">Open until</string>
+    <string name="closing_soon">Closing soon</string>
+    <string name="close">Close</string>
     <string name="opening_hours_not_available">Opening hours not available</string>
 
 
@@ -74,20 +80,23 @@
 
 
     <!-- SETTINGS ACTIVITY -->
+    <string name="settings">Settings</string>
     <string name="notification">Notification :</string>
 
     <!-- Notification -->
+    <string name="no_time_set">No time set</string>
+    <string name="choose_a_time">Time for notification</string>
+    <string name="allowNotification">Notification at 12:00</string>
+    <string name="cancelNotification">Cancel notification</string>
     <string name="notification_title">Your Lunch!</string>
     <string name="lunch_at">You have lunch at</string>
     <string name="address">Address</string>
     <string name="with">with</string>
+    <string name="alone">alone</string>
 
 
     <!-- FACEBOOK PURPOSE -->
     <string name="facebook_application_id" translatable="false">1558301754356407</string>
     <string name="facebook_login_protocol_scheme" translatable="false" tools:ignore="UnusedResources">fb1558301754356407</string>
-
-    <!-- API KEY -->
-    <string name="YOUR_API_KEY" translatable="false">AIzaSyDzSszTzfJREkId1r5N9HEcO9eLHX8Uttw</string>
 
 </resources>

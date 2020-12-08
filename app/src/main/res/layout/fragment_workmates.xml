@@ -5,12 +5,13 @@
     android:id="@+id/fragmentWorkmates"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#EBE4E4"
-    tools:context=".ui.fragments.WorkmatesFragment">
+    android:background="#FFFFFF"
+    tools:context=".ui.fragments.WorkMatesFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/workmatesRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        tools:listitem="@layout/workmates_item"/>
 
 </RelativeLayout>

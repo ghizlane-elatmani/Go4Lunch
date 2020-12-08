@@ -2,22 +2,23 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/fragmentList"
+    android:id="@+id/fragmentLike"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#EBE4E4"
+    android:background="#fff"
     tools:context=".ui.fragments.ListViewFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/fragmentListRecyclerView"
+        android:id="@+id/fragmentLikeRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        tools:listitem="@layout/restaurant_item"/>
 
     <androidx.appcompat.widget.SearchView
         android:id="@+id/searchView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/fragmentListRecyclerView"
-        app:searchIcon="@drawable/ic_search" />
+        android:layout_above="@+id/fragmentLikeRecyclerView"
+        app:searchIcon="@drawable/ic_toolbar_search" />
 
 </RelativeLayout>

@@ -1,10 +1,12 @@
 package com.developpeuseoc.go4lunch.models;
 
-
 import com.google.firebase.firestore.ServerTimestamp;
 
 import java.util.Date;
 
+/**
+ * Model class for a message
+ */
 public class Message {
 
     // --- ATTRIBUTES ---
@@ -16,7 +18,9 @@ public class Message {
 
     // --- CONSTRUCTOR ---
 
-    public Message() { }
+    public Message() {
+        // Empty Constructor
+    }
 
     public Message(String message, User userSender) {
         this.message = message;

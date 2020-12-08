@@ -4,11 +4,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_header"
     android:layout_width="match_parent"
-    android:layout_height="250dp"
+    android:layout_height="260dp"
     android:background="@drawable/ic_navheader_background"
     android:backgroundTintMode="src_atop"
-    android:backgroundTint="#AB000000"
-    android:padding="10dp">
+    android:backgroundTint="#AB272525"
+    android:paddingBottom="20dp"
+    android:paddingRight="15dp"
+    android:paddingLeft="15dp">
 
 
     <TextView
@@ -18,36 +20,33 @@
         android:layout_centerHorizontal="true"
         android:text="@string/app_name"
         android:textColor="#ffffff"
-        android:textSize="45sp"
+        android:textSize="40sp"
         android:textStyle="bold"
-        android:layout_marginTop="35dp"/>
+        android:layout_above="@id/name_header"
+        android:layout_marginBottom="50dp"/>
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/urlPicture_header"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_alignParentBottom="true"
-        android:layout_marginLeft="20dp"
-        android:layout_marginBottom="20dp"/>
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginRight="10dp"
+        android:layout_alignParentBottom="true"/>
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/name_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/urlPicture_header"
-        android:layout_marginLeft="20dp"
         android:layout_toRightOf="@+id/urlPicture_header"
         android:textColor="#fff"
-        android:textStyle="bold" />
+        android:textStyle="bold"/>
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/mail_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="#fff"
-        android:layout_below="@+id/name_header"
         android:layout_toRightOf="@+id/urlPicture_header"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="5dp"/>
+        android:layout_alignBottom="@id/urlPicture_header"/>
 
 </RelativeLayout>

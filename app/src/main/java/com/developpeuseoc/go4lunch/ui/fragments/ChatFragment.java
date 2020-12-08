@@ -1,6 +1,5 @@
 package com.developpeuseoc.go4lunch.ui.fragments;
 
-import android.Manifest;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -19,27 +18,22 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.developpeuseoc.go4lunch.R;
-import com.developpeuseoc.go4lunch.adapters.ChatAdapter;
-import com.developpeuseoc.go4lunch.repositories.ChatRepository;
-import com.developpeuseoc.go4lunch.repositories.UserRepository;
+import com.developpeuseoc.go4lunch.api.ChatHelper;
+import com.developpeuseoc.go4lunch.api.UserHelper;
 import com.developpeuseoc.go4lunch.models.Message;
 import com.developpeuseoc.go4lunch.models.User;
-import com.developpeuseoc.go4lunch.viewModel.MyViewModel;
+import com.developpeuseoc.go4lunch.ui.adapters.ChatAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.storage.FirebaseStorage;
@@ -48,40 +42,37 @@ import com.google.firebase.storage.UploadTask;
 
 import java.util.Objects;
 import java.util.UUID;
-import java.util.concurrent.Executor;
 
 import pub.devrel.easypermissions.EasyPermissions;
 
 import static android.app.Activity.RESULT_OK;
+import static com.developpeuseoc.go4lunch.api.UserHelper.getCurrentUser;
+import static com.developpeuseoc.go4lunch.utils.Constant.RC_CHOOSE_PHOTO;
+import static com.developpeuseoc.go4lunch.utils.Constant.RC_IMAGE_PERMS;
+import static com.developpeuseoc.go4lunch.utils.Constant.READ_EXTERNAL_STORAGE;
 
-public class ChatFragment extends Fragment implements ChatAdapter.Listener {
+/**
+ * Fragments who manage messages
+ */
+public class ChatFragment extends BaseFragment implements ChatAdapter.Listener {
 
-    // STATIC DATA FOR PICTURE
-    private static final String PERMS = Manifest.permission.READ_EXTERNAL_STORAGE;
-    private static final int RC_IMAGE_PERMS = 100;
-    private static final int RC_CHOOSE_PHOTO = 200;
-
-    // view
+    private static final String TAG = ChatFragment.class.getSimpleName();
     private RecyclerView recyclerView;
     private TextView textViewRecyclerViewEmpty;
     private EditText editTextMessage;
     private ImageView imageViewPreview;
-    private Button chatSendButton;
+    private ImageButton chatSendButton;
     private ImageButton chatAddFileButton;
-    private ChatAdapter chatAdapter;
 
+    private ChatAdapter chatAdapter;
     @Nullable
-    private User user;
+    private User modelCurrentUser;
     private String chat;
     private Uri uriImageSelected;
-    private FirebaseAuth auth;
-    private MyViewModel myViewModel;
 
-    public static ChatFragment newInstance() {
-        ChatFragment fragment = new ChatFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
+
+    public ChatFragment() {
+        // Required empty public constructor
     }
 
 
@@ -89,8 +80,6 @@ public class ChatFragment extends Fragment implements ChatAdapter.Listener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_chat, container, false);
-
-        this.getCurrentUserFromFirestore();
 
         //findViewById
         recyclerView = view.findViewById(R.id.chat_recycler_view);
@@ -100,22 +89,20 @@ public class ChatFragment extends Fragment implements ChatAdapter.Listener {
         chatSendButton = view.findViewById(R.id.chat_send_button);
         chatAddFileButton = view.findViewById(R.id.chat_add_file_button);
 
-        auth = FirebaseAuth.getInstance();
-        myViewModel = ViewModelProviders.of(requireActivity()).get(MyViewModel.class);
-
         this.configureRecyclerView();
+        this.getCurrentUserFromFirestore();
 
         //Action on click button
         chatSendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //Check if text field is not empty and current user properly downloaded from Firestore
-                if (!TextUtils.isEmpty(editTextMessage.getText()) && user != null) {
+                if (!TextUtils.isEmpty(editTextMessage.getText()) && modelCurrentUser != null) {
                     if (imageViewPreview.getDrawable() == null) {
                         //Send text message
-                        myViewModel.createMessageForChat(editTextMessage.getText().toString(), user);
+                        Message message = new Message(editTextMessage.getText().toString(), modelCurrentUser);
+                        ChatHelper.createMessageForChat(message).addOnFailureListener(onFailureListener());
                         editTextMessage.setText("");
-
                     } else {
                         //Send image and text
                         uploadPhotoInFirebaseAndSendMessage(editTextMessage.getText().toString());
@@ -137,15 +124,21 @@ public class ChatFragment extends Fragment implements ChatAdapter.Listener {
         return view;
     }
 
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        //For change title action bar
+        getActionBar().setTitle(R.string.chat);
+    }
 
-    //For images permisssions
+    //For images permissions
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
     }
 
-    //For images permisssions
+    //For images permissions
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -155,21 +148,14 @@ public class ChatFragment extends Fragment implements ChatAdapter.Listener {
 
     //Get current user from Firestore
     private void getCurrentUserFromFirestore() {
-        FirebaseUser currentUser = auth.getCurrentUser();
-        if (currentUser != null) {
-            myViewModel.getUser(currentUser.getUid())
-                    .addOnCompleteListener((Executor) this, new OnCompleteListener<DocumentSnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                            if (task.isSuccessful()) {
-                                user = task.getResult().toObject(User.class);
-                            } else {
-                                Log.e("ChatFragment", "getUser: onFailure", task.getException());
-                            }
-                        }
-                    });
-        }
+        UserHelper.getUser(Objects.requireNonNull(getCurrentUser()).getUid()).addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                modelCurrentUser = documentSnapshot.toObject(User.class);
+            }
+        });
     }
+
 
     //Upload a picture in Firebase and send a message
     private void uploadPhotoInFirebaseAndSendMessage(final String message) {
@@ -182,10 +168,11 @@ public class ChatFragment extends Fragment implements ChatAdapter.Listener {
             @Override
             public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
                 if (!task.isSuccessful()) {
-                    Log.e("UploadPhotoChat", "Error TASK_URI : " + task.getException());
+                    Log.e(TAG, "Error TASK_URI : " + task.getException());
                     throw Objects.requireNonNull(task.getException());
                 }
 
+                // Continue with the task to get the download URL
                 return mImageRef.getDownloadUrl();
             }
         }).addOnCompleteListener(new OnCompleteListener<Uri>() {
@@ -193,9 +180,10 @@ public class ChatFragment extends Fragment implements ChatAdapter.Listener {
             public void onComplete(@NonNull Task<Uri> task) {
                 if (task.isSuccessful()) {
                     Uri downloadUri = task.getResult();
-                    myViewModel.createMessageWithImageForChat(Objects.requireNonNull(downloadUri).toString(), message, user);
+                    Message message1 = new Message(Objects.requireNonNull(downloadUri).toString(), message, modelCurrentUser);
+                    ChatHelper.createMessageWithImageForChat(message1).addOnFailureListener(ChatFragment.this.onFailureListener());
                 } else {
-                    Log.e("UploadPhotoChat", "Error ON_COMPLETE : " + task.getException());
+                    Log.e(TAG, "Error ON_COMPLETE : " + task.getException());
                 }
             }
         });
@@ -203,8 +191,8 @@ public class ChatFragment extends Fragment implements ChatAdapter.Listener {
 
 
     private void chooseImageFromPhone() {
-        if (!EasyPermissions.hasPermissions(getContext(), PERMS)) {
-            EasyPermissions.requestPermissions(this, getString(R.string.popup_title_perm_access), RC_IMAGE_PERMS, PERMS);
+        if (!EasyPermissions.hasPermissions(getContext(), READ_EXTERNAL_STORAGE)) {
+            EasyPermissions.requestPermissions(this, getString(R.string.popup_title_perm_access), RC_IMAGE_PERMS, READ_EXTERNAL_STORAGE);
             return;
         }
         Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
@@ -228,9 +216,7 @@ public class ChatFragment extends Fragment implements ChatAdapter.Listener {
 
     private void configureRecyclerView() {
 
-        chatAdapter = new ChatAdapter(generateOptionsForAdapter(myViewModel.getAllMessageForChat(chat)),
-                Glide.with(this), this, user.getUid());
-
+        this.chatAdapter = new ChatAdapter(generateOptionsForAdapter(ChatHelper.getAllMessageForChat(chat)), Glide.with(this), this, Objects.requireNonNull(getCurrentUser()).getUid());
         chatAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
             @Override
             public void onItemRangeInserted(int positionStart, int itemCount) {
@@ -241,7 +227,7 @@ public class ChatFragment extends Fragment implements ChatAdapter.Listener {
         recyclerView.setAdapter(this.chatAdapter);
     }
 
-    //Create options for RecyclerView from a Query
+
     private FirestoreRecyclerOptions<Message> generateOptionsForAdapter(Query query) {
         return new FirestoreRecyclerOptions.Builder<Message>()
                 .setQuery(query, Message.class)
@@ -249,11 +235,11 @@ public class ChatFragment extends Fragment implements ChatAdapter.Listener {
                 .build();
     }
 
-    //Callback
+
     @Override
     public void onDataChanged() {
         //Show TextView in case RecyclerView is empty
         textViewRecyclerViewEmpty.setVisibility(this.chatAdapter.getItemCount() == 0 ? View.VISIBLE : View.GONE);
     }
-}
 
+}

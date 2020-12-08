@@ -58,7 +58,7 @@
             android:textAllCaps="false"
             android:textColor="#ffffff"
             android:textSize="15sp"
-            android:drawableStart="@drawable/ic_facebook_logo"
+            android:drawableStart="@drawable/ic_login_facebook"
             android:padding="5dp"
             android:background="@drawable/shape_facebook_button"
             android:onClick="onClick"/>
@@ -74,7 +74,7 @@
             android:textAllCaps="false"
             android:textColor="#ffffff"
             android:textSize="15sp"
-            android:drawableLeft="@drawable/ic_google_logo"
+            android:drawableLeft="@drawable/ic_login_google"
             android:padding="10dp"
             android:background="@drawable/shape_google_button"
             android:onClick="onClick"/>

@@ -8,20 +8,15 @@ public class NearbySearch {
 
     // --- Attribute ---
     @SerializedName("html_attributions")
-    private List<Object> htmlAttributions = null;
-    @SerializedName("next_page_token")
-    private String nextPageToken;
+    private List<Object> htmlAttributions;
     @SerializedName("results")
-    private List<Result> results = null;
+    private List<Result> results;
     @SerializedName("status")
     private String status;
 
     // --- GETTERS ---
     public List<Object> getHtmlAttributions() {
         return htmlAttributions;
-    }
-    public String getNextPageToken() {
-        return nextPageToken;
     }
     public List<Result> getResults() {
         return results;
@@ -33,9 +28,6 @@ public class NearbySearch {
     // --- SETTERS ---
     public void setHtmlAttributions(List<Object> htmlAttributions) {
         this.htmlAttributions = htmlAttributions;
-    }
-    public void setNextPageToken(String nextPageToken) {
-        this.nextPageToken = nextPageToken;
     }
     public void setResults(List<Result> results) {
         this.results = results;
@@ -50,23 +42,15 @@ public class NearbySearch {
         // --- Attribute ---
         @SerializedName("location")
         private Location location;
-        @SerializedName("viewport")
-        private Viewport viewport;
 
         // --- GETTERS ---
         public Location getLocation() {
             return location;
         }
-        public Viewport getViewport() {
-            return viewport;
-        }
 
         // --- SETTERS ---
         public void setLocation(Location location) {
             this.location = location;
-        }
-        public void setViewport(Viewport viewport) {
-            this.viewport = viewport;
         }
 
     }
@@ -88,32 +72,6 @@ public class NearbySearch {
         }
 
         // --- SETTERS
-        public void setLat(Double lat) {
-            this.lat = lat;
-        }
-        public void setLng(Double lng) {
-            this.lng = lng;
-        }
-
-    }
-
-    public static class Northeast {
-
-        // --- Attribute ---
-        @SerializedName("lat")
-        private Double lat;
-        @SerializedName("lng")
-        private Double lng;
-
-        // --- GETTERS ---
-        public Double getLat() {
-            return lat;
-        }
-        public Double getLng() {
-            return lng;
-        }
-
-        // --- SETTERS ---
         public void setLat(Double lat) {
             this.lat = lat;
         }
@@ -147,7 +105,7 @@ public class NearbySearch {
         @SerializedName("height")
         private Integer height;
         @SerializedName("html_attributions")
-        private List<String> htmlAttributions = null;
+        private List<String> htmlAttributions;
         @SerializedName("photo_reference")
         private String photoReference;
         @SerializedName("width")
@@ -183,32 +141,6 @@ public class NearbySearch {
 
     }
 
-    public static class PlusCode {
-
-        // --- Attribute ---
-        @SerializedName("compound_code")
-        private String compoundCode;
-        @SerializedName("global_code")
-        private String globalCode;
-
-        // --- GETTERS ---
-        public String getCompoundCode() {
-            return compoundCode;
-        }
-        public String getGlobalCode() {
-            return globalCode;
-        }
-
-        // --- SETTERS ---
-        public void setCompoundCode(String compoundCode) {
-            this.compoundCode = compoundCode;
-        }
-        public void setGlobalCode(String globalCode) {
-            this.globalCode = globalCode;
-        }
-
-    }
-
     public static class Result {
 
         // --- Attribute ---
@@ -216,30 +148,22 @@ public class NearbySearch {
         private Geometry geometry;
         @SerializedName("icon")
         private String icon;
+        @SerializedName("id")
+        private String id;
         @SerializedName("name")
         private String name;
+        @SerializedName("opening_hours")
+        private OpeningHours openingHours;
         @SerializedName("photos")
         private List<Photo> photos;
         @SerializedName("place_id")
         private String placeId;
         @SerializedName("reference")
         private String reference;
-        @SerializedName("scope")
-        private String scope;
         @SerializedName("types")
         private List<String> types;
         @SerializedName("vicinity")
         private String vicinity;
-        @SerializedName("business_status")
-        private String businessStatus;
-        @SerializedName("opening_hours")
-        private OpeningHours openingHours;
-        @SerializedName("plus_code")
-        private PlusCode plusCode;
-        @SerializedName("rating")
-        private Double rating;
-        @SerializedName("user_ratings_total")
-        private Integer userRatingsTotal;
 
 
         // --- GETTERS ---
@@ -249,8 +173,14 @@ public class NearbySearch {
         public String getIcon() {
             return icon;
         }
+        public String getId() {
+            return id;
+        }
         public String getName() {
             return name;
+        }
+        public OpeningHours getOpeningHours() {
+            return openingHours;
         }
         public List<Photo> getPhotos() {
             return photos;
@@ -261,29 +191,11 @@ public class NearbySearch {
         public String getReference() {
             return reference;
         }
-        public String getScope() {
-            return scope;
-        }
         public List<String> getTypes() {
             return types;
         }
         public String getVicinity() {
             return vicinity;
-        }
-        public String getBusinessStatus() {
-            return businessStatus;
-        }
-        public OpeningHours getOpeningHours() {
-            return openingHours;
-        }
-        public PlusCode getPlusCode() {
-            return plusCode;
-        }
-        public Double getRating() {
-            return rating;
-        }
-        public Integer getUserRatingsTotal() {
-            return userRatingsTotal;
         }
 
         // --- SETTERS ---
@@ -293,8 +205,14 @@ public class NearbySearch {
         public void setIcon(String icon) {
             this.icon = icon;
         }
+        public void setId(String id) {
+            this.id = id;
+        }
         public void setName(String name) {
             this.name = name;
+        }
+        public void setOpeningHours(OpeningHours openingHours) {
+            this.openingHours = openingHours;
         }
         public void setPhotos(List<Photo> photos) {
             this.photos = photos;
@@ -305,81 +223,11 @@ public class NearbySearch {
         public void setReference(String reference) {
             this.reference = reference;
         }
-        public void setScope(String scope) {
-            this.scope = scope;
-        }
         public void setTypes(List<String> types) {
             this.types = types;
         }
         public void setVicinity(String vicinity) {
             this.vicinity = vicinity;
-        }
-        public void setBusinessStatus(String businessStatus) {
-            this.businessStatus = businessStatus;
-        }
-        public void setOpeningHours(OpeningHours openingHours) {
-            this.openingHours = openingHours;
-        }
-        public void setPlusCode(PlusCode plusCode) {
-            this.plusCode = plusCode;
-        }
-        public void setRating(Double rating) {
-            this.rating = rating;
-        }
-        public void setUserRatingsTotal(Integer userRatingsTotal) {
-            this.userRatingsTotal = userRatingsTotal;
-        }
-
-    }
-
-    public static class Southwest {
-
-        // --- Attribute ---
-        @SerializedName("lat")
-        private Double lat;
-        @SerializedName("lng")
-        private Double lng;
-
-        // --- GETTERS ---
-        public Double getLat() {
-            return lat;
-        }
-        public Double getLng() {
-            return lng;
-        }
-
-        // --- SETTERS ---
-        public void setLat(Double lat) {
-            this.lat = lat;
-        }
-        public void setLng(Double lng) {
-            this.lng = lng;
-        }
-
-    }
-
-    public static class Viewport {
-
-        // --- Attribute ---
-        @SerializedName("northeast")
-        private Northeast northeast;
-        @SerializedName("southwest")
-        private Southwest southwest;
-
-        // --- GETTERS ---
-        public Northeast getNortheast() {
-            return northeast;
-        }
-        public Southwest getSouthwest() {
-            return southwest;
-        }
-
-        // --- SETTERS ---
-        public void setNortheast(Northeast northeast) {
-            this.northeast = northeast;
-        }
-        public void setSouthwest(Southwest southwest) {
-            this.southwest = southwest;
         }
 
     }

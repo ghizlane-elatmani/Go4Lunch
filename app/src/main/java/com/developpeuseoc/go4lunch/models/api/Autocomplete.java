@@ -86,8 +86,10 @@ public class Autocomplete {
         // --- Attribute ---
         @SerializedName("description")
         private String description;
+        @SerializedName("id")
+        private String id;
         @SerializedName("matched_substrings")
-        private List<MatchedSubstring> matchedSubstrings = null;
+        private List<MatchedSubstring> matchedSubstrings;
         @SerializedName("place_id")
         private String placeId;
         @SerializedName("reference")
@@ -95,13 +97,16 @@ public class Autocomplete {
         @SerializedName("structured_formatting")
         private StructuredFormatting structuredFormatting;
         @SerializedName("terms")
-        private List<Term> terms = null;
+        private List<Term> terms;
         @SerializedName("types")
-        private List<String> types = null;
+        private List<String> types;
 
         // --- GETTERS ---
         public String getDescription() {
             return description;
+        }
+        public String getId() {
+            return id;
         }
         public List<MatchedSubstring> getMatchedSubstrings() {
             return matchedSubstrings;
@@ -125,6 +130,9 @@ public class Autocomplete {
         // --- SETTERS ---
         public void setDescription(String description) {
             this.description = description;
+        }
+        public void setId(String id) {
+            this.id = id;
         }
         public void setMatchedSubstrings(List<MatchedSubstring> matchedSubstrings) {
             this.matchedSubstrings = matchedSubstrings;

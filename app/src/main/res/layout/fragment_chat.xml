@@ -5,6 +5,7 @@
     android:id="@+id/chat_fragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#fff"
     tools:context=".ui.fragments.ChatFragment">
 
 
@@ -48,7 +49,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_margin="10dp">
+        android:background="#DDDFDF">
 
         <!-- ADD FILE BUTTON -->
         <ImageButton
@@ -58,7 +59,7 @@
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
             android:contentDescription="Image"
-            android:src="@drawable/ic_add_circle_24"/>
+            android:src="@drawable/ic_chat_add"/>
 
         <!-- TEXT MESSAGE EDIT TEXT -->
         <androidx.appcompat.widget.AppCompatEditText
@@ -69,15 +70,16 @@
             android:hint="@string/compose_your_message"
             android:imeOptions="actionDone"
             android:inputType="textMultiLine"
-            android:textSize="15sp" />
+            android:textSize="15sp"
+            android:textColorHint="#BC000000"/>
 
         <!-- ADD MESSAGE BUTTON -->
-        <Button
+        <ImageButton
             android:id="@+id/chat_send_button"
-            style="@style/Widget.AppCompat.Button.Borderless.Colored"
-            android:layout_width="wrap_content"
+            android:layout_width="60dp"
             android:layout_height="wrap_content"
-            android:text="@string/send" />
+            android:adjustViewBounds="true"
+            android:src="@drawable/ic_chat_send"/>
 
     </LinearLayout>
 </RelativeLayout>

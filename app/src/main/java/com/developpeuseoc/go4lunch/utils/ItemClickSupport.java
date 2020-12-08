@@ -4,6 +4,9 @@ import android.view.View;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+/**
+ * Class which will help us to more easily manage user clicks on the RecyclerView.
+ */
 public class ItemClickSupport {
 
     private final RecyclerView recyclerView;
